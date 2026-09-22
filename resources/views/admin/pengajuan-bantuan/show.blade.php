@@ -10,9 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Detail Pengajuan Bantuan - Admin
-    </title>
+    <title>Detail Pengajuan Bantuan - Admin</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -64,7 +62,7 @@
             href="{{ route('admin.pengajuan-bantuan.index') }}"
             class="btn btn-secondary"
         >
-            ← Kembali
+            &larr; Kembali
         </a>
 
     </div>
@@ -106,87 +104,81 @@
     @endif
 
 
-    {{-- VALIDATION ERROR --}}
-    @if($errors->any())
+    <div class="row g-4">
 
-        <div class="alert alert-danger">
+        {{-- DATA PENGAJUAN --}}
+        <div class="col-lg-8">
 
-            <ul class="mb-0">
+            <div class="card border-0 shadow-sm mb-4">
 
-                @foreach($errors->all() as $error)
+                <div class="card-header bg-white py-3">
 
-                    <li>
-                        {{ $error }}
-                    </li>
-
-                @endforeach
-
-            </ul>
-
-        </div>
-
-    @endif
-
-
-    {{-- NOMOR DAN STATUS --}}
-    <div class="card border-0 shadow-sm mb-4">
-
-        <div class="card-body">
-
-            <div class="row">
-
-                <div class="col-md-6">
-
-                    <small class="text-muted">
-                        Nomor Pengajuan
-                    </small>
-
-                    <h5 class="fw-bold">
-                        {{ $pengajuanBantuan->nomor_pengajuan }}
+                    <h5 class="mb-0 fw-bold">
+                        Data Pengajuan
                     </h5>
 
                 </div>
 
+                <div class="card-body">
 
-                <div class="col-md-6">
+                    <div class="row g-3">
 
-                    <small class="text-muted">
-                        Status Saat Ini
-                    </small>
+                        <div class="col-md-6">
 
-                    <div>
+                            <label class="text-muted small">
+                                Nomor Pengajuan
+                            </label>
 
-                        @if($pengajuanBantuan->status === 'Menunggu Verifikasi')
+                            <div class="fw-bold text-primary">
+                                {{ $pengajuanBantuan->nomor_pengajuan }}
+                            </div>
 
-                            <span class="badge bg-warning text-dark fs-6">
-                                Menunggu Verifikasi
-                            </span>
+                        </div>
 
-                        @elseif($pengajuanBantuan->status === 'Diverifikasi')
 
-                            <span class="badge bg-primary fs-6">
-                                Diverifikasi
-                            </span>
+                        <div class="col-md-6">
 
-                        @elseif($pengajuanBantuan->status === 'Disetujui')
+                            <label class="text-muted small">
+                                Status
+                            </label>
 
-                            <span class="badge bg-success fs-6">
-                                Disetujui
-                            </span>
+                            <div>
 
-                        @elseif($pengajuanBantuan->status === 'Ditolak')
+                                @if($pengajuanBantuan->status === 'Menunggu Verifikasi')
 
-                            <span class="badge bg-danger fs-6">
-                                Ditolak
-                            </span>
+                                    <span class="badge bg-warning text-dark">
+                                        Menunggu Verifikasi
+                                    </span>
 
-                        @else
+                                @elseif($pengajuanBantuan->status === 'Diverifikasi')
 
-                            <span class="badge bg-secondary fs-6">
-                                {{ $pengajuanBantuan->status }}
-                            </span>
+                                    <span class="badge bg-primary">
+                                        Diverifikasi
+                                    </span>
 
-                        @endif
+                                @elseif($pengajuanBantuan->status === 'Disetujui')
+
+                                    <span class="badge bg-success">
+                                        Disetujui
+                                    </span>
+
+                                @elseif($pengajuanBantuan->status === 'Ditolak')
+
+                                    <span class="badge bg-danger">
+                                        Ditolak
+                                    </span>
+
+                                @else
+
+                                    <span class="badge bg-secondary">
+                                        {{ $pengajuanBantuan->status }}
+                                    </span>
+
+                                @endif
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -194,368 +186,353 @@
 
             </div>
 
-        </div>
 
-    </div>
+            {{-- DATA PEMOHON --}}
+            <div class="card border-0 shadow-sm mb-4">
 
+                <div class="card-header bg-white py-3">
 
-    {{-- DATA PEMOHON --}}
-    <div class="card border-0 shadow-sm mb-4">
-
-        <div class="card-header bg-white">
-
-            <h5 class="fw-bold mb-0">
-                Data Pemohon
-            </h5>
-
-        </div>
-
-        <div class="card-body">
-
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-
-                    <strong>
-                        Nama Lengkap
-                    </strong>
-
-                    <div>
-                        {{ $pengajuanBantuan->nama_lengkap }}
-                    </div>
+                    <h5 class="mb-0 fw-bold">
+                        Data Pemohon
+                    </h5>
 
                 </div>
 
+                <div class="card-body">
 
-                <div class="col-md-6 mb-3">
+                    <div class="row g-3">
 
-                    <strong>
-                        NIK
-                    </strong>
+                        <div class="col-md-6">
 
-                    <div>
-                        {{ $pengajuanBantuan->nik }}
-                    </div>
+                            <label class="text-muted small">
+                                Nama Lengkap
+                            </label>
 
-                </div>
+                            <div class="fw-semibold">
+                                {{ $pengajuanBantuan->nama_lengkap }}
+                            </div>
 
+                        </div>
 
-                <div class="col-md-6 mb-3">
 
-                    <strong>
-                        Nomor KK
-                    </strong>
+                        <div class="col-md-6">
 
-                    <div>
-                        {{ $pengajuanBantuan->nomor_kk }}
-                    </div>
+                            <label class="text-muted small">
+                                NIK
+                            </label>
 
-                </div>
+                            <div>
+                                {{ $pengajuanBantuan->nik }}
+                            </div>
 
+                        </div>
 
-                <div class="col-md-6 mb-3">
 
-                    <strong>
-                        Nomor HP
-                    </strong>
+                        <div class="col-md-6">
 
-                    <div>
-                        {{ $pengajuanBantuan->nomor_hp }}
-                    </div>
+                            <label class="text-muted small">
+                                Nomor KK
+                            </label>
 
-                </div>
+                            <div>
+                                {{ $pengajuanBantuan->nomor_kk }}
+                            </div>
 
-            </div>
+                        </div>
 
-        </div>
 
-    </div>
+                        <div class="col-md-6">
 
+                            <label class="text-muted small">
+                                Nomor HP
+                            </label>
 
-    {{-- ALAMAT --}}
-    <div class="card border-0 shadow-sm mb-4">
+                            <div>
+                                {{ $pengajuanBantuan->nomor_hp }}
+                            </div>
 
-        <div class="card-header bg-white">
+                        </div>
 
-            <h5 class="fw-bold mb-0">
-                Alamat
-            </h5>
-
-        </div>
-
-        <div class="card-body">
-
-            <p class="mb-2">
-
-                <strong>
-                    Alamat:
-                </strong>
-
-                <br>
-
-                {{ $pengajuanBantuan->alamat }}
-
-            </p>
-
-
-            <div class="row">
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>
-                        Desa/Kelurahan:
-                    </strong>
-
-                    <br>
-
-                    {{ $pengajuanBantuan->desa_kelurahan }}
-
-                </div>
-
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>
-                        Kecamatan:
-                    </strong>
-
-                    <br>
-
-                    {{ $pengajuanBantuan->kecamatan }}
-
-                </div>
-
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>
-                        Kabupaten/Kota:
-                    </strong>
-
-                    <br>
-
-                    {{ $pengajuanBantuan->kabupaten_kota }}
-
-                </div>
-
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>
-                        Provinsi:
-                    </strong>
-
-                    <br>
-
-                    {{ $pengajuanBantuan->provinsi }}
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    {{-- KONDISI RUMAH DAN LISTRIK --}}
-    <div class="card border-0 shadow-sm mb-4">
-
-        <div class="card-header bg-white">
-
-            <h5 class="fw-bold mb-0">
-                Kondisi Rumah dan Listrik
-            </h5>
-
-        </div>
-
-        <div class="card-body">
-
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-
-                    <strong>
-                        Status Kepemilikan Rumah
-                    </strong>
-
-                    <div>
-                        {{ $pengajuanBantuan->status_kepemilikan_rumah }}
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-6 mb-3">
-
-                    <strong>
-                        Kondisi Rumah
-                    </strong>
-
-                    <div>
-                        {{ $pengajuanBantuan->kondisi_rumah }}
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-6 mb-3">
-
-                    <strong>
-                        Sumber Listrik
-                    </strong>
-
-                    <div>
-                        {{ $pengajuanBantuan->sumber_listrik ?? '-' }}
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-6 mb-3">
-
-                    <strong>
-                        Daya Listrik
-                    </strong>
-
-                    <div>
-                        {{ $pengajuanBantuan->daya_listrik ?? '-' }}
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
 
-    </div>
+            {{-- ALAMAT --}}
+            <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-header bg-white py-3">
+
+                    <h5 class="mb-0 fw-bold">
+                        Alamat Pemohon
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <label class="text-muted small">
+                            Alamat
+                        </label>
+
+                        <div>
+                            {{ $pengajuanBantuan->alamat }}
+                        </div>
+
+                    </div>
 
 
-    {{-- ALASAN --}}
-    <div class="card border-0 shadow-sm mb-4">
+                    <div class="row g-3">
 
-        <div class="card-header bg-white">
+                        <div class="col-md-6">
 
-            <h5 class="fw-bold mb-0">
-                Alasan Pengajuan
-            </h5>
+                            <label class="text-muted small">
+                                Desa/Kelurahan
+                            </label>
 
-        </div>
+                            <div>
+                                {{ $pengajuanBantuan->desa_kelurahan }}
+                            </div>
 
-        <div class="card-body">
-
-            {{ $pengajuanBantuan->alasan_pengajuan }}
-
-        </div>
-
-    </div>
+                        </div>
 
 
-    {{-- DOKUMEN --}}
-    <div class="card border-0 shadow-sm mb-4">
+                        <div class="col-md-6">
 
-        <div class="card-header bg-white">
+                            <label class="text-muted small">
+                                Kecamatan
+                            </label>
 
-            <h5 class="fw-bold mb-0">
-                Dokumen Persyaratan
-            </h5>
+                            <div>
+                                {{ $pengajuanBantuan->kecamatan }}
+                            </div>
 
-        </div>
+                        </div>
 
-        <div class="card-body">
 
-            <div class="row">
+                        <div class="col-md-6">
 
-                {{-- KTP --}}
-                <div class="col-md-4 mb-3">
+                            <label class="text-muted small">
+                                Kabupaten/Kota
+                            </label>
 
-                    <strong>
-                        KTP
-                    </strong>
+                            <div>
+                                {{ $pengajuanBantuan->kabupaten_kota }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Provinsi
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->provinsi }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {{-- KONDISI RUMAH --}}
+            <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-header bg-white py-3">
+
+                    <h5 class="mb-0 fw-bold">
+                        Kondisi Rumah & Listrik
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Status Kepemilikan Rumah
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->status_kepemilikan_rumah }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Kondisi Rumah
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->kondisi_rumah }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Sumber Listrik
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->sumber_listrik }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Daya Listrik
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->daya_listrik ?: '-' }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Penghasilan
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->penghasilan ?: '-' }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Jumlah Anggota Keluarga
+                            </label>
+
+                            <div>
+                                {{ $pengajuanBantuan->jumlah_anggota_keluarga ?: '-' }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {{-- ALASAN --}}
+            <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-header bg-white py-3">
+
+                    <h5 class="mb-0 fw-bold">
+                        Alasan Pengajuan
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <p class="mb-0">
+                        {{ $pengajuanBantuan->alasan_pengajuan }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        {{-- DOKUMEN --}}
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold">
+                    Dokumen Pendukung
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="d-flex flex-column gap-2">
 
                     @if($pengajuanBantuan->dokumen_ktp)
 
-                        <div class="mt-2">
-
-                            <a
-                                href="{{ asset('storage/' . $pengajuanBantuan->dokumen_ktp) }}"
-                                target="_blank"
-                                class="btn btn-outline-primary btn-sm"
-                            >
-                                Lihat Dokumen
-                            </a>
-
-                        </div>
+                        <a
+                            href="{{ route('admin.pengajuan-bantuan.dokumen', [$pengajuanBantuan, 'ktp']) }}"
+                            target="_blank"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            Lihat Dokumen KTP
+                        </a>
 
                     @else
 
-                        <div class="text-muted mt-2">
-                            Tidak tersedia
-                        </div>
+                        <span class="text-muted">
+                            Dokumen KTP tidak tersedia.
+                        </span>
 
                     @endif
 
-                </div>
-
-
-                {{-- KK --}}
-                <div class="col-md-4 mb-3">
-
-                    <strong>
-                        KK
-                    </strong>
 
                     @if($pengajuanBantuan->dokumen_kk)
 
-                        <div class="mt-2">
-
-                            <a
-                                href="{{ asset('storage/' . $pengajuanBantuan->dokumen_kk) }}"
-                                target="_blank"
-                                class="btn btn-outline-primary btn-sm"
-                            >
-                                Lihat Dokumen
-                            </a>
-
-                        </div>
+                        <a
+                            href="{{ route('admin.pengajuan-bantuan.dokumen', [$pengajuanBantuan, 'kk']) }}"
+                            target="_blank"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            Lihat Dokumen KK
+                        </a>
 
                     @else
 
-                        <div class="text-muted mt-2">
-                            Tidak tersedia
-                        </div>
+                        <span class="text-muted">
+                            Dokumen KK tidak tersedia.
+                        </span>
 
                     @endif
 
-                </div>
-
-
-                {{-- DOKUMEN PENDUKUNG --}}
-                <div class="col-md-4 mb-3">
-
-                    <strong>
-                        Dokumen Pendukung
-                    </strong>
 
                     @if($pengajuanBantuan->dokumen_pendukung)
 
-                        <div class="mt-2">
-
-                            <a
-                                href="{{ asset('storage/' . $pengajuanBantuan->dokumen_pendukung) }}"
-                                target="_blank"
-                                class="btn btn-outline-primary btn-sm"
-                            >
-                                Lihat Dokumen
-                            </a>
-
-                        </div>
+                        <a
+                            href="{{ route('admin.pengajuan-bantuan.dokumen', [$pengajuanBantuan, 'pendukung']) }}"
+                            target="_blank"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            Lihat Dokumen Pendukung
+                        </a>
 
                     @else
 
-                        <div class="text-muted mt-2">
-                            Tidak tersedia
-                        </div>
+                        <span class="text-muted">
+                            Tidak ada dokumen pendukung tambahan.
+                        </span>
 
                     @endif
 
@@ -565,163 +542,116 @@
 
         </div>
 
-    </div>
 
+        {{-- SIDEBAR VERIFIKASI --}}
+        <div class="col-lg-4">
 
-    {{-- VERIFIKASI --}}
-    <div class="card border-0 shadow-sm mb-4">
-
-        <div class="card-header bg-white">
-
-            <h5 class="fw-bold mb-0">
-                Verifikasi Pengajuan
-            </h5>
-
-        </div>
-
-        <div class="card-body">
-
-            <form
-                action="{{ route(
-                    'admin.pengajuan-bantuan.verifikasi',
-                    $pengajuanBantuan
-                ) }}"
-                method="POST"
+            <div
+                class="card border-0 shadow-sm"
+                style="position: sticky; top: 20px;"
             >
 
-                @csrf
+                <div class="card-header bg-primary text-white py-3">
 
-                @method('PUT')
-
-
-                {{-- STATUS --}}
-                <div class="mb-3">
-
-                    <label
-                        for="status"
-                        class="form-label fw-semibold"
-                    >
-                        Ubah Status
-                    </label>
-
-                    <select
-                        name="status"
-                        id="status"
-                        class="form-select"
-                        required
-                    >
-
-                        <option value="">
-                            -- Pilih Status --
-                        </option>
-
-                        <option
-                            value="Diverifikasi"
-                            {{ $pengajuanBantuan->status === 'Diverifikasi' ? 'selected' : '' }}
-                        >
-                            Diverifikasi
-                        </option>
-
-                        <option
-                            value="Disetujui"
-                            {{ $pengajuanBantuan->status === 'Disetujui' ? 'selected' : '' }}
-                        >
-                            Disetujui
-                        </option>
-
-                        <option
-                            value="Ditolak"
-                            {{ $pengajuanBantuan->status === 'Ditolak' ? 'selected' : '' }}
-                        >
-                            Ditolak
-                        </option>
-
-                    </select>
+                    <h5 class="mb-0 fw-bold">
+                        Verifikasi Pengajuan
+                    </h5>
 
                 </div>
 
+                <div class="card-body">
 
-                {{-- KETERANGAN --}}
-                <div class="mb-3">
-
-                    <label
-                        for="keterangan"
-                        class="form-label fw-semibold"
+                    <form
+                        action="{{ route('admin.pengajuan-bantuan.verifikasi', $pengajuanBantuan) }}"
+                        method="POST"
                     >
-                        Keterangan
-                    </label>
 
-                    <textarea
-                        name="keterangan"
-                        id="keterangan"
-                        class="form-control"
-                        rows="4"
-                        placeholder="Masukkan keterangan verifikasi..."
-                    ></textarea>
+                        @csrf
+                        @method('PUT')
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="status"
+                                class="form-label fw-semibold"
+                            >
+                                Status Pengajuan
+                            </label>
+
+                            <select
+                                name="status"
+                                id="status"
+                                class="form-select"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    disabled
+                                    {{ !in_array($pengajuanBantuan->status, ['Diverifikasi', 'Disetujui', 'Ditolak']) ? 'selected' : '' }}
+                                >
+                                    Pilih Status
+                                </option>
+
+                                <option
+                                    value="Diverifikasi"
+                                    {{ $pengajuanBantuan->status === 'Diverifikasi' ? 'selected' : '' }}
+                                >
+                                    Diverifikasi
+                                </option>
+
+                                <option
+                                    value="Disetujui"
+                                    {{ $pengajuanBantuan->status === 'Disetujui' ? 'selected' : '' }}
+                                >
+                                    Disetujui
+                                </option>
+
+                                <option
+                                    value="Ditolak"
+                                    {{ $pengajuanBantuan->status === 'Ditolak' ? 'selected' : '' }}
+                                >
+                                    Ditolak
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="keterangan"
+                                class="form-label fw-semibold"
+                            >
+                                Catatan Petugas
+                            </label>
+
+                            <textarea
+                                name="keterangan"
+                                id="keterangan"
+                                rows="5"
+                                class="form-control"
+                                placeholder="Masukkan catatan atau keterangan..."
+                            >{{ old('keterangan', $pengajuanBantuan->catatan_petugas) }}</textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Simpan Verifikasi
+                        </button>
+
+                    </form>
 
                 </div>
 
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Simpan Verifikasi
-                </button>
-
-            </form>
-
-        </div>
-
-    </div>
-
-
-    {{-- RIWAYAT STATUS --}}
-    <div class="card border-0 shadow-sm">
-
-        <div class="card-header bg-white">
-
-            <h5 class="fw-bold mb-0">
-                Riwayat Status Pengajuan
-            </h5>
-
-        </div>
-
-        <div class="card-body">
-
-            @forelse($pengajuanBantuan->riwayat as $riwayat)
-
-                <div class="border-start border-3 ps-3 mb-4">
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-                        <strong>
-                            {{ $riwayat->status }}
-                        </strong>
-
-                        <small class="text-muted">
-                            {{ $riwayat->created_at->format('d/m/Y H:i') }}
-                        </small>
-
-                    </div>
-
-                    @if($riwayat->keterangan)
-
-                        <p class="mb-0 mt-2 text-muted">
-                            {{ $riwayat->keterangan }}
-                        </p>
-
-                    @endif
-
-                </div>
-
-            @empty
-
-                <p class="text-muted mb-0">
-                    Belum ada riwayat perubahan status.
-                </p>
-
-            @endforelse
+            </div>
 
         </div>
 

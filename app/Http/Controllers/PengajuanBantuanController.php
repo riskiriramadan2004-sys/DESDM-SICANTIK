@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PengajuanBantuan;
+use App\Models\PengajuanLayanan;
 use Illuminate\Http\Request;
 
 class PengajuanBantuanController extends Controller
@@ -30,10 +31,12 @@ class PengajuanBantuanController extends Controller
             'kecamatan' => 'required|string|max:255',
             'kabupaten_kota' => 'required|string|max:255',
             'provinsi' => 'required|string|max:255',
+
             'status_kepemilikan_rumah' => 'required|string|max:255',
             'kondisi_rumah' => 'required|string|max:255',
             'sumber_listrik' => 'required|string|max:255',
             'daya_listrik' => 'required|string|max:255',
+
             'penghasilan' => 'nullable|string|max:255',
             'jumlah_anggota_keluarga' => 'nullable|integer',
             'alasan_pengajuan' => 'required|string',
@@ -44,43 +47,46 @@ class PengajuanBantuanController extends Controller
         ]);
 
         /*
-         * Upload dokumen
+         * Upload dokumen KTP
          */
         if ($request->hasFile('dokumen_ktp')) {
             $validated['dokumen_ktp'] =
                 $request->file('dokumen_ktp')
-                    ->store('dokumen-pengajuan');
-        }
-
-        if ($request->hasFile('dokumen_kk')) {
-            $validated['dokumen_kk'] =
-                $request->file('dokumen_kk')
-                    ->store('dokumen-pengajuan');
-        }
-
-        if ($request->hasFile('dokumen_pendukung')) {
-            $validated['dokumen_pendukung'] =
-                $request->file('dokumen_pendukung')
-                    ->store('dokumen-pengajuan');
+                    ->store('dokumen-pengajuan','public');
         }
 
         /*
-         * Status awal
+         * Upload dokumen KK
+         */
+        if ($request->hasFile('dokumen_kk')) {
+            $validated['dokumen_kk'] =
+                $request->file('dokumen_kk')
+                    ->store('dokumen-pengajuan','public');
+        }
+
+        /*
+         * Upload dokumen pendukung
+         */
+        if ($request->hasFile('dokumen_pendukung')) {
+            $validated['dokumen_pendukung'] =
+                $request->file('dokumen_pendukung')
+                    ->store('dokumen-pengajuan','public');
+        }
+
+        /*
+         * Status awal pengajuan bantuan
          */
         $validated['status'] = 'Menunggu Verifikasi';
 
         /*
-         * Simpan pengajuan
+         * Simpan pengajuan bantuan
          */
         $pengajuan = PengajuanBantuan::create($validated);
 
-        return redirect()
-            ->route('pengajuan-bantuan.cek-status')
-            ->with(
-                'success',
-                'Pengajuan berhasil dikirim. Nomor pengajuan Anda adalah '
-                . $pengajuan->nomor_pengajuan
-            );
+        return view(
+            'pengajuan-bantuan.berhasil',
+            compact('pengajuan')
+        );
     }
 
     /**
@@ -93,6 +99,10 @@ class PengajuanBantuanController extends Controller
 
     /**
      * Menampilkan hasil cek status.
+     *
+     * Cek Status dapat digunakan untuk:
+     * - Bantuan Listrik
+     * - Layanan Online
      */
     public function hasilStatus(Request $request)
     {
@@ -100,13 +110,49 @@ class PengajuanBantuanController extends Controller
             'nomor_pengajuan' => 'required|string',
         ]);
 
+        $nomorPengajuan = trim($request->nomor_pengajuan);
+
+        /*
+         * ==========================================
+         * LAYANAN ONLINE
+         * ==========================================
+         *
+         * Nomor Layanan Online menggunakan format:
+         * LO-XXXXXXXX
+         */
+        if (str_starts_with(strtoupper($nomorPengajuan), 'LO-')) {
+
+            $pengajuanLayanan = PengajuanLayanan::with(
+                'layanan.bidangLayanan'
+            )->where(
+                'nomor_pengajuan',
+                $nomorPengajuan
+            )->first();
+
+            return view(
+                'pengajuan-bantuan.hasil-status',
+                compact('pengajuanLayanan')
+            );
+        }
+
+        /*
+         * ==========================================
+         * BANTUAN LISTRIK
+         * ==========================================
+         *
+         * Nomor selain LO- dianggap sebagai
+         * nomor pengajuan Bantuan Listrik.
+         */
         $pengajuan = PengajuanBantuan::where(
             'nomor_pengajuan',
-            $request->nomor_pengajuan
+            $nomorPengajuan
         )->first();
 
         /*
          * Ambil riwayat/status terbaru.
+         *
+         * Bagian ini tetap digunakan untuk
+         * pengajuan Bantuan Listrik.
          */
         $riwayatTerbaru = null;
 
