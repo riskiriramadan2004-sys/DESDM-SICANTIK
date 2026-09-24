@@ -2,55 +2,62 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Controller publik
+// =====================================================
+// CONTROLLER PUBLIK
+// =====================================================
+
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LayananOnlineController;
 use App\Http\Controllers\PengajuanBantuanController;
 use App\Http\Controllers\PengajuanLayananController;
+use App\Http\Controllers\PengaduanController;
 
-// Controller admin
+// =====================================================
+// CONTROLLER ADMIN
+// =====================================================
+
 use App\Http\Controllers\Admin\InformationController as AdminInformationController;
 use App\Http\Controllers\Admin\PengajuanBantuanController as AdminPengajuanBantuanController;
 use App\Http\Controllers\Admin\PengajuanLayananController as AdminPengajuanLayananController;
+use App\Http\Controllers\Admin\PengaduanController as AdminPengaduanController;
+
+// BARU - TAHAP 4
+use App\Http\Controllers\Admin\MonitoringController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Halaman Utama
-|--------------------------------------------------------------------------
-*/
+// =====================================================
+// HALAMAN UTAMA
+// =====================================================
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-/*
-|--------------------------------------------------------------------------
-| Informasi Publik
-|--------------------------------------------------------------------------
-*/
+// =====================================================
+// INFORMASI PUBLIK
+// =====================================================
 
-Route::get('/informasi', [InformationController::class, 'index'])
-    ->name('information.index');
+Route::get('/informasi', [
+    InformationController::class,
+    'index'
+])->name('information.index');
 
-Route::get('/informasi/{information}', [InformationController::class, 'show'])
-    ->name('information.show');
+Route::get('/informasi/{information}', [
+    InformationController::class,
+    'show'
+])->name('information.show');
 
 
-/*
-|--------------------------------------------------------------------------
-| Admin
-|--------------------------------------------------------------------------
-*/
+// =====================================================
+// ADMIN
+// =====================================================
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Informasi
-    |--------------------------------------------------------------------------
-    */
+    // -------------------------------------------------
+    // Informasi
+    // -------------------------------------------------
 
     Route::resource(
         'informasi',
@@ -58,11 +65,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     );
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Pengajuan Bantuan
-    |--------------------------------------------------------------------------
-    */
+    // -------------------------------------------------
+    // Pengajuan Bantuan Listrik
+    // -------------------------------------------------
 
     Route::get('/pengajuan-bantuan', [
         AdminPengajuanBantuanController::class,
@@ -85,11 +90,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     ])->name('pengajuan-bantuan.verifikasi');
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Pengajuan Layanan Online
-    |--------------------------------------------------------------------------
-    */
+    // -------------------------------------------------
+    // Pengajuan Layanan Online
+    // -------------------------------------------------
 
     Route::get('/pengajuan-layanan', [
         AdminPengajuanLayananController::class,
@@ -105,14 +108,82 @@ Route::prefix('admin')->name('admin.')->group(function () {
         AdminPengajuanLayananController::class,
         'verifikasi'
     ])->name('pengajuan-layanan.verifikasi');
+
+
+    // -------------------------------------------------
+    // Pengaduan Masyarakat - ADMIN
+    // -------------------------------------------------
+
+    // Daftar pengaduan
+    Route::get('/pengaduan', [
+        AdminPengaduanController::class,
+        'index'
+    ])->name('pengaduan.index');
+
+    // Detail pengaduan
+    Route::get('/pengaduan/{pengaduan}', [
+        AdminPengaduanController::class,
+        'show'
+    ])->name('pengaduan.show');
+
+    // Update status dan tanggapan
+    Route::put('/pengaduan/{pengaduan}', [
+        AdminPengaduanController::class,
+        'update'
+    ])->name('pengaduan.update');
+
+    // Kirim hasil pengaduan melalui WhatsApp
+    Route::get('/pengaduan/{pengaduan}/whatsapp', [
+        AdminPengaduanController::class,
+        'whatsapp'
+    ])->name('pengaduan.whatsapp');
+
+
+    // =================================================
+    // MONITORING - TAHAP 4
+    // =================================================
+
+    Route::get('/monitoring', [
+        MonitoringController::class,
+        'index'
+    ])->name('monitoring.index');
+
+
+    // =================================================
+    // MONITORING PENGAJUAN BANTUAN - TAHAP 4
+    // =================================================
+
+    Route::get('/monitoring/pengajuan-bantuan', [
+        MonitoringController::class,
+        'bantuan'
+    ])->name('monitoring.bantuan');
+
+
+    // =================================================
+    // MONITORING PENGAJUAN LAYANAN ONLINE - TAHAP 4
+    // =================================================
+
+    Route::get('/monitoring/layanan-online', [
+        MonitoringController::class,
+        'layanan'
+    ])->name('monitoring.layanan');
+
+
+    // =================================================
+    // MONITORING PENGADUAN MASYARAKAT - TAHAP 4
+    // =================================================
+
+    Route::get('/monitoring/pengaduan', [
+        MonitoringController::class,
+        'pengaduan'
+    ])->name('monitoring.pengaduan');
+
 });
 
 
-/*
-|--------------------------------------------------------------------------
-| Pengajuan Bantuan Listrik - Publik
-|--------------------------------------------------------------------------
-*/
+// =====================================================
+// PENGAJUAN BANTUAN LISTRIK - PUBLIK
+// =====================================================
 
 Route::get('/pengajuan-bantuan', [
     PengajuanBantuanController::class,
@@ -125,11 +196,9 @@ Route::post('/pengajuan-bantuan', [
 ])->name('pengajuan-bantuan.store');
 
 
-/*
-|--------------------------------------------------------------------------
-| Cek Status
-|--------------------------------------------------------------------------
-*/
+// =====================================================
+// CEK STATUS PENGAJUAN BANTUAN
+// =====================================================
 
 Route::get('/cek-status', [
     PengajuanBantuanController::class,
@@ -142,11 +211,9 @@ Route::post('/cek-status', [
 ])->name('pengajuan-bantuan.hasil-status');
 
 
-/*
-|--------------------------------------------------------------------------
-| Layanan Online
-|--------------------------------------------------------------------------
-*/
+// =====================================================
+// LAYANAN ONLINE
+// =====================================================
 
 // Halaman utama layanan online
 Route::get('/layanan-online', [
@@ -154,25 +221,43 @@ Route::get('/layanan-online', [
     'index'
 ])->name('layanan-online.index');
 
-// Pengajuan layanan
-Route::get('/layanan-online/{layanan}/ajukan', [
-    PengajuanLayananController::class,
-    'create'
-])->name('layanan-online.pengajuan.create');
-
-Route::post('/layanan-online/{layanan}/ajukan', [
-    PengajuanLayananController::class,
-    'store'
-])->name('layanan-online.pengajuan.store');
-
 // Halaman bidang layanan
 Route::get('/layanan-online/{bidangLayanan}', [
     LayananOnlineController::class,
     'show'
 ])->name('layanan-online.show');
 
-// Pengajuan berhasil
+// Form pengajuan layanan
+Route::get('/layanan-online/{layanan}/ajukan', [
+    PengajuanLayananController::class,
+    'create'
+])->name('layanan-online.pengajuan.create');
+
+// Submit pengajuan layanan
+Route::post('/layanan-online/{layanan}/ajukan', [
+    PengajuanLayananController::class,
+    'store'
+])->name('layanan-online.pengajuan.store');
+
+// Halaman pengajuan berhasil
 Route::get('/layanan-online/pengajuan/{pengajuanLayanan}/berhasil', [
     PengajuanLayananController::class,
     'berhasil'
 ])->name('layanan-online.pengajuan.berhasil');
+
+
+// =====================================================
+// PENGADUAN MASYARAKAT - PUBLIK
+// =====================================================
+
+// Form pengaduan
+Route::get('/pengaduan', [
+    PengaduanController::class,
+    'create'
+])->name('pengaduan.create');
+
+// Submit pengaduan
+Route::post('/pengaduan', [
+    PengaduanController::class,
+    'store'
+])->name('pengaduan.store');

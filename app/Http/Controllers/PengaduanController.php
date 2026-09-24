@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PengaduanController extends Controller
 {
@@ -80,7 +79,10 @@ class PengaduanController extends Controller
             'isi_pengaduan' => $request->isi_pengaduan,
             'foto' => $foto,
             'dokumen' => $dokumen,
-            'status' => 'Menunggu Diproses',
+
+            // Status awal sesuai database
+            'status' => 'Baru',
+
             'tanggapan' => null,
         ]);
 
