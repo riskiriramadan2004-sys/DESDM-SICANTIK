@@ -53,12 +53,12 @@ class PengajuanBantuanController extends Controller
         }
 
         // Cek apakah file benar-benar ada
-        if (!Storage::disk('local')->exists($dokumen)) {
+        if (!Storage::disk('public')->exists($dokumen)) {
             abort(404, 'File dokumen tidak ditemukan.');
         }
 
         // Tampilkan file langsung di browser
-        return Storage::disk('local')->response($dokumen);
+        return Storage::disk('public')->response($dokumen);
     }
 
     /**
