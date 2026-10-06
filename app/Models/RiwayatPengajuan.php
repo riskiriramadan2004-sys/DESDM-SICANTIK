@@ -12,7 +12,7 @@ class RiwayatPengajuan extends Model
     protected $fillable = [
         'pengajuan_bantuan_id',
         'status',
-        'catatan',
+        'keterangan',
     ];
 
     public function pengajuanBantuan(): BelongsTo
