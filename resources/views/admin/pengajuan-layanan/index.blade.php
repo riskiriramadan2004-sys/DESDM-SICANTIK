@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,55 @@
             color: #1f2937;
         }
 
+        .navbar {
+            background: #123c69;
+            color: white;
+            padding: 15px 0;
+        }
+
+        .navbar-container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-label {
+            color: white;
+            font-size: 14px;
+        }
+
+        .logout-button {
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+            padding: 7px 13px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background: white;
+            color: #123c69;
+        }
+
         .container {
             width: 95%;
             max-width: 1200px;
@@ -28,12 +78,17 @@
             background: white;
             border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
         }
 
         h1 {
             margin-top: 0;
             color: #123c69;
+        }
+
+        .description {
+            color: #6b7280;
+            margin-bottom: 20px;
         }
 
         .table-wrapper {
@@ -110,130 +165,220 @@
         .pagination {
             margin-top: 25px;
         }
+
+        @media (max-width: 700px) {
+
+            .navbar-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .navbar-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+        }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+    {{-- NAVBAR --}}
+    <nav class="navbar">
 
-    <div class="card">
+        <div class="navbar-container">
 
-        <h1>Pengajuan Layanan Online</h1>
+            <a
+                href="{{ url('/') }}"
+                class="brand"
+            >
+                SICANTIK
+            </a>
 
-        <p>
-            Daftar pengajuan layanan yang masuk dari masyarakat.
-        </p>
+            <div class="navbar-right">
 
-        <div class="table-wrapper">
+                <span class="admin-label">
+                    Admin Layanan
+                </span>
 
-            <table>
+                {{-- LOGOUT --}}
+                <form
+                    method="POST"
+                    action="{{ route('admin.logout') }}"
+                    style="margin: 0;"
+                >
 
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nomor Pengajuan</th>
-                        <th>Pemohon</th>
-                        <th>Layanan</th>
-                        <th>Bidang</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
+                    @csrf
 
-                <tbody>
+                    <button
+                        type="submit"
+                        class="logout-button"
+                    >
+                        Logout
+                    </button>
 
-                @forelse ($pengajuanLayanans as $pengajuan)
+                </form>
 
-                    @php
-                        $statusClass = match ($pengajuan->status) {
-                            'Menunggu Verifikasi', 'menunggu_verifikasi'
-                                => 'menunggu',
-
-                            'Diverifikasi'
-                                => 'diverifikasi',
-
-                            'Disetujui'
-                                => 'disetujui',
-
-                            'Ditolak'
-                                => 'ditolak',
-
-                            default
-                                => 'menunggu',
-                        };
-                    @endphp
-
-                    <tr>
-
-                        <td>
-                            {{ $pengajuanLayanans->firstItem() + $loop->index }}
-                        </td>
-
-                        <td>
-                            <strong>
-                                {{ $pengajuan->nomor_pengajuan }}
-                            </strong>
-                        </td>
-
-                        <td>
-                            {{ $pengajuan->nama_lengkap }}
-
-                            <br>
-
-                            <small>
-                                NIK: {{ $pengajuan->nik }}
-                            </small>
-                        </td>
-
-                        <td>
-                            {{ $pengajuan->layanan->nama ?? '-' }}
-                        </td>
-
-                        <td>
-                            {{ $pengajuan->layanan->bidangLayanan->nama ?? '-' }}
-                        </td>
-
-                        <td>
-                            <span class="badge {{ $statusClass }}">
-                                {{ $pengajuan->status }}
-                            </span>
-                        </td>
-
-                        <td>
-                            <a
-                                href="{{ route('admin.pengajuan-layanan.show', $pengajuan) }}"
-                                class="btn"
-                            >
-                                Detail
-                            </a>
-                        </td>
-
-                    </tr>
-
-                @empty
-
-                    <tr>
-                        <td colspan="7" class="empty">
-                            Belum ada pengajuan layanan.
-                        </td>
-                    </tr>
-
-                @endforelse
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
-        <div class="pagination">
-            {{ $pengajuanLayanans->links() }}
+    </nav>
+
+
+    {{-- CONTENT --}}
+    <div class="container">
+
+        <div class="card">
+
+            <h1>
+                Pengajuan Layanan Online
+            </h1>
+
+            <p class="description">
+                Daftar pengajuan layanan yang masuk dari masyarakat.
+            </p>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>No</th>
+                            <th>Nomor Pengajuan</th>
+                            <th>Pemohon</th>
+                            <th>Layanan</th>
+                            <th>Bidang</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @forelse ($pengajuanLayanans as $pengajuan)
+
+                        @php
+
+                            $statusClass = match ($pengajuan->status) {
+
+                                'Menunggu Verifikasi',
+                                'menunggu_verifikasi'
+                                    => 'menunggu',
+
+                                'Diverifikasi'
+                                    => 'diverifikasi',
+
+                                'Disetujui'
+                                    => 'disetujui',
+
+                                'Ditolak'
+                                    => 'ditolak',
+
+                                default
+                                    => 'menunggu',
+
+                            };
+
+                        @endphp
+
+                        <tr>
+
+                            <td>
+                                {{ $pengajuanLayanans->firstItem() + $loop->index }}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    {{ $pengajuan->nomor_pengajuan }}
+                                </strong>
+                            </td>
+
+                            <td>
+
+                                {{ $pengajuan->nama_lengkap }}
+
+                                <br>
+
+                                <small>
+                                    NIK: {{ $pengajuan->nik }}
+                                </small>
+
+                            </td>
+
+                            <td>
+                                {{ $pengajuan->layanan->nama ?? '-' }}
+                            </td>
+
+                            <td>
+                                {{ $pengajuan->layanan->bidangLayanan->nama ?? '-' }}
+                            </td>
+
+                            <td>
+
+                                <span class="badge {{ $statusClass }}">
+                                    {{ $pengajuan->status }}
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{{ route('admin.pengajuan-layanan.show', $pengajuan) }}"
+                                    class="btn"
+                                >
+                                    Detail
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    @empty
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="empty"
+                            >
+                                Belum ada pengajuan layanan.
+                            </td>
+
+                        </tr>
+
+                    @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="pagination">
+
+                {{ $pengajuanLayanans->links() }}
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>

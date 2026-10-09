@@ -18,27 +18,100 @@
             color: #212529;
         }
 
+        /* ==============================
+           HEADER ADMIN
+        ============================== */
+
         .header {
             background: #0d6efd;
             color: white;
             padding: 20px 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
-        .header h1 {
+        .header-left h1 {
             margin: 0;
             font-size: 25px;
         }
 
-        .header p {
+        .header-left p {
             margin: 6px 0 0;
             opacity: .9;
         }
+
+        /* ==============================
+           BAGIAN KANAN HEADER
+        ============================== */
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-info {
+            text-align: right;
+        }
+
+        .admin-info small {
+            display: block;
+            font-size: 11px;
+            opacity: .8;
+            margin-bottom: 3px;
+        }
+
+        .admin-info strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           TOMBOL LOGOUT
+        ============================== */
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button {
+            border: 1px solid rgba(255,255,255,.8);
+            background: white;
+            color: #0d6efd;
+
+            padding: 10px 16px;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .logout-button:hover {
+            background: #eaf2ff;
+            transform: translateY(-1px);
+        }
+
+        /* ==============================
+           CONTAINER
+        ============================== */
 
         .container {
             width: 95%;
             max-width: 1400px;
             margin: 30px auto;
         }
+
+        /* ==============================
+           CARD
+        ============================== */
 
         .card {
             background: white;
@@ -47,6 +120,10 @@
             box-shadow: 0 3px 15px rgba(0,0,0,.08);
         }
 
+        /* ==============================
+           ALERT
+        ============================== */
+
         .alert {
             padding: 14px 18px;
             background: #d1e7dd;
@@ -54,6 +131,10 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
+
+        /* ==============================
+           TABLE
+        ============================== */
 
         .table-wrapper {
             overflow-x: auto;
@@ -83,6 +164,10 @@
             background: #f8f9fa;
         }
 
+        /* ==============================
+           STATUS
+        ============================== */
+
         .badge {
             display: inline-block;
             padding: 6px 11px;
@@ -106,6 +191,10 @@
             color: #0f5132;
         }
 
+        /* ==============================
+           BUTTON DETAIL
+        ============================== */
+
         .btn {
             display: inline-block;
             padding: 8px 13px;
@@ -122,6 +211,10 @@
             background: #0b5ed7;
         }
 
+        /* ==============================
+           EMPTY
+        ============================== */
+
         .empty {
             text-align: center;
             padding: 50px 20px;
@@ -131,23 +224,108 @@
         .pagination {
             margin-top: 20px;
         }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 700px) {
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .admin-info {
+                text-align: left;
+            }
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- =====================================
+         HEADER ADMIN PENGADUAN
+    ====================================== -->
+
     <div class="header">
-        <h1>Pengaduan Masyarakat</h1>
-        <p>Daftar pengaduan yang masuk dari masyarakat</p>
+
+        <div class="header-left">
+
+            <h1>
+                Pengaduan Masyarakat
+            </h1>
+
+            <p>
+                Daftar pengaduan yang masuk dari masyarakat
+            </p>
+
+        </div>
+
+
+        <div class="header-right">
+
+            <!-- Nama Admin -->
+
+            <div class="admin-info">
+
+                <small>
+                    LOGIN SEBAGAI
+                </small>
+
+                <strong>
+                    {{ Auth::user()->name ?? 'Admin Pengaduan' }}
+                </strong>
+
+            </div>
+
+
+            <!-- Logout -->
+
+            <form
+                action="{{ route('admin.logout') }}"
+                method="POST"
+                class="logout-form"
+            >
+
+                @csrf
+
+                <button
+                    type="submit"
+                    class="logout-button"
+                >
+                    ⏻ Keluar
+                </button>
+
+            </form>
+
+        </div>
+
     </div>
+
+
+    <!-- =====================================
+         CONTENT
+    ====================================== -->
 
     <div class="container">
 
         @if(session('success'))
+
             <div class="alert">
+
                 {{ session('success') }}
+
             </div>
+
         @endif
+
 
         <div class="card">
 
@@ -158,18 +336,47 @@
                     <table>
 
                         <thead>
+
                             <tr>
+
                                 <th>No</th>
-                                <th>Nomor Pengaduan</th>
-                                <th>Nama</th>
-                                <th>No. HP</th>
-                                <th>Kategori</th>
-                                <th>Judul</th>
-                                <th>Status</th>
-                                <th>Tanggal</th>
-                                <th>Aksi</th>
+
+                                <th>
+                                    Nomor Pengaduan
+                                </th>
+
+                                <th>
+                                    Nama
+                                </th>
+
+                                <th>
+                                    No. HP
+                                </th>
+
+                                <th>
+                                    Kategori
+                                </th>
+
+                                <th>
+                                    Judul
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Tanggal
+                                </th>
+
+                                <th>
+                                    Aksi
+                                </th>
+
                             </tr>
+
                         </thead>
+
 
                         <tbody>
 
@@ -182,9 +389,11 @@
                                     </td>
 
                                     <td>
+
                                         <strong>
                                             {{ $item->nomor_pengaduan }}
                                         </strong>
+
                                     </td>
 
                                     <td>
@@ -258,15 +467,21 @@
 
                 </div>
 
+
                 <div class="pagination">
+
                     {{ $pengaduans->links() }}
+
                 </div>
+
 
             @else
 
                 <div class="empty">
 
-                    <h3>Belum Ada Pengaduan</h3>
+                    <h3>
+                        Belum Ada Pengaduan
+                    </h3>
 
                     <p>
                         Belum ada pengaduan masyarakat yang masuk.
