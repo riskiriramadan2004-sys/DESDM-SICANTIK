@@ -25,12 +25,33 @@
             ADMIN SICANTIK
         </span>
 
-        <a
-            href="{{ route('information.index') }}"
-            class="btn btn-outline-light btn-sm"
-        >
-            Lihat Website
-        </a>
+        <div class="d-flex gap-2">
+
+            <a
+                href="{{ route('information.index') }}"
+                class="btn btn-outline-light btn-sm"
+            >
+                Lihat Website
+            </a>
+
+            <form
+                action="{{ route('admin.logout') }}"
+                method="POST"
+                class="d-inline"
+            >
+
+                @csrf
+
+                <button
+                    type="submit"
+                    class="btn btn-outline-light btn-sm"
+                >
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
 </nav>

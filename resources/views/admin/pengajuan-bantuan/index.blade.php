@@ -16,7 +16,10 @@
 
 <body class="bg-light">
 
-    {{-- NAVBAR --}}
+    {{-- =====================================================
+         NAVBAR
+    ====================================================== --}}
+
     <nav class="navbar navbar-dark bg-dark">
 
         <div class="container">
@@ -28,19 +31,45 @@
                 SICANTIK
             </a>
 
-            <span class="navbar-text text-white">
-                Admin / Pengelola
-            </span>
+            <div class="d-flex align-items-center gap-3">
+
+                <span class="navbar-text text-white">
+                    Admin Bantuan
+                </span>
+
+                {{-- LOGOUT --}}
+                <form
+                    method="POST"
+                    action="{{ route('admin.logout') }}"
+                    class="mb-0"
+                >
+
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="btn btn-outline-light btn-sm"
+                    >
+                        Logout
+                    </button>
+
+                </form>
+
+            </div>
 
         </div>
 
     </nav>
 
 
-    {{-- CONTENT --}}
+    {{-- =====================================================
+         CONTENT
+    ====================================================== --}}
+
     <div class="container py-5">
 
         {{-- HEADER --}}
+
         <div class="d-flex justify-content-between align-items-center mb-4">
 
             <div>
@@ -58,7 +87,10 @@
         </div>
 
 
-        {{-- ALERT SUCCESS --}}
+        {{-- =================================================
+             ALERT SUCCESS
+        ================================================== --}}
+
         @if(session('success'))
 
             <div class="alert alert-success alert-dismissible fade show">
@@ -76,7 +108,10 @@
         @endif
 
 
-        {{-- ALERT ERROR --}}
+        {{-- =================================================
+             ALERT ERROR
+        ================================================== --}}
+
         @if(session('error'))
 
             <div class="alert alert-danger alert-dismissible fade show">
@@ -94,7 +129,10 @@
         @endif
 
 
-        {{-- VALIDATION ERROR --}}
+        {{-- =================================================
+             VALIDATION ERROR
+        ================================================== --}}
+
         @if($errors->any())
 
             <div class="alert alert-danger">
@@ -116,7 +154,10 @@
         @endif
 
 
-        {{-- CARD TABLE --}}
+        {{-- =================================================
+             CARD TABLE
+        ================================================== --}}
+
         <div class="card border-0 shadow-sm">
 
             <div class="card-body">
@@ -169,12 +210,14 @@
                                 <tr>
 
                                     {{-- NOMOR --}}
+
                                     <td>
                                         {{ $pengajuan->firstItem() + $loop->index }}
                                     </td>
 
 
                                     {{-- NOMOR PENGAJUAN --}}
+
                                     <td>
 
                                         <strong>
@@ -185,24 +228,28 @@
 
 
                                     {{-- NAMA --}}
+
                                     <td>
                                         {{ $item->nama_lengkap }}
                                     </td>
 
 
                                     {{-- NIK --}}
+
                                     <td>
                                         {{ $item->nik }}
                                     </td>
 
 
                                     {{-- NOMOR HP --}}
+
                                     <td>
                                         {{ $item->nomor_hp }}
                                     </td>
 
 
                                     {{-- STATUS --}}
+
                                     <td>
 
                                         @if($item->status === 'Menunggu Verifikasi')
@@ -241,6 +288,7 @@
 
 
                                     {{-- AKSI --}}
+
                                     <td>
 
                                         <a
@@ -253,6 +301,7 @@
                                     </td>
 
                                 </tr>
+
 
                             @empty
 
@@ -289,7 +338,10 @@
                 </div>
 
 
-                {{-- PAGINATION --}}
+                {{-- =================================================
+                     PAGINATION
+                ================================================== --}}
+
                 @if($pengajuan->hasPages())
 
                     <div class="mt-4">
@@ -307,7 +359,10 @@
     </div>
 
 
-    {{-- BOOTSTRAP JS --}}
+    {{-- =====================================================
+         BOOTSTRAP JS
+    ====================================================== --}}
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
