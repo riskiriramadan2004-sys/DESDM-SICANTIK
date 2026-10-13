@@ -149,10 +149,45 @@ Route::prefix('admin')
         |--------------------------------------------------------------------------
         */
 
-        Route::resource(
-            'informasi',
-            AdminInformationController::class
-        );
+
+
+        // DATA KEPEGAWAIAN - KHUSUS ADMIN
+
+        Route::get('/informasi', [
+            AdminInformationController::class,
+            'index'
+        ])->name('informasi.index');
+
+        Route::get('/informasi/create', [
+            AdminInformationController::class,
+            'create'
+        ])->name('informasi.create');
+
+        Route::post('/informasi', [
+            AdminInformationController::class,
+            'store'
+        ])->name('informasi.store');
+
+        Route::post('/informasi/import', [
+            AdminInformationController::class,
+            'import'
+        ])->name('informasi.import');
+
+        Route::get('/informasi/{informasi}/edit', [
+            AdminInformationController::class,
+            'edit'
+        ])->name('informasi.edit');
+
+        Route::put('/informasi/{informasi}', [
+            AdminInformationController::class,
+            'update'
+        ])->name('informasi.update');
+
+        Route::delete('/informasi/{informasi}', [
+            AdminInformationController::class,
+            'destroy'
+        ])->name('informasi.destroy');
+
 
 
         /*

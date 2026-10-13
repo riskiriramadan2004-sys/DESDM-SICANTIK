@@ -590,14 +590,14 @@
             Monitoring Sistem
         </div>
 
+<a
+    href="{{ route('admin.informasi.index') }}"
+    class="menu-item"
+>
+    <span class="menu-icon">👥</span>
+    Data Kepegawaian
+</a>
 
-        <a
-            href="{{ route('admin.informasi.index') }}"
-            class="menu-item"
-        >
-            <span class="menu-icon">📰</span>
-            Monitoring Informasi
-        </a>
 
 
         <a
@@ -860,12 +860,11 @@
                         </div>
 
                         <h3>
-                            Informasi ESDM
+                            Data Kepegawaian ESDM
                         </h3>
 
                         <p>
-                            Memantau jumlah informasi dan berita yang
-                            dikelola oleh Admin Informasi.
+                            Memantau data pegawai yang dikelola secara internal.
                         </p>
 
                         <div class="monitor-number">
@@ -873,7 +872,7 @@
                         </div>
 
                         <div class="monitor-label">
-                            Total informasi
+                            Total pegawai
                         </div>
 
                         <br>
@@ -882,7 +881,7 @@
                             href="{{ route('admin.informasi.index') }}"
                             class="monitor-button"
                         >
-                            Buka Informasi →
+                            Buka Data Kepegawaian →
                         </a>
 
                     </div>

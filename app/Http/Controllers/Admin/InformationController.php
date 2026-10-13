@@ -3,165 +3,273 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Information;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class InformationController extends Controller
 {
+    /**
+     * Menampilkan daftar data kepegawaian.
+     */
     public function index(Request $request)
     {
-        $query = Information::with('category')
-            ->orderByDesc('created_at');
+        $query = Pegawai::query()->orderBy('nama');
 
-        if ($request->filled('search')) {
-            $search = $request->search;
+        if ($request->filled('cari')) {
+            $cari = $request->cari;
 
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('content', 'like', "%{$search}%");
+            $query->where(function ($q) use ($cari) {
+                $q->where('nama', 'like', "%{$cari}%")
+                    ->orWhere('nip', 'like', "%{$cari}%")
+                    ->orWhere('jabatan', 'like', "%{$cari}%")
+                    ->orWhere('unit_kerja', 'like', "%{$cari}%");
             });
         }
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        if ($request->filled('jenis_kelamin')) {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
         }
 
-        $information = $query
-            ->paginate(10)
-            ->withQueryString();
+        if ($request->filled('status_pegawai')) {
+            $query->where('status_pegawai', $request->status_pegawai);
+        }
 
-        return view('admin.information.index', compact('information'));
+        $pegawai = $query->paginate(10)->withQueryString();
+
+$statistik = [
+    'total' => Pegawai::count(),
+    'aktif' => Pegawai::where('status_pegawai', 'aktif')->count(),
+    'laki_laki' => Pegawai::where('jenis_kelamin', 'Laki-laki')->count(),
+    'perempuan' => Pegawai::where('jenis_kelamin', 'Perempuan')->count(),
+    'mendekati_pensiun' => Pegawai::whereNotNull('tanggal_pensiun')
+        ->whereDate('tanggal_pensiun', '>=', now()->toDateString())
+        ->whereDate('tanggal_pensiun', '<=', now()->addYears(5)->toDateString())
+        ->count(),
+];
+
+        return view('admin.information.index', compact('pegawai', 'statistik'));
     }
 
+    /**
+     * Menampilkan formulir tambah pegawai.
+     */
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
-
-        return view('admin.information.create', compact('categories'));
+        return view('admin.information.create');
     }
 
+    /**
+     * Menyimpan data pegawai baru.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255'],
-            'excerpt' => ['nullable', 'string'],
-            'content' => ['required', 'string'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'status' => ['required', 'in:draft,published'],
-            'published_at' => ['nullable', 'date'],
+            'nip' => ['nullable', 'string', 'max:30', 'unique:pegawais,nip'],
+            'nama' => ['required', 'string', 'max:150'],
+            'jenis_kelamin' => ['nullable', Rule::in(['Laki-laki', 'Perempuan'])],
+            'tempat_lahir' => ['nullable', 'string', 'max:100'],
+            'tanggal_lahir' => ['nullable', 'date'],
+            'pendidikan_terakhir' => ['nullable', 'string', 'max:100'],
+            'status_kepegawaian' => ['required', 'string', 'max:100'],
+            'status_pegawai' => ['required', Rule::in(['aktif', 'nonaktif', 'pensiun'])],
+            'jabatan' => ['nullable', 'string', 'max:150'],
+            'jenis_jabatan' => ['nullable', 'string', 'max:100'],
+            'unit_kerja' => ['nullable', 'string', 'max:150'],
+            'pangkat_golongan' => ['nullable', 'string', 'max:100'],
+            'tanggal_mulai_kerja' => ['nullable', 'date'],
+            'tanggal_mulai_jabatan' => ['nullable', 'date'],
+            'batas_usia_pensiun' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'tanggal_pensiun' => ['nullable', 'date'],
+            'keterangan' => ['nullable', 'string'],
         ]);
 
-        $validated['slug'] = $this->generateUniqueSlug($validated['title']);
-
-        if ($validated['status'] === 'published' && empty($validated['published_at'])) {
-            $validated['published_at'] = now();
-        }
-
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request
-                ->file('image')
-                ->store('information', 'public');
-        }
-
-        Information::create($validated);
+        Pegawai::create($validated);
 
         return redirect()
-            ->route('admin.information.index')
-            ->with('success', 'Informasi berhasil ditambahkan.');
+            ->route('admin.informasi.index')
+            ->with('success', 'Data pegawai berhasil ditambahkan.');
     }
 
-    public function show(Information $information)
+    /**
+     * Menampilkan formulir edit pegawai.
+     * Parameter $informasi dipertahankan agar sesuai dengan route yang ada.
+     */
+    public function edit(Pegawai $informasi)
     {
-        return view('admin.information.show', compact('information'));
+        return view('admin.information.edit', [
+            'pegawai' => $informasi,
+        ]);
     }
 
-    public function edit(Information $information)
-    {
-        $categories = Category::orderBy('name')->get();
-
-        return view('admin.information.edit', compact(
-            'information',
-            'categories'
-        ));
-    }
-
-    public function update(Request $request, Information $information)
+    /**
+     * Memperbarui data pegawai.
+     */
+    public function update(Request $request, Pegawai $informasi)
     {
         $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255'],
-            'excerpt' => ['nullable', 'string'],
-            'content' => ['required', 'string'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'status' => ['required', 'in:draft,published'],
-            'published_at' => ['nullable', 'date'],
+            'nip' => [
+                'nullable',
+                'string',
+                'max:30',
+                Rule::unique('pegawais', 'nip')->ignore($informasi->id),
+            ],
+            'nama' => ['required', 'string', 'max:150'],
+            'jenis_kelamin' => ['nullable', Rule::in(['Laki-laki', 'Perempuan'])],
+            'tempat_lahir' => ['nullable', 'string', 'max:100'],
+            'tanggal_lahir' => ['nullable', 'date'],
+            'pendidikan_terakhir' => ['nullable', 'string', 'max:100'],
+            'status_kepegawaian' => ['required', 'string', 'max:100'],
+            'status_pegawai' => ['required', Rule::in(['aktif', 'nonaktif', 'pensiun'])],
+            'jabatan' => ['nullable', 'string', 'max:150'],
+            'jenis_jabatan' => ['nullable', 'string', 'max:100'],
+            'unit_kerja' => ['nullable', 'string', 'max:150'],
+            'pangkat_golongan' => ['nullable', 'string', 'max:100'],
+            'tanggal_mulai_kerja' => ['nullable', 'date'],
+            'tanggal_mulai_jabatan' => ['nullable', 'date'],
+            'batas_usia_pensiun' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'tanggal_pensiun' => ['nullable', 'date'],
+            'keterangan' => ['nullable', 'string'],
         ]);
 
-        if ($information->title !== $validated['title']) {
-            $validated['slug'] = $this->generateUniqueSlug(
-                $validated['title'],
-                $information->id
-            );
+        $informasi->update($validated);
+
+        return redirect()
+            ->route('admin.informasi.index')
+            ->with('success', 'Data pegawai berhasil diperbarui.');
+    }
+
+    /**
+     * Menghapus data pegawai.
+     */
+    public function destroy(Pegawai $informasi)
+    {
+        $informasi->delete();
+
+        return redirect()
+            ->route('admin.informasi.index')
+            ->with('success', 'Data pegawai berhasil dihapus.');
+    }
+
+    /**
+     * Mengimpor data pegawai dari CSV.
+     * Header CSV harus menggunakan nama kolom tabel pegawais.
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:csv,txt', 'max:5120'],
+        ]);
+
+        $handle = fopen($request->file('file')->getRealPath(), 'r');
+
+        if ($handle === false) {
+            return back()->withErrors([
+                'file' => 'File CSV tidak dapat dibaca.',
+            ]);
         }
 
-        if ($validated['status'] === 'published' && empty($validated['published_at'])) {
-            $validated['published_at'] = now();
+        $header = fgetcsv($handle, 0, ',');
+
+        if (!$header) {
+            fclose($handle);
+
+            return back()->withErrors([
+                'file' => 'File CSV kosong atau tidak valid.',
+            ]);
         }
 
-        if ($request->hasFile('image')) {
-            if ($information->image) {
-                Storage::disk('public')->delete($information->image);
+        $header[0] = preg_replace('/^\xEF\xBB\xBF/', '', $header[0]);
+
+        $header = array_map(
+            fn ($column) => strtolower(trim($column)),
+            $header
+        );
+
+        $kolomDiizinkan = [
+            'nip',
+            'nama',
+            'jenis_kelamin',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'pendidikan_terakhir',
+            'status_kepegawaian',
+            'status_pegawai',
+            'jabatan',
+            'jenis_jabatan',
+            'unit_kerja',
+            'pangkat_golongan',
+            'tanggal_mulai_kerja',
+            'tanggal_mulai_jabatan',
+            'batas_usia_pensiun',
+            'tanggal_pensiun',
+            'keterangan',
+        ];
+
+        if (
+            count($header) !== count(array_unique($header)) ||
+            array_diff(['nama', 'status_kepegawaian'], $header) ||
+            array_diff($header, $kolomDiizinkan)
+        ) {
+            fclose($handle);
+
+            return back()->withErrors([
+                'file' => 'Header CSV tidak valid. Gunakan nama kolom tabel pegawais, termasuk nama dan status_kepegawaian.',
+            ]);
+        }
+
+        $jumlah = 0;
+
+        while (($data = fgetcsv($handle, 0, ',')) !== false) {
+            if (count($data) !== count($header)) {
+                continue;
             }
 
-            $validated['image'] = $request
-                ->file('image')
-                ->store('information', 'public');
+            $row = array_combine($header, $data);
+
+            $row = array_map(
+                fn ($value) => is_string($value) ? trim($value) : $value,
+                $row
+            );
+
+            if (empty($row['nama']) || empty($row['status_kepegawaian'])) {
+                continue;
+            }
+
+            if (empty($row['status_pegawai'])) {
+                $row['status_pegawai'] = 'aktif';
+            }
+
+            if (!in_array($row['status_pegawai'], ['aktif', 'nonaktif', 'pensiun'], true)) {
+                continue;
+            }
+
+            if (!empty($row['jenis_kelamin']) &&
+                !in_array($row['jenis_kelamin'], ['Laki-laki', 'Perempuan'], true)) {
+                continue;
+            }
+
+            try {
+                if (!empty($row['nip'])) {
+                    Pegawai::updateOrCreate(
+                        ['nip' => $row['nip']],
+                        $row
+                    );
+                } else {
+                    Pegawai::create($row);
+                }
+
+                $jumlah++;
+            } catch (\Throwable $e) {
+                // Lewati baris yang gagal diproses.
+                continue;
+            }
         }
 
-        $information->update($validated);
+        fclose($handle);
 
         return redirect()
-            ->route('admin.information.index')
-            ->with('success', 'Informasi berhasil diperbarui.');
-    }
-
-    public function destroy(Information $information)
-    {
-        if ($information->image) {
-            Storage::disk('public')->delete($information->image);
-        }
-
-        $information->delete();
-
-        return redirect()
-            ->route('admin.information.index')
-            ->with('success', 'Informasi berhasil dihapus.');
-    }
-
-    private function generateUniqueSlug(
-        string $title,
-        ?int $ignoreId = null
-    ): string {
-        $baseSlug = Str::slug($title);
-        $slug = $baseSlug;
-        $counter = 1;
-
-        while (
-            Information::where('slug', $slug)
-                ->when(
-                    $ignoreId,
-                    fn ($query) => $query->where('id', '!=', $ignoreId)
-                )
-                ->exists()
-        ) {
-            $slug = $baseSlug . '-' . $counter;
-            $counter++;
-        }
-
-        return $slug;
+            ->route('admin.informasi.index')
+            ->with('success', "{$jumlah} baris data pegawai berhasil diproses.");
     }
 }
