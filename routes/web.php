@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\PengajuanLayananController as AdminPengajuanLayan
 use App\Http\Controllers\Admin\PengaduanController as AdminPengaduanController;
 use App\Http\Controllers\Admin\MonitoringController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\BeritaAcaraController;
 
 
 /*
@@ -37,9 +38,13 @@ use App\Http\Controllers\Admin\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+    $beritaAcaras = \App\Models\BeritaAcara::where('status', 'published')
+        ->latest()
+        ->take(6)
+        ->get();
 
+    return view('welcome', compact('beritaAcaras'));
+})->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +98,13 @@ Route::prefix('admin')
     ->name('admin.')
     ->middleware('auth')
     ->group(function () {
+
+    //BERITA ACARA
+    
+Route::get('berita-acara/{beritaAcara}/download', [BeritaAcaraController::class, 'download'])
+    ->name('berita-acara.download');
+
+Route::resource('berita-acara', BeritaAcaraController::class);
 
         /*
         |--------------------------------------------------------------------------

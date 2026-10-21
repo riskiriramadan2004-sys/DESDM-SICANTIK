@@ -9,6 +9,7 @@ use App\Models\Pengaduan;
 use App\Models\PengajuanBantuan;
 use App\Models\PengajuanLayanan;
 use App\Models\User;
+use App\Models\BeritaAcara;
 
 class AdminDashboardController extends Controller
 {
@@ -44,6 +45,11 @@ class AdminDashboardController extends Controller
             ->take(8)
             ->get();
 
+        // Lima Berita Acara terbaru.
+        $beritaAcaras = BeritaAcara::latest()
+            ->take(5)
+            ->get();
+
         return view('admin.dashboard', [
             'jumlahAdmin' => $jumlahAdmin,
             'jumlahInformasi' => $jumlahInformasi,
@@ -51,6 +57,7 @@ class AdminDashboardController extends Controller
             'jumlahBantuan' => $jumlahBantuan,
             'jumlahLayanan' => $jumlahLayanan,
             'aktivitasTerbaru' => $aktivitasTerbaru,
+            'beritaAcaras' => $beritaAcaras,
         ]);
     }
 }

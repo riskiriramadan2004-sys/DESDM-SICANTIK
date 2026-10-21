@@ -6,6 +6,8 @@
 
     <title>Si Cantik - Dinas ESDM Sulawesi Tengah</title>
 
+    <!-- TES SICANTIK -->
+
     <style>
         * {
             margin: 0;
@@ -547,6 +549,116 @@
                 font-size: 45px;
             }
         }
+        
+/* =========================
+   BERITA ACARA PUBLIK
+========================= */
+.berita-publik {
+    padding: 45px 7% 60px;
+    background: #f7faff;
+}
+
+.berita-publik-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 30px;
+}
+
+.berita-publik-card {
+    min-width: 0;
+    background: #ffffff;
+    border: 1px solid #e4eaf2;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 5px 18px rgba(18, 63, 109, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow-wrap: anywhere;
+}
+
+.berita-publik-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(18, 63, 109, 0.12);
+}
+
+.berita-publik-card small {
+    display: block;
+    color: #17669a;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.berita-publik-card h3 {
+    color: #123f6d;
+    font-size: 19px;
+    line-height: 1.5;
+    margin: 0 0 12px;
+}
+
+.berita-publik-card p {
+    color: #667085;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 12px;
+}
+
+.berita-publik-isi {
+    color: #526174;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.berita-publik-card a {
+    display: inline-block;
+    margin-top: 18px;
+    color: #17669a;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.berita-publik-card a:hover {
+    color: #0b4c78;
+    text-decoration: underline;
+}
+
+.berita-publik-grid > p {
+    grid-column: 1 / -1;
+    padding: 25px;
+    text-align: center;
+    color: #667085;
+    background: #ffffff;
+    border: 1px solid #e4eaf2;
+    border-radius: 12px;
+}
+
+@media (max-width: 1000px) {
+    .berita-publik-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .berita-publik {
+        padding: 35px 6% 45px;
+    }
+
+    .berita-publik-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .berita-publik-card {
+        padding: 20px;
+    }
+
+    .berita-publik-card h3 {
+        font-size: 17px;
+    }
+}
     </style>
 </head>
 
@@ -744,6 +856,51 @@
 
         </section>
 
+        {{-- =========================
+     BERITA ACARA TERBARU
+========================== --}}
+<section class="berita-publik">
+    <div class="section-heading">
+        <span>INFORMASI RESMI ESDM</span>
+        <h2>Berita Acara Terbaru</h2>
+        <p>Baca berita acara dan informasi kegiatan ESDM Sulawesi Tengah.</p>
+    </div>
+
+    <div class="berita-publik-grid">
+        @forelse ($beritaAcaras as $berita)
+            <article class="berita-publik-card">
+                <small>
+                    📄 Berita Acara
+                    @if ($berita->tanggal_kegiatan)
+                        · {{ \Carbon\Carbon::parse($berita->tanggal_kegiatan)->format('d M Y') }}
+                    @endif
+                </small>
+
+                <h3>{{ $berita->judul }}</h3>
+
+                @if ($berita->nomor_berita_acara)
+                    <p>Nomor: {{ $berita->nomor_berita_acara }}</p>
+                @endif
+
+                <div class="berita-publik-isi">
+                    {{ $berita->isi_berita_acara ?: $berita->deskripsi }}
+                </div>
+
+                @if ($berita->dokumen_pdf)
+                    <a
+                        href="{{ asset('storage/' . $berita->dokumen_pdf) }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Baca dokumen PDF →
+                    </a>
+                @endif
+            </article>
+        @empty
+            <p>Belum ada berita acara yang dipublikasikan.</p>
+        @endforelse
+    </div>
+</section>
 
         {{-- =========================
              INFORMASI & PANDUAN

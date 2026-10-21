@@ -446,6 +446,119 @@
             box-shadow: 0 3px 12px rgba(24,65,100,.04);
         }
 
+         .berita-acara-section {
+    margin-bottom: 28px;
+}
+
+.berita-acara-card {
+    background: white;
+    border: 1px solid #dce7f1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(24,65,100,.04);
+}
+
+.berita-acara-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 19px;
+    border-bottom: 1px solid #edf2f6;
+}
+
+.berita-acara-item:last-child {
+    border-bottom: 0;
+}
+
+.berita-acara-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #edf7ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.berita-acara-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.berita-acara-info strong {
+    display: block;
+    font-size: 12px;
+    color: #16324f;
+    overflow-wrap: anywhere;
+}
+
+.berita-acara-info span {
+    display: block;
+    margin-top: 5px;
+    color: #71869e;
+    font-size: 10px;
+}
+
+.berita-acara-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.berita-acara-button {
+    display: inline-block;
+    padding: 8px 11px;
+    border-radius: 6px;
+    background: #0875ae;
+    color: white;
+    text-decoration: none;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.berita-acara-button:hover {
+    background: #075d8c;
+}
+
+.berita-acara-button.secondary {
+    background: #edf2f6;
+    color: #16324f;
+}
+
+.berita-acara-button.secondary:hover {
+    background: #dce7f1;
+}
+
+.berita-acara-status {
+    display: inline-block !important;
+    width: fit-content;
+    margin-top: 6px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: #e6faf3;
+    color: #07856c !important;
+    font-size: 9px !important;
+}
+
+.berita-acara-status.draft {
+    background: #fff4df;
+    color: #946200 !important;
+}
+
+@media (max-width: 750px) {
+    .berita-acara-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .berita-acara-actions {
+        width: 100%;
+        padding-left: 56px;
+    }
+}
+
         .activity-item {
             display: flex;
             align-items: center;
@@ -1025,6 +1138,49 @@
 
             </section>
 
+<!-- BERITA ACARA TERBARU -->
+<section class="berita-acara-section">
+    <div class="section-head">
+        <h2>Berita Acara Terbaru</h2>
+        <a href="{{ route('admin.berita-acara.index') }}" class="btn-lihat-semua">
+            Lihat Semua
+        </a>
+    </div>
+
+    <div class="berita-acara-card">
+        @forelse($beritaAcaras as $beritaAcara)
+            <div class="berita-acara-item">
+                <div class="berita-acara-icon">
+                    📄
+                </div>
+
+                <div class="berita-acara-info">
+                    <strong>{{ $beritaAcara->judul }}</strong>
+
+                    <span>
+                        Nomor:
+                        {{ $beritaAcara->nomor_berita_acara ?: 'Belum ada nomor' }}
+                    </span>
+
+                    <span>
+                        Tanggal kegiatan:
+                        {{ $beritaAcara->tanggal_kegiatan
+                            ? \Carbon\Carbon::parse($beritaAcara->tanggal_kegiatan)->format('d/m/Y')
+                            : 'Belum ditentukan' }}
+                    </span>
+                </div>
+
+                <div class="berita-acara-status">
+                    {{ ucfirst($beritaAcara->status) }}
+                </div>
+            </div>
+        @empty
+            <div class="empty">
+                Belum ada berita acara yang tercatat.
+            </div>
+        @endforelse
+    </div>
+</section>
 
             <!-- AKTIVITAS -->
 
