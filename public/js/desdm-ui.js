@@ -30,4 +30,57 @@
     window.addEventListener('scroll', () => { if (!ticking) { window.requestAnimationFrame(updateBlur); ticking = true; } }, { passive: true });
     updateBlur();
   }
+    // Slideshow foto hero DESDM-SICANTIK
+  const heroSlides = document.querySelectorAll('.hero-slide');
+
+  if (
+    heroSlides.length > 1 &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    let currentSlide = 0;
+
+    window.setInterval(() => {
+      heroSlides[currentSlide].classList.remove('active');
+
+      currentSlide = (currentSlide + 1) % heroSlides.length;
+
+      heroSlides[currentSlide].classList.add('active');
+    }, 5000);
+  }
+
+  // Efek blur pada foto hero saat halaman di-scroll
+  const heroSection = document.querySelector('.hero-section');
+
+  if (
+    heroSection &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    let ticking = false;
+
+    const updateHeroBlur = () => {
+      const rect = heroSection.getBoundingClientRect();
+      const progress = Math.min(
+        1,
+        Math.max(0, -rect.top / Math.max(1, heroSection.offsetHeight))
+      );
+
+      heroSlides.forEach(slide => {
+        slide.style.setProperty(
+          '--hero-blur',
+          `${(progress * 10).toFixed(1)}px`
+        );
+      });
+
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeroBlur);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateHeroBlur();
+  }
 })();

@@ -20,3 +20,426 @@ body:not(.public-site):not(.login-page):not(.admin-page){font-family:var(--font-
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 /* Legacy page-class bridge: keep existing Blade workflows while unifying their visual language. */
 body:not(.public-site):not(.login-page):not(.admin-page) .header{background:var(--charcoal)!important;background-image:none!important;color:#fff!important;box-shadow:none!important;border-bottom:3px solid var(--copper)}body:not(.public-site):not(.login-page):not(.admin-page) .header h1,body:not(.public-site):not(.login-page):not(.admin-page) .header h2,body:not(.public-site):not(.login-page):not(.admin-page) .header h3,body:not(.public-site):not(.login-page):not(.admin-page) .header .brand h1{color:#fff!important}body:not(.public-site):not(.login-page):not(.admin-page) .back-link{border-color:rgba(255,255,255,.45)!important;border-radius:7px!important}body:not(.public-site):not(.login-page):not(.admin-page) .brand-icon{background:var(--copper)!important;color:#fff!important;border-radius:9px!important}body:not(.public-site):not(.login-page):not(.admin-page) .submit-btn,body:not(.public-site):not(.login-page):not(.admin-page) button[type=submit]{background:var(--copper);border-color:var(--copper);border-radius:8px}body:not(.public-site):not(.login-page):not(.admin-page) .form-label{color:var(--charcoal)!important;font-weight:700!important}body:not(.public-site):not(.login-page):not(.admin-page) .form-input{border:1px solid #d9dcd9!important;border-radius:8px!important;background:#fff!important}body:not(.public-site):not(.login-page):not(.admin-page) .form-input:focus{border-color:var(--copper)!important;box-shadow:0 0 0 3px rgba(198,107,50,.13)!important}body:not(.public-site):not(.login-page):not(.admin-page) .menu-item.active{background:var(--copper)!important;color:#fff!important}body:not(.public-site):not(.login-page):not(.admin-page) .sidebar{background:var(--charcoal)!important;color:#fff!important}body:not(.public-site):not(.login-page):not(.admin-page) .sidebar .brand-logo{background:#fff!important;color:var(--charcoal)!important;border-bottom:3px solid var(--copper)}body:not(.public-site):not(.login-page):not(.admin-page) .main{background:var(--warm)!important}body:not(.public-site):not(.login-page):not(.admin-page) .topbar{background:#fff!important;border-bottom:1px solid var(--line)!important}body:not(.public-site):not(.login-page):not(.admin-page) .topbar h1{color:var(--charcoal)!important}body:not(.public-site):not(.login-page):not(.admin-page) .content-card,body:not(.public-site):not(.login-page):not(.admin-page) .stat-card,body:not(.public-site):not(.login-page):not(.admin-page) .table-card{background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:none}body:not(.public-site):not(.login-page):not(.admin-page) .status-badge{border-radius:999px;padding:5px 9px;font-size:11px;font-weight:700}
+
+/*hero slideshow */
+.hero-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--charcoal);
+}
+
+.hero-slides {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.03);
+    filter: blur(var(--hero-blur, 0px));
+    transition: opacity 1s ease, filter 0.12s linear;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        90deg,
+        rgba(41, 47, 54, 0.94) 0%,
+        rgba(41, 47, 54, 0.76) 48%,
+        rgba(41, 47, 54, 0.24) 100%
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+        transition: none;
+    }
+}
+.hero-section .hero-content h1 {
+    color: #FFFFFF !important;
+}
+
+.hero-section .hero-content h1 span {
+    color: #E6A078 !important;
+}
+/* Pastikan slideshow berada di belakang konten hero */
+.hero-section .hero-slides {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.hero-section .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease;
+}
+
+.hero-section .hero-slide.active {
+    opacity: 1;
+}
+
+.hero-section .hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+.hero-section .hero-inner {
+    position: relative;
+    z-index: 1;
+}
+/* Fix warna identitas navbar */
+.navbar .brand-text h1 {
+    color: #FFFFFF !important;
+}
+
+.navbar .brand-text span {
+    color: #F5F5F3 !important;
+}
+
+/* Fix judul utama SICANTIK */
+.hero-section .hero-content h1 {
+    color: #FFFFFF !important;
+}
+
+.hero-section .hero-content h1 span {
+    color: #E6A078 !important;
+}
+
+
+/* Alamat kantor pada hero */
+.hero-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 590px;
+    margin-top: -10px;
+    margin-bottom: 28px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.hero-address-icon {
+    flex-shrink: 0;
+    color: #E6A078;
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+@media (max-width: 480px) {
+    .hero-address {
+        font-size: 11px;
+        margin-bottom: 24px;
+    }
+}
+/* Logo resmi Sulawesi Tengah pada navbar */
+.navbar .brand-logo {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #FFFFFF;
+    border-radius: 12px;
+}
+
+.navbar .brand-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.navbar .brand-logo {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #FFFFFF;
+    border-radius: 12px;
+}
+
+.navbar .brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2px;
+    display: block;
+}
+.navbar .brand-logo {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    background: transparent;
+    border-radius: 0;
+}
+
+.navbar .brand-logo img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    padding: 0;
+    display: block;
+}
+
+/* Perbaikan kontras bagian layanan dan banner */
+.service-card,
+.service-card h3,
+.service-card p,
+.service-card .text-link {
+    color: #FFFFFF;
+}
+
+.status-band h2,
+.status-band h3 {
+    color: #FFFFFF !important;
+}
+
+.status-band {
+    background: #292F36;
+    color: #FFFFFF;
+}
+
+.status-band p {
+    color: #F5F5F3;
+}
+
+/* Footer */
+.site-footer,
+.site-footer h3,
+.site-footer p,
+.site-footer a {
+    color: #F5F5F3;
+}
+
+.site-footer {
+    background: #292F36;
+}
+
+
+/* Si Cantik — layanan minimalis dan elegan */
+.services-section .service-card {
+    background: #FFFFFF !important;
+    color: #292F36 !important;
+    border: 1px solid #E2E2DF;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(41, 47, 54, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.services-section .service-card h3 {
+    color: #292F36 !important;
+}
+
+.services-section .service-card p {
+    color: #62676B !important;
+}
+
+.services-section .service-card .service-icon {
+    background: #F7E9DF !important;
+    color: #C66B32 !important;
+    border-radius: 10px;
+}
+
+.services-section .service-card .text-link,
+.services-section .service-card .card-arrow {
+    color: #C66B32 !important;
+}
+
+.services-section .service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(41, 47, 54, 0.1);
+}
+
+/* Si Cantik — bagian berita terbaru */
+.berita-publik {
+    background: #F5F5F3 !important;
+    padding: 64px 0 !important;
+}
+
+.berita-publik .section-heading h2,
+.berita-publik .section-heading h3 {
+    color: #292F36 !important;
+}
+
+.berita-publik .section-heading p {
+    color: #62676B !important;
+}
+
+.berita-publik .section-heading > span,
+.berita-publik .section-heading .eyebrow {
+    color: #C66B32 !important;
+    background: #F7E9DF !important;
+    border-radius: 6px;
+}
+
+.berita-publik .empty-news,
+.berita-publik .berita-publik-empty {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E2DF !important;
+    border-radius: 12px;
+    color: #62676B !important;
+    box-shadow: 0 4px 14px rgba(41, 47, 54, 0.04);
+}
+
+/* Panduan Si Cantik — charcoal & copper */
+.info-section {
+    background: #F5F5F3 !important;
+}
+
+.info-section .section-heading h2,
+.info-section .section-heading h3 {
+    color: #292F36 !important;
+}
+
+.info-section .section-heading p {
+    color: #62676B !important;
+}
+
+.info-section .info-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E2DF !important;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(41, 47, 54, 0.05);
+}
+
+.info-section .info-card h3 {
+    color: #292F36 !important;
+}
+
+.info-section .info-card p {
+    color: #62676B !important;
+}
+
+.info-section .info-card-icon {
+    background: #F7E9DF !important;
+    color: #C66B32 !important;
+    border-radius: 8px;
+}
+
+.info-section .info-card strong,
+.info-section .info-card a {
+    color: #C66B32 !important;
+}
+
+/* Banner cek status */
+.cta {
+    background: #292F36 !important;
+    border-radius: 14px;
+}
+
+.cta h2,
+.cta h3 {
+    color: #FFFFFF !important;
+}
+
+.cta p {
+    color: #F5F5F3 !important;
+}
+
+.cta .cta-button {
+    background: #C66B32 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #C66B32 !important;
+    border-radius: 8px;
+}
+
+.cta .cta-button:hover {
+    background: #A95325 !important;
+}
+
+/* Footer Si Cantik — charcoal & copper */
+footer {
+    background: #292F36 !important;
+    color: #F5F5F3 !important;
+}
+
+footer h3,
+footer h4,
+footer strong {
+    color: #FFFFFF !important;
+}
+
+footer p,
+footer span,
+footer a {
+    color: #F5F5F3 !important;
+}
+
+footer a:hover {
+    color: #E6A078 !important;
+}
+
+footer .copyright {
+    color: #DADBD7 !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+footer .footer-links {
+    color: #F5F5F3 !important;
+}
+
+footer .footer-links a,
+footer .footer-links span {
+    color: #F5F5F3 !important;
+}
+
+/* Geser identitas navbar ke kiri */
+
+/* Posisi navbar dan hero lebih seimbang */
+.navbar .brand {
+    margin-left: 0;
+}
+
+.hero-section .hero-inner {
+    width: calc(100% - 48px);
+    max-width: 1240px;
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+.hero-section .hero-content {
+    margin-left: 0;
+}
+
+/* Sejajarkan navbar dengan konten hero */
+.navbar {
+    padding-left: 4% !important;
+    padding-right: 4% !important;
+}
+
+.navbar .brand {
+    margin-left: 0 !important;
+}

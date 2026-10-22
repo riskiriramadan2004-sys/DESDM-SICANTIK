@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Si Cantik - Dinas ESDM Sulawesi Tengah</title>
+    <link rel="stylesheet" href="{{ asset('css/desdm-theme.css') }}">
 
     <!-- TES SICANTIK -->
 
@@ -16,7 +17,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+      cleat      scroll-behavior: smooth;
         }
 
         body {
@@ -667,84 +668,92 @@
     {{-- =========================
          NAVBAR
     ========================== --}}
-    <header class="navbar">
+   
+<header class="navbar">
+    <a href="{{ url('/') }}" class="brand">
+        <div class="brand-logo">
+    <img
+        src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+        alt="Lambang Provinsi Sulawesi Tengah"
+    >
+</div>
 
-        <a href="{{ url('/') }}" class="brand">
-            <div class="brand-logo">E</div>
+        <div class="brand-text">
+            <h1 style="color: #FFFFFF !important;">Si Cantik</h1>
+            <span style="color: #F5F5F3 !important;">
+                Dinas Energi dan Sumber Daya Mineral
+            </span>
+        </div>
+    </a>
 
-            <div class="brand-text">
-                <h1>Si Cantik</h1>
-                <span>Dinas Energi dan Sumber Daya Mineral</span>
-            </div>
+    <nav class="nav-menu">
+        <a href="{{ url('/admin/informasi') }}" class="login-button">
+            Login Admin
         </a>
-
-        <nav class="nav-menu">
-
-            {{--
-                Navigasi utama sengaja dibuat sederhana.
-                Semua layanan publik sudah tersedia pada kartu layanan
-                di halaman ini, sehingga tidak ada menu yang berulang.
-            --}}
-            <a href="{{ url('/admin/informasi') }}" class="login-button">
-                Login Admin
-            </a>
-
-        </nav>
-
-    </header>
+    </nav>
+</header>
 
 
     {{-- =========================
          HERO
     ========================== --}}
     <main>
+        
+<section class="hero-section" id="beranda">
+    <div class="hero-slides" aria-hidden="true">
+        <div class="hero-slide active"
+             style="background-image: url('{{ asset('images/hero-esdm-1.jpeg') }}')"></div>
+        <div class="hero-slide"
+             style="background-image: url('{{ asset('images/hero-esdm-2.jpeg') }}')"></div>
+        <div class="hero-slide"
+             style="background-image: url('{{ asset('images/hero-esdm-3.jpeg') }}')"></div>
+    </div>
 
-        <section class="hero">
+    <div class="hero-shade"></div>
 
-            <div class="hero-content">
-
-                <div class="hero-label">
-                    DINAS ENERGI DAN SUMBER DAYA MINERAL
-                </div>
-
-                <h2>
-                    SICANTIK
-                </h2>
-
-                <h3>
-                    Sistem Informasi Cepat, Akurat,<br>
-                    Transparan, Inovatif dan Kolaboratif
-                </h3>
-
-                <p>
-                    Dinas Energi dan Sumber Daya Mineral
-                    Provinsi Sulawesi Tengah.
-                    Akses informasi dan berbagai layanan
-                    secara mudah dan online.
-                </p>
-
-                <form
-                    class="search-box"
-                    action="{{ route('information.index') }}"
-                    method="GET"
-                >
-
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Cari layanan atau informasi..."
-                    >
-
-                    <button type="submit">
-                        Cari
-                    </button>
-
-                </form>
-
+    <div class="container hero-inner">
+        <div class="hero-content">
+            <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                DINAS ENERGI DAN SUMBER DAYA MINERAL
             </div>
 
-        </section>
+        <h1 style="color: #FFFFFF !important;">
+            SICANTIK
+            <span style="color: #FFFFFF !important;">
+                  Untuk Pelayanan Publik.
+             </span>
+        </h1>
+        
+            <p>
+                Sistem Informasi Cepat, Akurat, Transparan, Inovatif
+                dan Kolaboratif. Akses informasi dan layanan ESDM
+                Provinsi Sulawesi Tengah dengan mudah secara online.
+            </p>
 
+            
+<div class="hero-address">
+    <span class="hero-address-icon"></span>
+    <span>
+        Jl. Sam Ratulangi No. 25, Besusu Bar., Kec. Palu Tim.,
+        Kota Palu, Sulawesi Tengah 94118
+    </span>
+</div>
+
+            
+
+            <div class="hero-actions">
+                <a href="#dashboard" class="btn btn-primary btn-lg">
+                    Jelajahi Layanan
+                </a>
+                <a href="{{ route('information.index') }}"
+                   class="btn btn-outline-light btn-lg">
+                    Lihat Informasi
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
         {{-- =========================
              LAYANAN CEPAT
@@ -1106,6 +1115,6 @@
         </div>
 
     </footer>
-
+    <script src="{{ asset('js/desdm-ui.js') }}" defer></script>
 </body>
 </html>
