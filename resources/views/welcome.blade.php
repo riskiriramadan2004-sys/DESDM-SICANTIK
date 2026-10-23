@@ -208,7 +208,7 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 18px;
         }
 
@@ -821,25 +821,6 @@
                     </p>
                 </a>
 
-
-                {{-- Cek Status --}}
-                <a
-                    href="{{ route('pengajuan-bantuan.cek-status') }}"
-                    class="service-card orange"
-                >
-                    <div class="service-icon">
-                        ⚙
-                    </div>
-
-                    <h3>
-                        Cek Status
-                    </h3>
-
-                    <p>
-                        Pantau status<br>
-                        pengajuan
-                    </p>
-                </a>
 
 
                 {{-- Pengaduan --}}
