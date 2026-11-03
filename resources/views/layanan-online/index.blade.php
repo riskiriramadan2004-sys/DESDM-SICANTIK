@@ -4,126 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Layanan Online - Si Cantik</title>
+    <title>Layanan Online - SICANTIK</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            /* area di luar body (saat overscroll / zoom out) ikut charcoal */
+            background: #292F36;
+        }
+
+        /* Body dibuat kolom setinggi layar supaya footer selalu menempel di dasar */
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #F5F5F3;
+            color: #292F36;
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        /* HEADER */
         .header {
-            background: linear-gradient(135deg, #0f4c81, #1976c5);
+            position: relative;
+            overflow: hidden;
             color: white;
-            padding: 24px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+            /* kiri-kanan: tidak mepet, tapi lebih ke kiri dari sebelumnya */
+            padding: 16px clamp(20px, 8vw, 150px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+            background:
+                /* garis copper tipis di bawah, dari tengah ke kanan */
+                linear-gradient(90deg, rgba(198, 107, 50, 0) 40%, #C66B32 70%, #E6A078 100%) left bottom / 100% 2px no-repeat,
+                /* dua garis diagonal tipis */
+                linear-gradient(115deg, transparent calc(50% - .6px), rgba(230, 160, 120, .7) 50%, transparent calc(50% + .6px)) 80% 0 / 150px 100% no-repeat,
+                linear-gradient(115deg, transparent calc(50% - .6px), rgba(255, 255, 255, .28) 50%, transparent calc(50% + .6px)) 85% 0 / 150px 100% no-repeat,
+                /* gradasi copper lembut dari kanan sampai tengah */
+                linear-gradient(270deg, rgba(198, 107, 50, .45) 0%, rgba(198, 107, 50, .2) 25%, rgba(198, 107, 50, 0) 52%),
+                #292F36;
         }
 
+        .header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                #F2B17F,
+                #C66B32,
+                #8F421F
+            );
+        }
+
+        /* Tidak lagi dipusatkan: logo & teks rata kiri */
         .header-inner {
-            max-width: 1150px;
-            margin: 0 auto;
+            max-width: none;
+            margin: 0;
+            padding: 0;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .brand-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.15);
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .brand-text h1 {
             margin: 0;
-            font-size: 25px;
-            line-height: 1.2;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: .5px;
         }
 
         .brand-text p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            opacity: 0.9;
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: #D1D5D8;
         }
 
-        /* =========================
-           CONTAINER
-        ========================= */
+        /* MAIN CONTAINER
+           (margin kiri-kanan saja; "margin: auto" di dalam flex kolom
+           akan ikut menengahkan secara vertikal) */
         .container {
+            width: 100%;
             max-width: 1150px;
             margin: 0 auto;
-            padding: 45px 20px 60px;
+            padding: 55px 24px 70px;
         }
 
-        /* =========================
-           INTRO
-        ========================= */
+        /* INTRO */
         .intro {
             text-align: center;
-            margin-bottom: 38px;
+            margin-bottom: 42px;
         }
 
         .intro-badge {
             display: inline-block;
-            background: #e7f1fb;
-            color: #155aa8;
-            padding: 7px 15px;
+            background: #FCEBDD;
+            color: #A94F23;
+            padding: 8px 17px;
             border-radius: 30px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 13px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
 
         .intro h2 {
-            margin: 0 0 10px;
-            font-size: 30px;
-            color: #123c69;
+            margin: 0 0 12px;
+            font-size: 32px;
+            color: #292F36;
+            font-weight: 800;
         }
 
         .intro p {
-            margin: 0 auto;
+            margin: auto;
             max-width: 650px;
-            color: #6b7280;
-            line-height: 1.7;
+            color: #68717A;
+            line-height: 1.8;
             font-size: 15px;
         }
 
-        /* =========================
-           GRID
-        ========================= */
+        /* GRID */
         .bidang-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 25px;
         }
 
-        /* =========================
-           CARD
-        ========================= */
+        /* CARD */
         .bidang-card {
-            background: white;
-            border-radius: 16px;
+            background: #FFFFFF;
+            border-radius: 15px;
             padding: 28px;
-            border: 1px solid #e5eaf0;
-            box-shadow: 0 5px 20px rgba(15, 76, 129, 0.07);
-            transition: all 0.25s ease;
+            border: 1px solid #E8E5E1;
+            box-shadow: 0 5px 20px rgba(41, 47, 54, .05);
+            transition: transform .25s ease, box-shadow .25s ease;
             position: relative;
             overflow: hidden;
         }
@@ -131,156 +172,156 @@
         .bidang-card::before {
             content: "";
             position: absolute;
-            left: 0;
             top: 0;
+            left: 0;
             width: 5px;
             height: 100%;
-            background: #1976c5;
+            background: linear-gradient(
+                to bottom,
+                #F2B17F,
+                #C66B32,
+                #8F421F
+            );
         }
 
         .bidang-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 28px rgba(15, 76, 129, 0.13);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(41, 47, 54, .11);
         }
 
         .card-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
-            background: #eaf3fb;
-            color: #155aa8;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 23px;
-            font-weight: bold;
-            margin-bottom: 18px;
+            min-width: 58px;
+            min-height: 58px;
+            padding: 0 12px;
+            border-radius: 13px;
+            background: #FCEBDD;
+            color: #A94F23;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 19px;
         }
 
         .bidang-card h3 {
-            margin: 0 0 10px;
-            color: #123c69;
+            margin: 0 0 11px;
+            color: #292F36;
             font-size: 21px;
+            font-weight: 700;
+            line-height: 1.4;
         }
 
         .bidang-card p {
             margin: 0;
-            color: #6b7280;
-            line-height: 1.7;
+            color: #68717A;
+            line-height: 1.8;
             min-height: 52px;
             font-size: 14px;
         }
 
-        /* =========================
-           BUTTON
-        ========================= */
+        /* BUTTON */
         .card-footer {
-            margin-top: 22px;
+            margin-top: 23px;
             padding-top: 18px;
-            border-top: 1px solid #edf0f4;
+            border-top: 1px solid #F0EEEB;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 11px 18px;
-            background: #155aa8;
+            justify-content: center;
+            gap: 9px;
+            padding: 12px 19px;
+            background: #C66B32;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 14px;
-            font-weight: bold;
-            transition: background 0.2s ease;
+            font-weight: 600;
+            transition: all .2s ease;
         }
 
         .btn:hover {
-            background: #0d4789;
+            background: #A95125;
+            color: white;
+            transform: translateY(-2px);
         }
 
         .btn-arrow {
-            font-size: 17px;
+            font-size: 18px;
             line-height: 1;
         }
 
-        /* =========================
-           EMPTY STATE
-        ========================= */
+        /* EMPTY STATE */
         .empty {
             background: white;
-            border: 1px dashed #cbd5e1;
+            border: 1px dashed #D6D1CA;
             border-radius: 14px;
             padding: 40px 20px;
             text-align: center;
-            color: #6b7280;
+            color: #68717A;
         }
 
         .empty h3 {
             margin: 0 0 8px;
-            color: #374151;
+            color: #292F36;
         }
 
         .empty p {
             margin: 0;
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
+        /* FOOTER: menempel di dasar halaman, seluruh area bawah charcoal */
         .footer {
-            background: #123c69;
+            margin-top: auto;
+            background: #292F36;
             color: white;
             text-align: center;
-            padding: 22px 20px;
+            padding: 25px 20px;
             font-size: 13px;
+            border-top: 4px solid #C66B32;
         }
 
         .footer p {
-            margin: 4px 0;
+            margin: 5px 0;
         }
 
         .footer .muted {
-            opacity: 0.75;
+            color: #B9BEC3;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
+        /* RESPONSIVE */
         @media (max-width: 800px) {
             .bidang-grid {
                 grid-template-columns: 1fr;
             }
 
             .intro h2 {
-                font-size: 26px;
+                font-size: 27px;
             }
         }
 
         @media (max-width: 600px) {
             .header {
-                padding: 20px 16px;
+                padding: 16px 16px;
             }
 
             .brand-icon {
-                width: 42px;
-                height: 42px;
-                font-size: 20px;
+                width: 40px;
+                height: 40px;
             }
 
             .brand-text h1 {
-                font-size: 21px;
+                font-size: 19px;
             }
 
             .brand-text p {
-                font-size: 12px;
+                font-size: 11px;
             }
 
             .container {
-                padding: 32px 16px 45px;
-            }
-
-            .intro {
-                margin-bottom: 28px;
+                padding: 38px 17px 50px;
             }
 
             .intro h2 {
@@ -293,7 +334,6 @@
 
             .btn {
                 width: 100%;
-                justify-content: center;
             }
         }
     </style>
@@ -301,20 +341,21 @@
 
 <body>
 
-    {{-- =========================
-         HEADER
-    ========================= --}}
+    <!-- HEADER -->
     <header class="header">
         <div class="header-inner">
 
             <div class="brand">
 
                 <div class="brand-icon">
-                    E
+                    <img
+                        src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+                        alt="Logo Sulawesi Tengah"
+                    >
                 </div>
 
                 <div class="brand-text">
-                    <h1>Si Cantik</h1>
+                    <h1>SICANTIK</h1>
                     <p>Dinas Energi dan Sumber Daya Mineral</p>
                 </div>
 
@@ -323,10 +364,7 @@
         </div>
     </header>
 
-
-    {{-- =========================
-         CONTENT
-    ========================= --}}
+    <!-- CONTENT -->
     <main class="container">
 
         <div class="intro">
@@ -343,7 +381,6 @@
             </p>
 
         </div>
-
 
         @if($bidangLayanans->count())
 
@@ -402,14 +439,11 @@
 
     </main>
 
-
-    {{-- =========================
-         FOOTER
-    ========================= --}}
+    <!-- FOOTER -->
     <footer class="footer">
 
         <p>
-            <strong>Si Cantik</strong> -
+            <strong>SICANTIK</strong> -
             Dinas Energi dan Sumber Daya Mineral
         </p>
 

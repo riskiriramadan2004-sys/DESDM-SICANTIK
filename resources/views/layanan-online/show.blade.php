@@ -1,10 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ $bidangLayanan->nama }} - Si Cantik</title>
+    <title>{{ $bidangLayanan->nama }} - SICANTIK</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -13,192 +18,297 @@
 
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #F5F5F3;
+            color: #292F36;
         }
 
+        /* HEADER */
         .header {
-            background: linear-gradient(135deg, #0f4c81, #1976c5);
+            background: #292F36;
             color: white;
-            padding: 24px 20px;
+            padding: 16px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                #F2B17F,
+                #C66B32,
+                #8F421F
+            );
         }
 
         .header-inner {
             max-width: 1150px;
-            margin: 0 auto;
+            margin: auto;
+            padding: 0 16px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .brand-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(255,255,255,.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .brand h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: .5px;
         }
 
         .brand p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            opacity: .9;
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: #D1D5D8;
         }
 
+        /* CONTAINER */
         .container {
             max-width: 1050px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
+            margin: auto;
+            padding: 45px 24px 70px;
         }
 
+        /* BACK BUTTON */
         .back {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
             margin-bottom: 25px;
-            color: #155aa8;
+            color: #A95125;
             text-decoration: none;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .back:hover {
-            text-decoration: underline;
+            color: #C66B32;
         }
 
+        /* HEADING */
         .heading {
             background: white;
             border-radius: 16px;
-            padding: 28px;
-            border: 1px solid #e5eaf0;
-            box-shadow: 0 5px 20px rgba(15,76,129,.07);
-            margin-bottom: 28px;
+            padding: 30px;
+            border: 1px solid #E8E5E1;
+            box-shadow: 0 5px 20px rgba(41, 47, 54, .05);
+            margin-bottom: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .heading::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                #F2B17F,
+                #C66B32,
+                #8F421F
+            );
         }
 
         .badge {
             display: inline-block;
-            background: #e7f1fb;
-            color: #155aa8;
+            background: #FCEBDD;
+            color: #A94F23;
             padding: 7px 14px;
             border-radius: 30px;
             font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 12px;
+            font-weight: 700;
+            margin-bottom: 13px;
         }
 
         .heading h2 {
-            margin: 0 0 10px;
-            color: #123c69;
-            font-size: 28px;
+            margin: 0 0 12px;
+            color: #292F36;
+            font-size: 29px;
+            font-weight: 800;
         }
 
         .heading p {
             margin: 0;
-            color: #6b7280;
-            line-height: 1.7;
+            color: #68717A;
+            line-height: 1.8;
+            font-size: 14px;
         }
 
+        /* SECTION */
         .section-title {
-            margin: 0 0 18px;
-            color: #123c69;
+            margin: 0 0 20px;
+            color: #292F36;
             font-size: 22px;
+            font-weight: 800;
         }
 
+        .section-subtitle {
+            color: #68717A;
+            font-size: 14px;
+            margin: -10px 0 23px;
+        }
+
+        /* SERVICE LIST */
         .service-list {
             display: grid;
-            gap: 18px;
+            gap: 20px;
         }
 
         .service-card {
             background: white;
-            border-radius: 14px;
-            padding: 24px;
-            border: 1px solid #e5eaf0;
-            box-shadow: 0 4px 16px rgba(15,76,129,.06);
+            border-radius: 15px;
+            padding: 26px;
+            border: 1px solid #E8E5E1;
+            box-shadow: 0 4px 16px rgba(41, 47, 54, .05);
+            transition: all .25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(41, 47, 54, .09);
         }
 
         .service-card h3 {
-            margin: 0 0 10px;
-            color: #123c69;
+            margin: 0 0 12px;
+            color: #292F36;
             font-size: 20px;
+            font-weight: 700;
         }
 
         .description {
-            color: #6b7280;
-            line-height: 1.7;
-            margin-bottom: 18px;
+            color: #68717A;
+            line-height: 1.8;
+            margin: 0 0 18px;
+            font-size: 14px;
         }
 
         .service-number {
             display: inline-block;
-            background: #f1f5f9;
+            background: #FCEBDD;
             padding: 8px 12px;
             border-radius: 7px;
-            font-size: 13px;
-            color: #475569;
+            font-size: 12px;
+            color: #A95125;
+            font-weight: 700;
             margin-bottom: 18px;
         }
 
+        /* BUTTON */
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 11px 18px;
-            background: #155aa8;
+            justify-content: center;
+            gap: 9px;
+            padding: 12px 20px;
+            background: #C66B32;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
+            transition: all .2s ease;
         }
 
         .btn:hover {
-            background: #0d4789;
+            background: #A95125;
+            color: white;
+            transform: translateY(-2px);
         }
 
+        /* EMPTY */
         .empty {
             background: white;
-            border: 1px dashed #cbd5e1;
+            border: 1px dashed #D6D1CA;
             border-radius: 14px;
-            padding: 40px 20px;
+            padding: 42px 20px;
             text-align: center;
-            color: #6b7280;
+            color: #68717A;
         }
 
+        .empty h3 {
+            margin: 0 0 10px;
+            color: #292F36;
+        }
+
+        .empty p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
         .footer {
-            background: #123c69;
+            background: #292F36;
             color: white;
             text-align: center;
-            padding: 22px 20px;
+            padding: 25px 20px;
             font-size: 13px;
+            border-top: 4px solid #C66B32;
         }
 
         .footer p {
-            margin: 4px 0;
+            margin: 5px 0;
         }
 
         .muted {
-            opacity: .75;
+            color: #B9BEC3;
         }
 
+        /* RESPONSIVE */
         @media (max-width: 600px) {
+            .header {
+                padding: 16px 12px;
+            }
+
+            .header-inner {
+                padding: 0 8px;
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .brand h1 {
+                font-size: 19px;
+            }
+
+            .brand p {
+                font-size: 11px;
+            }
+
             .container {
-                padding: 30px 16px 45px;
+                padding: 30px 17px 50px;
             }
 
             .heading {
-                padding: 22px;
+                padding: 23px;
             }
 
             .heading h2 {
@@ -206,12 +316,11 @@
             }
 
             .service-card {
-                padding: 20px;
+                padding: 21px;
             }
 
             .btn {
                 width: 100%;
-                justify-content: center;
             }
         }
     </style>
@@ -219,118 +328,128 @@
 
 <body>
 
-<header class="header">
-    <div class="header-inner">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
 
-        <div class="brand">
-            <div class="brand-icon">
-                ESDM
-            </div>
+            <div class="brand">
 
-            <div>
-                <h1>Si Cantik</h1>
-                <p>Dinas Energi dan Sumber Daya Mineral</p>
+                <div class="brand-icon">
+                    <img
+                        src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+                        alt="Logo Sulawesi Tengah"
+                    >
+                </div>
+
+                <div>
+                    <h1>SICANTIK</h1>
+                    <p>Dinas Energi dan Sumber Daya Mineral</p>
+                </div>
+
             </div>
         </div>
+    </header>
 
-    </div>
-</header>
+    <!-- MAIN CONTENT -->
+    <main class="container">
 
-<main class="container">
+        <a href="{{ route('layanan-online.index') }}" class="back">
+            <span>&larr;</span>
+            Kembali ke Daftar Layanan
+        </a>
 
-    <a href="{{ route('layanan-online.index') }}" class="back">
-        ← Kembali ke Layanan Online
-    </a>
+        <!-- INFORMASI BIDANG -->
+        <section class="heading">
 
-    <section class="heading">
+            <span class="badge">
+                DETAIL LAYANAN
+            </span>
 
-        <span class="badge">
-            BIDANG LAYANAN
-        </span>
+            <h2>{{ $bidangLayanan->nama }}</h2>
 
-        <h2>
-            {{ $bidangLayanan->nama }}
-        </h2>
-
-        @if($bidangLayanan->deskripsi)
             <p>
-                {{ $bidangLayanan->deskripsi }}
+                {{ $bidangLayanan->deskripsi ?: 'Informasi layanan Dinas Energi dan Sumber Daya Mineral.' }}
             </p>
-        @endif
 
-    </section>
+        </section>
 
-    <h2 class="section-title">
-        Daftar Layanan
-    </h2>
+        <!-- DAFTAR LAYANAN -->
+        <section>
 
-    @if($layanans->count())
+            <h2 class="section-title">
+                Daftar Layanan
+            </h2>
 
-        <div class="service-list">
+            <p class="section-subtitle">
+                Pilih layanan yang ingin Anda ajukan secara online.
+            </p>
 
-            @foreach($layanans as $layanan)
+            @if($layanans->count())
 
-                <div class="service-card">
+                <div class="service-list">
 
-                    <h3>
-                        {{ $layanan->nama }}
-                    </h3>
+                    @foreach($layanans as $layanan)
 
-                    @if($layanan->deskripsi)
-                        <div class="description">
-                            {{ $layanan->deskripsi }}
-                        </div>
-                    @endif
+                        <article class="service-card">
 
-                    <div class="service-number">
-                        Nomor Layanan:
-                        <strong>{{ $layanan->nomor_layanan }}</strong>
-                    </div>
+                            <span class="service-number">
+                                LAYANAN ONLINE
+                            </span>
 
-                    <br>
+                            <h3>
+                                {{ $layanan->nama }}
+                            </h3>
 
-                    <a
-                        href="{{ route('layanan-online.pengajuan.create', $layanan) }}"
-                        class="btn"
-                    >
-                        Ajukan Layanan
-                        <span>→</span>
-                    </a>
+                            <p class="description">
+                                {{ $layanan->deskripsi ?: 'Silakan pilih layanan ini untuk melihat dan mengisi formulir pengajuan.' }}
+                            </p>
+
+                            <a
+                                href="{{ route('layanan-online.pengajuan.create', $layanan) }}"
+                                class="btn"
+                            >
+                                Ajukan Layanan
+                                <span>&rarr;</span>
+                            </a>
+
+                        </article>
+
+                    @endforeach
 
                 </div>
 
-            @endforeach
+            @else
 
-        </div>
+                <div class="empty">
 
-    @else
+                    <h3>Belum Ada Layanan</h3>
 
-        <div class="empty">
+                    <p>
+                        Saat ini belum tersedia layanan pada bidang ini.
+                        Silakan periksa kembali di lain waktu.
+                    </p>
 
-            <h3>Belum Ada Layanan</h3>
+                </div>
 
-            <p>
-                Belum tersedia layanan pada bidang ini.
-            </p>
+            @endif
 
-        </div>
+        </section>
 
-    @endif
+    </main>
 
-</main>
+    <!-- FOOTER -->
+    <footer class="footer">
 
-<footer class="footer">
+        <p>
+            <strong>SICANTIK</strong> -
+            Dinas Energi dan Sumber Daya Mineral
+        </p>
 
-    <p>
-        <strong>Si Cantik</strong> -
-        Dinas Energi dan Sumber Daya Mineral
-    </p>
+        <p class="muted">
+            Layanan informasi dan pengajuan secara online
+        </p>
 
-    <p class="muted">
-        Layanan informasi dan pengajuan secara online
-    </p>
-
-</footer>
+    </footer>
 
 </body>
 </html>

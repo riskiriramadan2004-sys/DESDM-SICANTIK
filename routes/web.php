@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 | CONTROLLER PUBLIK
 |--------------------------------------------------------------------------
 */
-
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LayananOnlineController;
 use App\Http\Controllers\PengajuanBantuanController;
@@ -61,7 +60,6 @@ Route::get('/informasi/{information}', [
     InformationController::class,
     'show'
 ])->name('information.show');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -387,3 +385,4 @@ Route::post('/pengaduan', [
     PengaduanController::class,
     'store'
 ])->name('pengaduan.store');
+

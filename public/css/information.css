@@ -1,0 +1,190 @@
+/* =====================================================
+   NAVBAR HALAMAN INFORMASI — DESDM-SICANTIK
+   File : public/css/information-navbar.css
+   Muat SETELAH desdm-theme.css dan information.css.
+   Tidak memakai class .navbar / bg-dark Bootstrap,
+   jadi tidak bentrok dengan aturan global tema.
+===================================================== */
+
+.information-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    overflow: hidden;
+    /* garis copper tipis di bawah + gradasi charcoal ke copper di kanan */
+    background:
+        linear-gradient(90deg, rgba(198, 107, 50, 0) 0%, #C66B32 18%, #E6A078 60%, #C66B32 100%) left bottom / 100% 2px no-repeat,
+        linear-gradient(105deg, #252B32 0%, #292F36 42%, #3A3431 66%, #8A4C2A 88%, #C66B32 100%);
+    color: #FFFFFF;
+    box-shadow: 0 6px 18px rgba(20, 24, 28, 0.18);
+}
+
+/* dua garis diagonal tipis sebagai aksen */
+.information-navbar::before,
+.information-navbar::after {
+    content: "";
+    position: absolute;
+    top: -30px;
+    bottom: -30px;
+    width: 1px;
+    transform: rotate(28deg);
+    pointer-events: none;
+}
+
+.information-navbar::before {
+    right: 19%;
+    background: linear-gradient(180deg, transparent, rgba(230, 160, 120, 0.6), transparent);
+}
+
+.information-navbar::after {
+    right: 17%;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+}
+
+.information-navbar-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 72px;
+    /* kiri sedikit masuk dari tepi, kanan sedikit lebih longgar ke tepi */
+    padding: 12px clamp(16px, 6vw, 110px) 14px clamp(20px, 9vw, 170px);
+}
+
+/* ---------- Brand ---------- */
+.information-navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    color: #FFFFFF;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+}
+
+.information-navbar-brand:hover {
+    color: #FFFFFF;
+}
+
+.information-navbar-logo {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.information-navbar-brand:hover .information-navbar-logo {
+    transform: scale(1.06);
+}
+
+/* ---------- Tombol kanan ---------- */
+.information-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.information-navbar-link,
+.information-navbar-admin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.information-navbar-link {
+    border-color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.06);
+    color: #FFFFFF;
+}
+
+.information-navbar-link:hover,
+.information-navbar-link.is-active:hover {
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #292F36;
+    transform: translateY(-1px);
+}
+
+.information-navbar-link.is-active {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: #FFFFFF;
+}
+
+.information-navbar-admin {
+    background: #C66B32;
+    border-color: #C66B32;
+    color: #FFFFFF;
+}
+
+.information-navbar-admin:hover {
+    background: #A95324;
+    border-color: #A95324;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+.information-navbar-brand:focus-visible,
+.information-navbar-link:focus-visible,
+.information-navbar-admin:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 3px;
+}
+
+/* ---------- Responsif ---------- */
+@media (max-width: 576px) {
+    .information-navbar-inner {
+        min-height: 64px;
+        padding: 10px 16px 12px;
+    }
+
+    .information-navbar-brand {
+        gap: 9px;
+        font-size: 16px;
+    }
+
+    .information-navbar-logo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .information-navbar-actions {
+        gap: 8px;
+    }
+
+    .information-navbar-link,
+    .information-navbar-admin {
+        height: 34px;
+        padding: 0 12px;
+        font-size: 12.5px;
+    }
+}
+
+@media (max-width: 380px) {
+    .information-navbar-brand span {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .information-navbar *,
+    .information-navbar-logo {
+        transition: none !important;
+    }
+}

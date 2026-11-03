@@ -6,33 +6,39 @@
 
     <title>Informasi ESDM - SICANTIK</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/desdm-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/information.css') }}">
+    {{-- Navbar baru: harus dimuat paling akhir --}}
+    <link rel="stylesheet" href="{{ asset('css/information-navbar.css') }}">
 </head>
 
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="/">
-            SICANTIK
+{{-- ================= NAVBAR ================= --}}
+<header class="information-navbar">
+    <div class="information-navbar-inner">
+        <a class="information-navbar-brand" href="{{ url('/') }}">
+            <img class="information-navbar-logo"
+                 src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+                 alt="Logo Sulawesi Tengah">
+            <span>SICANTIK</span>
         </a>
 
-        <div>
+        <nav class="information-navbar-actions" aria-label="Menu utama">
             <a href="{{ route('information.index') }}"
-               class="btn btn-outline-light btn-sm">
-                Informasi ESDM
-            </a>
+               class="information-navbar-link is-active"
+               aria-current="page">Informasi ESDM</a>
 
             <a href="{{ route('admin.informasi.index') }}"
-               class="btn btn-success btn-sm">
-                Admin
-            </a>
-        </div>
+               class="information-navbar-admin">Admin</a>
+        </nav>
     </div>
-</nav>
+</header>
 
 <div class="container py-5">
 
