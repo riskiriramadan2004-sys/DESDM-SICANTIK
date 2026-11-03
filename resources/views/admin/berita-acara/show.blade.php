@@ -10,6 +10,7 @@
         :root {
             --charcoal: #292F36;
             --copper: #C66B32;
+            --white: #FFFFFF;
             --background: #F5F5F3;
             --border: #E3E4E1;
             --muted: #6B7075;
@@ -105,6 +106,7 @@
         .details {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            gap: 0;
             padding: 8px 24px;
         }
 
@@ -124,7 +126,8 @@
 
         .detail-value {
             font-size: 14px;
-            line-height: 1.8;
+            font-weight: 600;
+            line-height: 1.7;
             overflow-wrap: anywhere;
             white-space: pre-line;
         }
@@ -137,19 +140,11 @@
             color: #91491F;
             font-size: 12px;
             font-weight: 600;
-            white-space: nowrap;
         }
 
         .status.published {
             background: #E3F3E8;
             color: #24683C;
-        }
-
-        .content {
-            padding: 24px;
-            font-size: 14px;
-            line-height: 1.9;
-            overflow-wrap: anywhere;
         }
 
         .document {
@@ -171,6 +166,12 @@
             color: var(--muted);
             font-size: 13px;
             line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .button {
@@ -196,23 +197,12 @@
 
         .button-primary:hover { background: #A95526; }
 
-        .button-danger {
-            color: #B42318;
-            border-color: #E8C7C3;
-        }
-
         .footer-actions {
             display: flex;
             justify-content: space-between;
             gap: 12px;
             flex-wrap: wrap;
             margin-top: 26px;
-        }
-
-        .action-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
         }
 
         @media (max-width: 600px) {
@@ -224,9 +214,7 @@
             .detail.full { grid-column: auto; }
             .document { align-items: flex-start; flex-direction: column; }
             .footer-actions { flex-direction: column; }
-            .action-group { flex-direction: column; }
-            .footer-actions .button,
-            .action-group .button { width: 100%; }
+            .footer-actions .button { width: 100%; }
         }
     </style>
 </head>
@@ -253,7 +241,10 @@
     <div class="heading">
         <div>
             <h1>{{ $beritaAcara->judul }}</h1>
-            <p class="subtitle">Detail berita acara kegiatan ESDM.</p>
+
+            <p class="subtitle">
+                Detail dokumen berita acara kegiatan ESDM.
+            </p>
         </div>
 
         <span class="status {{ $beritaAcara->status === 'published' ? 'published' : '' }}">
@@ -262,9 +253,18 @@
     </div>
 
     <section class="card">
-        <div class="card-heading">Informasi Berita Acara</div>
+
+        <div class="card-heading">
+            Informasi Berita Acara
+        </div>
 
         <div class="details">
+
+            <div class="detail">
+                <div class="detail-label">Judul Dokumen</div>
+                <div class="detail-value">{{ $beritaAcara->judul }}</div>
+            </div>
+
             <div class="detail">
                 <div class="detail-label">Nomor Berita Acara</div>
                 <div class="detail-value">
@@ -276,8 +276,17 @@
                 <div class="detail-label">Tanggal Kegiatan</div>
                 <div class="detail-value">
                     {{ $beritaAcara->tanggal_kegiatan
-                        ? $beritaAcara->tanggal_kegiatan->format('d-m-Y')
+                        ? $beritaAcara->tanggal_kegiatan->format('d F Y')
                         : 'Belum dicantumkan' }}
+                </div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">Status Publikasi</div>
+                <div class="detail-value">
+                    {{ $beritaAcara->status === 'published'
+                        ? 'Dipublikasikan kepada masyarakat'
+                        : 'Draft — belum dipublikasikan' }}
                 </div>
             </div>
 
@@ -285,25 +294,26 @@
                 <div class="detail-label">Deskripsi / Ringkasan</div>
                 <div class="detail-value">{{ $beritaAcara->deskripsi ?: 'Belum ada deskripsi.' }}</div>
             </div>
+
         </div>
     </section>
 
     <section class="card">
-        <div class="card-heading">Isi Lengkap Berita Acara</div>
 
-        <div class="content">{{ $beritaAcara->isi_berita_acara ?: 'Belum ada isi berita acara.' }}</div>
-    </section>
+        <div class="card-heading">
+            Dokumen Berita Acara
+        </div>
 
-    @if ($beritaAcara->dokumen_pdf)
-        <section class="card">
-            <div class="card-heading">Lampiran Dokumen</div>
+        <div class="document">
+            <div class="document-info">
+                <strong>Dokumen PDF</strong>
+                <p>
+                    Gunakan tombol berikut untuk membuka atau mengunduh
+                    dokumen berita acara.
+                </p>
+            </div>
 
-            <div class="document">
-                <div class="document-info">
-                    <strong>Dokumen PDF Berita Acara</strong>
-                    <p>Unduh lampiran jika dokumen PDF tersedia.</p>
-                </div>
-
+            <div class="actions">
                 <a
                     href="{{ route('admin.berita-acara.download', $beritaAcara) }}"
                     class="button button-primary"
@@ -311,35 +321,21 @@
                     Unduh PDF
                 </a>
             </div>
-        </section>
-    @endif
+        </div>
+
+    </section>
 
     <div class="footer-actions">
         <a href="{{ route('admin.berita-acara.index') }}" class="button">
             ← Kembali ke Daftar
         </a>
 
-        <div class="action-group">
-            <a
-                href="{{ route('admin.berita-acara.edit', $beritaAcara) }}"
-                class="button button-primary"
-            >
-                Edit Berita Acara
-            </a>
-
-            <form
-                action="{{ route('admin.berita-acara.destroy', $beritaAcara) }}"
-                method="POST"
-                onsubmit="return confirm('Yakin ingin menghapus seluruh berita acara ini beserta lampiran PDF-nya?')"
-            >
-                @csrf
-                @method('DELETE')
-
-                <button type="submit" class="button button-danger">
-                    Hapus Berita
-                </button>
-            </form>
-        </div>
+        <a
+            href="{{ route('admin.berita-acara.edit', $beritaAcara) }}"
+            class="button button-primary"
+        >
+            Edit Berita Acara
+        </a>
     </div>
 
 </main>
