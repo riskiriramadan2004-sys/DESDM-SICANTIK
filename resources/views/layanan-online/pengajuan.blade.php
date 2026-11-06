@@ -6,172 +6,289 @@
 
     <title>Ajukan Layanan - Si Cantik</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --charcoal: #292F36;
+            --charcoal-light: #343C45;
+            --copper: #C66B32;
+            --copper-dark: #A95425;
+            --warm-white: #F5F5F3;
+            --white: #FFFFFF;
+            --gray: #68717A;
+            --gray-light: #E7E7E3;
+            --pale-copper: #FCEBDD;
+            --danger: #C0392B;
+            --success: #26734D;
+            --shadow: 0 12px 35px rgba(41, 47, 54, .07);
+        }
+
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
+        [hidden] {
+            display: none !important;
+        }
+
+        html {
+            /* area di luar body (saat overscroll / zoom out) ikut charcoal */
+            background: var(--charcoal);
+        }
+
+        /* Body dibuat kolom setinggi layar supaya footer selalu menempel di dasar */
         body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            background: var(--warm-white);
+            color: var(--charcoal);
+            line-height: 1.6;
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        a {
+            text-decoration: none;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid rgba(198, 107, 50, .5);
+            outline-offset: 3px;
+        }
+
+        /* HEADER */
+
         .header {
-            background: linear-gradient(135deg, #0f4c81, #1976c5);
-            color: white;
-            padding: 24px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, .10);
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+            /* kiri-kanan: tidak mepet, tapi lebih ke kiri dari sebelumnya */
+            padding: 18px clamp(20px, 8vw, 150px);
+            border-bottom: 3px solid var(--copper);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+            background:
+                /* dua garis diagonal tipis */
+                linear-gradient(115deg, transparent calc(50% - .6px), rgba(230, 160, 120, .7) 50%, transparent calc(50% + .6px)) 80% 0 / 150px 100% no-repeat,
+                linear-gradient(115deg, transparent calc(50% - .6px), rgba(255, 255, 255, .28) 50%, transparent calc(50% + .6px)) 85% 0 / 150px 100% no-repeat,
+                /* gradasi copper lembut dari kanan sampai tengah */
+                linear-gradient(270deg, rgba(198, 107, 50, .45) 0%, rgba(198, 107, 50, .2) 25%, rgba(198, 107, 50, 0) 52%),
+                var(--charcoal);
         }
 
+        /* garis vertikal copper di tepi kanan */
+        .header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            height: 100%;
+            background: linear-gradient(to bottom, #F2B17F, #C66B32, #8F421F);
+        }
+
+        /* rata kiri, tidak lagi dipusatkan */
         .header-inner {
-            max-width: 1050px;
-            margin: 0 auto;
-        }
-
-        .brand {
+            position: relative;
+            z-index: 1;
+            max-width: none;
+            margin: 0;
             display: flex;
             align-items: center;
             gap: 14px;
         }
 
-        .brand-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(255,255,255,.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: bold;
+        /* logo tanpa kotak putih, di samping tulisan */
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            object-fit: contain;
         }
 
         .brand h1 {
-            margin: 0;
-            font-size: 24px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: .5px;
         }
 
         .brand p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            opacity: .9;
+            color: #D1D5D8;
+            font-size: 12px;
+            margin-top: 3px;
         }
 
-        /* =========================
-           CONTAINER
-        ========================= */
+        .brand-line {
+            width: 35px;
+            height: 3px;
+            background: var(--copper);
+            margin-top: 6px;
+            border-radius: 5px;
+        }
+
+        /* MAIN
+           (margin kiri-kanan saja; "margin: auto" di dalam flex kolom
+           akan ikut menengahkan secara vertikal) */
+
         .container {
-            max-width: 900px;
+            width: 100%;
+            max-width: 950px;
             margin: 0 auto;
-            padding: 40px 20px 60px;
+            padding: 42px 20px 65px;
         }
 
         .back {
-            display: inline-block;
-            margin-bottom: 22px;
-            color: #155aa8;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            transition: .2s;
         }
 
         .back:hover {
-            text-decoration: underline;
+            color: var(--copper);
+            transform: translateX(-3px);
         }
 
-        /* =========================
-           SERVICE INFO
-        ========================= */
+        /* SERVICE INFORMATION */
+
         .service-info {
-            background: white;
+            position: relative;
+            overflow: hidden;
+            background: var(--charcoal);
+            color: white;
             border-radius: 16px;
-            padding: 26px;
-            border: 1px solid #e5eaf0;
-            box-shadow: 0 5px 20px rgba(15,76,129,.07);
-            margin-bottom: 24px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .service-info::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border: 35px solid rgba(198, 107, 50, .12);
+            border-radius: 50%;
+            right: -55px;
+            top: -75px;
         }
 
         .badge {
             display: inline-block;
-            background: #e7f1fb;
-            color: #155aa8;
-            padding: 7px 14px;
+            background: rgba(198, 107, 50, .17);
+            color: #F2B58D;
+            border: 1px solid rgba(198, 107, 50, .35);
+            padding: 6px 13px;
             border-radius: 30px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
         }
 
         .service-info h2 {
-            margin: 0 0 8px;
-            color: #123c69;
-            font-size: 27px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
         }
 
         .service-info p {
-            margin: 6px 0;
-            color: #6b7280;
-            line-height: 1.6;
+            color: #D1D5D8;
+            font-size: 13px;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
         }
 
         .service-number {
             display: inline-block;
-            margin-top: 12px;
-            background: #f1f5f9;
-            color: #475569;
-            padding: 8px 12px;
+            margin-top: 17px;
+            padding: 7px 12px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.12);
+            color: #F2B58D;
             border-radius: 7px;
-            font-size: 13px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        /* =========================
-           FORM CARD
-        ========================= */
+        /* FORM CARD */
+
         .form-card {
-            background: white;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
             border-radius: 16px;
-            padding: 30px;
-            border: 1px solid #e5eaf0;
-            box-shadow: 0 5px 20px rgba(15,76,129,.07);
+            padding: 35px;
+            box-shadow: var(--shadow);
         }
 
         .form-title {
-            margin: 0 0 5px;
-            color: #123c69;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 23px;
+            font-weight: 800;
+            color: var(--charcoal);
+            margin-bottom: 7px;
         }
 
         .form-subtitle {
-            margin: 0 0 28px;
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.6;
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 30px;
         }
 
-        /* =========================
-           ERROR
-        ========================= */
+        .required {
+            color: var(--copper);
+            font-weight: 700;
+        }
+
+        /* ALERT */
+
         .alert {
-            background: #fff1f2;
-            border: 1px solid #fecdd3;
-            color: #9f1239;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 4px 12px;
+            background: #FFF1EF;
+            border: 1px solid #F3C6C0;
+            color: var(--danger);
             border-radius: 10px;
-            padding: 15px 18px;
+            padding: 17px 20px;
             margin-bottom: 25px;
+            font-size: 13px;
+            transition: opacity .25s ease, transform .25s ease;
+        }
+
+        .alert:focus {
+            outline: none;
+        }
+
+        .alert.is-closing {
+            opacity: 0;
+            transform: translateY(-6px);
         }
 
         .alert strong {
             display: block;
-            margin-bottom: 8px;
+            width: 100%;
+            margin-bottom: 4px;
         }
 
         .alert ul {
-            margin: 0;
             padding-left: 20px;
         }
 
@@ -179,196 +296,399 @@
             margin-bottom: 4px;
         }
 
-        /* =========================
-           SECTION
-        ========================= */
-        .form-section {
+        .alert-success {
+            background: #EEF8F1;
+            border-color: #C8E5D1;
+            color: var(--success);
+            align-items: center;
+        }
+
+        .alert-success span {
+            flex: 1;
+        }
+
+        .alert-close {
+            width: 28px;
+            height: 28px;
+            margin: -3px -6px 0 auto;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: inherit;
+            font-size: 20px;
+            line-height: 1;
+            opacity: .7;
+            cursor: pointer;
+            transition: opacity .15s ease, background .15s ease;
+        }
+
+        .alert-close:hover {
+            opacity: 1;
+            background: rgba(41, 47, 54, .08);
+        }
+
+        /* PROGRESS KELENGKAPAN */
+
+        .progress-card {
             margin-bottom: 30px;
+            padding: 15px 18px;
+            background: #FBF7F3;
+            border: 1px solid #F0E3D8;
+            border-radius: 12px;
+        }
+
+        .progress-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 9px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .progress-head strong {
+            color: var(--copper-dark);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            height: 8px;
+            overflow: hidden;
+            background: #EADFD5;
+            border-radius: 99px;
+        }
+
+        .progress-fill {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #F2B17F, #C66B32);
+            border-radius: 99px;
+            transition: width .35s ease, background .35s ease;
+        }
+
+        .progress-fill.is-complete {
+            background: linear-gradient(90deg, #48A978, var(--success));
+        }
+
+        /* SECTION */
+
+        .form-section {
+            margin-bottom: 32px;
         }
 
         .section-heading {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e5e7eb;
+            gap: 12px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 22px;
         }
 
         .section-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #e7f1fb;
-            color: #155aa8;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: var(--pale-copper);
+            color: var(--copper-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 800;
+            transition: background .25s ease, color .25s ease, transform .25s ease;
+        }
+
+        .section-number.is-complete {
+            background: var(--success);
+            color: #fff;
+            transform: scale(1.06);
         }
 
         .section-heading h3 {
-            margin: 0;
-            color: #123c69;
-            font-size: 18px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--charcoal);
+            font-size: 16px;
+            font-weight: 800;
         }
 
-        /* =========================
-           FORM GRID
-        ========================= */
+        /* FORM INPUT */
+
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 21px;
         }
 
         .form-group {
-            margin-bottom: 2px;
+            min-width: 0;
         }
 
-        .full {
+        .form-group.full {
             grid-column: 1 / -1;
         }
 
-        label {
+        .form-group label {
             display: block;
+            color: var(--charcoal);
+            font-size: 12px;
+            font-weight: 700;
             margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #374151;
-        }
-
-        .required {
-            color: #dc2626;
         }
 
         input,
         textarea {
             width: 100%;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-family: inherit;
-            font-size: 14px;
-            color: #1f2937;
-            background: white;
-            transition: .2s;
+            border: 1px solid #DADDDC;
+            background: #FCFCFB;
+            border-radius: 9px;
+            padding: 13px 14px;
+            color: var(--charcoal);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: .25s;
         }
 
         input {
-            height: 45px;
+            height: 47px;
         }
 
         textarea {
-            min-height: 110px;
+            min-height: 115px;
             resize: vertical;
-        }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #1976c5;
-            box-shadow: 0 0 0 3px rgba(25,118,197,.10);
+            line-height: 1.7;
         }
 
         input::placeholder,
         textarea::placeholder {
-            color: #9ca3af;
+            color: #A5AAAD;
+        }
+
+        input:hover,
+        textarea:hover {
+            border-color: #C9CDCB;
+        }
+
+        input:focus,
+        textarea:focus {
+            background: white;
+            border-color: var(--copper);
+            box-shadow: 0 0 0 3px rgba(198, 107, 50, .12);
+        }
+
+        /* status validasi */
+        input.is-valid,
+        textarea.is-valid {
+            border-color: #7DBE9A;
+        }
+
+        input.is-invalid,
+        textarea.is-invalid {
+            border-color: var(--danger);
+            background: #FFF8F7;
+        }
+
+        input.is-invalid:focus,
+        textarea.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, .14);
+        }
+
+        .is-shaking {
+            animation: shake .35s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%      { transform: translateX(-5px); }
+            40%      { transform: translateX(5px); }
+            60%      { transform: translateX(-3px); }
+            80%      { transform: translateX(3px); }
         }
 
         .help-text {
             display: block;
-            margin-top: 6px;
-            color: #9ca3af;
-            font-size: 12px;
+            color: var(--gray);
+            font-size: 11px;
+            margin-top: 7px;
         }
 
-        /* =========================
-           ACTION
-        ========================= */
+        /* pesan error + penghitung di bawah tiap kolom */
+        .field-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            min-height: 0;
+            margin-top: 6px;
+            font-size: 11.5px;
+            line-height: 1.5;
+        }
+
+        .field-error {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .field-error:not(:empty)::before {
+            content: "! ";
+            font-weight: 800;
+        }
+
+        .field-count {
+            margin-left: auto;
+            flex-shrink: 0;
+            color: #8A9096;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .field-count.is-done {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* ACTION */
+
         .form-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            padding-top: 24px;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--gray-light);
+            padding-top: 25px;
+            margin-top: 10px;
         }
 
         .btn {
             display: inline-flex;
-            align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
+            align-items: center;
+            gap: 9px;
+            min-height: 46px;
+            padding: 12px 22px;
             border: none;
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s;
         }
 
         .btn-secondary {
-            background: #f1f5f9;
-            color: #475569;
+            color: var(--charcoal);
+            background: #F0F0ED;
+            border: 1px solid #E2E2DE;
         }
 
         .btn-secondary:hover {
-            background: #e2e8f0;
+            background: #E5E5E0;
         }
 
         .btn-primary {
-            background: #155aa8;
             color: white;
+            background: var(--copper);
+            box-shadow: 0 5px 13px rgba(198, 107, 50, .2);
         }
 
         .btn-primary:hover {
-            background: #0d4789;
+            background: var(--copper-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 17px rgba(198, 107, 50, .27);
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
+        .btn-primary.is-loading {
+            pointer-events: none;
+            opacity: .85;
+        }
+
+        .btn-primary.is-loading::before {
+            content: "";
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* FOOTER: menempel di dasar halaman, seluruh area bawah charcoal */
+
         .footer {
-            background: #123c69;
+            margin-top: auto;
+            background: var(--charcoal);
+            border-top: 3px solid var(--copper);
             color: white;
             text-align: center;
-            padding: 22px 20px;
-            font-size: 13px;
+            padding: 25px 20px;
+            font-size: 12px;
         }
 
         .footer p {
-            margin: 4px 0;
+            margin: 5px 0;
         }
 
-        .muted {
-            opacity: .75;
+        .footer .muted {
+            color: #AEB5BB;
+            font-size: 11px;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
-        @media (max-width: 700px) {
-            .form-grid {
-                grid-template-columns: 1fr;
+        /* RESPONSIVE */
+
+        @media (max-width: 650px) {
+            .header {
+                padding: 16px 20px;
             }
 
-            .full {
-                grid-column: auto;
+            .brand-logo {
+                width: 42px;
+                height: 42px;
             }
 
-            .form-card {
-                padding: 22px;
+            .brand h1 {
+                font-size: 19px;
+            }
+
+            .brand p {
+                font-size: 10px;
+            }
+
+            .container {
+                padding: 28px 15px 45px;
             }
 
             .service-info {
-                padding: 22px;
+                padding: 24px 21px;
             }
 
             .service-info h2 {
-                font-size: 23px;
+                font-size: 21px;
+            }
+
+            .form-card {
+                padding: 24px 19px;
+            }
+
+            .form-title {
+                font-size: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .form-group.full {
+                grid-column: auto;
             }
 
             .form-actions {
@@ -379,29 +699,28 @@
             .btn {
                 width: 100%;
             }
+
+            /* 16px mencegah iPhone memperbesar layar otomatis saat kolom difokuskan */
+            input,
+            textarea {
+                font-size: 16px;
+            }
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 16px 45px;
-            }
-
-            .header {
-                padding: 20px 16px;
-            }
-
-            .brand-icon {
-                width: 42px;
-                height: 42px;
-                font-size: 13px;
-            }
-
-            .brand h1 {
-                font-size: 21px;
-            }
-
+        @media (max-width: 380px) {
             .brand p {
-                font-size: 12px;
+                max-width: 220px;
+            }
+
+            .form-card {
+                padding: 20px 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition: none !important;
+                animation: none !important;
             }
         }
     </style>
@@ -412,17 +731,16 @@
 <header class="header">
     <div class="header-inner">
 
+        <img
+            src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+            alt="Logo Sulawesi Tengah"
+            class="brand-logo"
+        >
+
         <div class="brand">
-
-            <div class="brand-icon">
-                ESDM
-            </div>
-
-            <div>
-                <h1>Si Cantik</h1>
-                <p>Dinas Energi dan Sumber Daya Mineral</p>
-            </div>
-
+            <h1>SICANTIK</h1>
+            <p>Dinas Energi dan Sumber Daya Mineral</p>
+            <div class="brand-line"></div>
         </div>
 
     </div>
@@ -433,6 +751,7 @@
     <a
         href="{{ route('layanan-online.show', $layanan->bidangLayanan) }}"
         class="back"
+        data-confirm-leave
     >
         ← Kembali ke Daftar Layanan
     </a>
@@ -440,87 +759,90 @@
     {{-- INFORMASI LAYANAN --}}
     <section class="service-info">
 
-        <span class="badge">
-            PENGAJUAN LAYANAN
-        </span>
+        <span class="badge">Formulir Pengajuan Online</span>
 
-        <h2>
-            {{ $layanan->nama }}
-        </h2>
+        <h2>{{ $layanan->nama }}</h2>
 
         <p>
-            <strong>Bidang:</strong>
-            {{ $layanan->bidangLayanan->nama }}
+            Silakan lengkapi formulir di bawah ini dengan data yang benar
+            dan sesuai dengan identitas Anda.
         </p>
 
-        @if($layanan->deskripsi)
-            <p>
-                {{ $layanan->deskripsi }}
-            </p>
-        @endif
-
-        <div class="service-number">
-            Nomor Layanan:
-            <strong>{{ $layanan->nomor_layanan }}</strong>
-        </div>
+        <span class="service-number">
+            Bidang: {{ $layanan->bidangLayanan->nama ?? '-' }}
+        </span>
 
     </section>
 
-    {{-- FORM --}}
+    {{-- FORMULIR --}}
     <section class="form-card">
 
-        <h2 class="form-title">
-            Form Pengajuan
-        </h2>
+        <h2 class="form-title">Data Pengajuan Layanan</h2>
 
         <p class="form-subtitle">
-            Silakan lengkapi data berikut dengan benar untuk mengajukan layanan.
+            Lengkapi seluruh informasi yang diperlukan untuk memproses
+            permohonan layanan Anda. Kolom bertanda
+            <span class="required">*</span> wajib diisi.
         </p>
 
-        @if($errors->any())
+        {{-- Pesan sukses dari server (jika controller mengirim session 'success') --}}
+        @if (session('success'))
+            <div class="alert alert-success" role="status">
+                <span>{{ session('success') }}</span>
+                <button type="button" class="alert-close" data-alert-close aria-label="Tutup">&times;</button>
+            </div>
+        @endif
 
-            <div class="alert">
-
-                <strong>
-                    Periksa kembali data yang Anda masukkan:
-                </strong>
-
+        {{-- Error dari server --}}
+        @if ($errors->any())
+            <div class="alert" id="serverAlert" role="alert" tabindex="-1">
+                <strong>Periksa kembali data yang Anda masukkan.</strong>
                 <ul>
-                    @foreach($errors->all() as $error)
+                    @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-
             </div>
-
         @endif
 
+        {{-- Error dari pengecekan di browser (diisi oleh JavaScript) --}}
+        <div class="alert" id="clientAlert" role="alert" tabindex="-1" hidden>
+            <strong>Periksa kembali data yang Anda masukkan.</strong>
+            <span id="clientAlertText"></span>
+            <button type="button" class="alert-close" data-alert-close aria-label="Tutup">&times;</button>
+        </div>
+
         <form
+            id="pengajuanForm"
             action="{{ route('layanan-online.pengajuan.store', $layanan) }}"
             method="POST"
+            novalidate
         >
 
             @csrf
+
+            {{-- PROGRESS --}}
+            <div class="progress-card" aria-live="polite">
+                <div class="progress-head">
+                    <span>Kelengkapan formulir</span>
+                    <strong id="progressText">0 dari 9 kolom</strong>
+                </div>
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+                    <span class="progress-fill" id="progressFill"></span>
+                </div>
+            </div>
 
             {{-- DATA PEMOHON --}}
             <div class="form-section">
 
                 <div class="section-heading">
-
-                    <div class="section-number">
-                        1
-                    </div>
-
-                    <h3>
-                        Data Pemohon
-                    </h3>
-
+                    <div class="section-number">1</div>
+                    <h3>Data Pemohon</h3>
                 </div>
 
                 <div class="form-grid">
 
                     <div class="form-group">
-
                         <label for="nik">
                             NIK <span class="required">*</span>
                         </label>
@@ -532,18 +854,20 @@
                             value="{{ old('nik') }}"
                             maxlength="16"
                             inputmode="numeric"
+                            pattern="[0-9]{16}"
+                            autocomplete="off"
                             placeholder="Masukkan 16 digit NIK"
+                            data-rule="nik"
+                            data-server-error="{{ $errors->first('nik') }}"
                             required
                         >
 
                         <span class="help-text">
-                            NIK harus terdiri dari 16 digit.
+                            NIK harus terdiri dari 16 digit angka.
                         </span>
-
                     </div>
 
                     <div class="form-group">
-
                         <label for="nama_lengkap">
                             Nama Lengkap <span class="required">*</span>
                         </label>
@@ -553,14 +877,15 @@
                             id="nama_lengkap"
                             name="nama_lengkap"
                             value="{{ old('nama_lengkap') }}"
+                            autocomplete="name"
                             placeholder="Masukkan nama lengkap"
+                            data-rule="nama"
+                            data-server-error="{{ $errors->first('nama_lengkap') }}"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
                         <label for="nomor_hp">
                             Nomor HP <span class="required">*</span>
                         </label>
@@ -571,35 +896,28 @@
                             name="nomor_hp"
                             value="{{ old('nomor_hp') }}"
                             inputmode="tel"
+                            autocomplete="tel"
                             placeholder="Contoh: 08xxxxxxxxxx"
+                            data-rule="hp"
+                            data-server-error="{{ $errors->first('nomor_hp') }}"
                             required
                         >
-
                     </div>
 
                 </div>
-
             </div>
 
-            {{-- ALAMAT --}}
+            {{-- ALAMAT PEMOHON --}}
             <div class="form-section">
 
                 <div class="section-heading">
-
-                    <div class="section-number">
-                        2
-                    </div>
-
-                    <h3>
-                        Alamat Pemohon
-                    </h3>
-
+                    <div class="section-number">2</div>
+                    <h3>Alamat Pemohon</h3>
                 </div>
 
                 <div class="form-grid">
 
                     <div class="form-group full">
-
                         <label for="alamat">
                             Alamat Lengkap <span class="required">*</span>
                         </label>
@@ -607,14 +925,15 @@
                         <textarea
                             id="alamat"
                             name="alamat"
+                            autocomplete="street-address"
                             placeholder="Masukkan alamat lengkap"
+                            data-rule="alamat"
+                            data-server-error="{{ $errors->first('alamat') }}"
                             required
                         >{{ old('alamat') }}</textarea>
-
                     </div>
 
                     <div class="form-group">
-
                         <label for="desa_kelurahan">
                             Desa/Kelurahan <span class="required">*</span>
                         </label>
@@ -625,13 +944,13 @@
                             name="desa_kelurahan"
                             value="{{ old('desa_kelurahan') }}"
                             placeholder="Desa/Kelurahan"
+                            data-rule="wilayah"
+                            data-server-error="{{ $errors->first('desa_kelurahan') }}"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
                         <label for="kecamatan">
                             Kecamatan <span class="required">*</span>
                         </label>
@@ -642,13 +961,13 @@
                             name="kecamatan"
                             value="{{ old('kecamatan') }}"
                             placeholder="Kecamatan"
+                            data-rule="wilayah"
+                            data-server-error="{{ $errors->first('kecamatan') }}"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
                         <label for="kabupaten_kota">
                             Kabupaten/Kota <span class="required">*</span>
                         </label>
@@ -658,14 +977,15 @@
                             id="kabupaten_kota"
                             name="kabupaten_kota"
                             value="{{ old('kabupaten_kota') }}"
+                            autocomplete="address-level2"
                             placeholder="Kabupaten/Kota"
+                            data-rule="wilayah"
+                            data-server-error="{{ $errors->first('kabupaten_kota') }}"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
                         <label for="provinsi">
                             Provinsi <span class="required">*</span>
                         </label>
@@ -675,33 +995,26 @@
                             id="provinsi"
                             name="provinsi"
                             value="{{ old('provinsi') }}"
+                            autocomplete="address-level1"
                             placeholder="Provinsi"
+                            data-rule="wilayah"
+                            data-server-error="{{ $errors->first('provinsi') }}"
                             required
                         >
-
                     </div>
 
                 </div>
-
             </div>
 
             {{-- KEPERLUAN --}}
             <div class="form-section">
 
                 <div class="section-heading">
-
-                    <div class="section-number">
-                        3
-                    </div>
-
-                    <h3>
-                        Keperluan Layanan
-                    </h3>
-
+                    <div class="section-number">3</div>
+                    <h3>Keperluan Layanan</h3>
                 </div>
 
                 <div class="form-group">
-
                     <label for="keperluan">
                         Keperluan <span class="required">*</span>
                     </label>
@@ -711,13 +1024,15 @@
                         name="keperluan"
                         rows="6"
                         placeholder="Jelaskan keperluan atau tujuan pengajuan layanan Anda"
+                        data-rule="keperluan"
+                        data-server-error="{{ $errors->first('keperluan') }}"
                         required
                     >{{ old('keperluan') }}</textarea>
 
                     <span class="help-text">
-                        Jelaskan keperluan dengan jelas agar dapat diproses dengan baik.
+                        Jelaskan keperluan dengan jelas agar dapat diproses
+                        dengan baik.
                     </span>
-
                 </div>
 
             </div>
@@ -728,15 +1043,14 @@
                 <a
                     href="{{ route('layanan-online.show', $layanan->bidangLayanan) }}"
                     class="btn btn-secondary"
+                    data-confirm-leave
                 >
                     ← Kembali
                 </a>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Kirim Pengajuan →
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <span data-label>Kirim Pengajuan</span>
+                    <span aria-hidden="true">→</span>
                 </button>
 
             </div>
@@ -759,6 +1073,253 @@
     </p>
 
 </footer>
+
+<script>
+(function () {
+    'use strict';
+
+    var form = document.getElementById('pengajuanForm');
+    if (!form) { return; }
+
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fields = Array.prototype.slice.call(form.querySelectorAll('[data-rule]'));
+    var submitBtn = document.getElementById('submitBtn');
+    var submitLabel = submitBtn.querySelector('[data-label]');
+    var defaultLabel = submitLabel.textContent;
+    var clientAlert = document.getElementById('clientAlert');
+    var clientAlertText = document.getElementById('clientAlertText');
+    var serverAlert = document.getElementById('serverAlert');
+    var progressText = document.getElementById('progressText');
+    var progressFill = document.getElementById('progressFill');
+    var progressBar = document.getElementById('progressBar');
+    var sections = Array.prototype.slice.call(form.querySelectorAll('.form-section'));
+    var submitted = false;
+
+    /* ---------- Aturan validasi ---------- */
+    function minLength(n, label) {
+        return {
+            test: function (v) { return v.trim().length >= n; },
+            msg: label + ' minimal ' + n + ' karakter.'
+        };
+    }
+
+    var rules = {
+        nik: {
+            test: function (v) { return /^\d{16}$/.test(v); },
+            msg: 'NIK harus terdiri dari 16 digit angka.'
+        },
+        nama: minLength(3, 'Nama lengkap'),
+        hp: {
+            test: function (v) { return /^(?:\+?62|0)8\d{8,11}$/.test(v.replace(/[\s-]/g, '')); },
+            msg: 'Nomor HP tidak valid. Contoh: 08xxxxxxxxxx.'
+        },
+        alamat: minLength(10, 'Alamat'),
+        wilayah: minLength(2, 'Kolom ini'),
+        keperluan: minLength(10, 'Keperluan')
+    };
+
+    function validate(field) {
+        var value = field.value;
+        if (!value.trim()) { return 'Kolom ini wajib diisi.'; }
+        var rule = rules[field.getAttribute('data-rule')];
+        return rule && !rule.test(value) ? rule.msg : '';
+    }
+
+    /* ---------- Siapkan pesan error & penghitung tiap kolom ---------- */
+    fields.forEach(function (field) {
+        var group = field.closest('.form-group');
+        var foot = document.createElement('div');
+        foot.className = 'field-foot';
+
+        var err = document.createElement('span');
+        err.className = 'field-error';
+        err.id = 'error-' + field.id;
+        err.setAttribute('aria-live', 'polite');
+
+        var count = document.createElement('span');
+        count.className = 'field-count';
+
+        foot.appendChild(err);
+        foot.appendChild(count);
+        group.appendChild(foot);
+
+        field._err = err;
+        field._count = count;
+        field.setAttribute('aria-describedby', err.id);
+    });
+
+    function updateCount(field) {
+        var len = field.value.length;
+        var rule = field.getAttribute('data-rule');
+        if (rule === 'nik') {
+            field._count.textContent = len + '/16';
+            field._count.classList.toggle('is-done', len === 16);
+        } else if (field.tagName === 'TEXTAREA') {
+            field._count.textContent = len + ' karakter';
+        }
+    }
+
+    function render(field, message) {
+        field._err.textContent = message;
+        field.classList.toggle('is-invalid', !!message);
+        field.classList.toggle('is-valid', !message && field.value.trim() !== '');
+        field.setAttribute('aria-invalid', message ? 'true' : 'false');
+    }
+
+    /* ---------- Progress & penanda bagian selesai ---------- */
+    function updateProgress() {
+        var done = fields.filter(function (f) { return validate(f) === ''; }).length;
+        var percent = Math.round((done / fields.length) * 100);
+        progressText.textContent = done + ' dari ' + fields.length + ' kolom';
+        progressFill.style.width = percent + '%';
+        progressFill.classList.toggle('is-complete', done === fields.length);
+        progressBar.setAttribute('aria-valuenow', String(percent));
+
+        sections.forEach(function (section) {
+            var badge = section.querySelector('.section-number');
+            if (!badge) { return; }
+            if (!badge.hasAttribute('data-number')) {
+                badge.setAttribute('data-number', badge.textContent.trim());
+            }
+            var inSection = Array.prototype.slice.call(section.querySelectorAll('[data-rule]'));
+            var complete = inSection.length > 0 && inSection.every(function (f) { return validate(f) === ''; });
+            badge.classList.toggle('is-complete', complete);
+            badge.textContent = complete ? '\u2713' : badge.getAttribute('data-number');
+        });
+    }
+
+    /* ---------- Alert dari browser ---------- */
+    function showClientAlert(message) {
+        clientAlertText.textContent = message;
+        clientAlert.hidden = false;
+        clientAlert.classList.remove('is-closing');
+    }
+
+    function hideClientAlert() {
+        clientAlert.hidden = true;
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-alert-close]'), function (btn) {
+        btn.addEventListener('click', function () {
+            var box = btn.closest('.alert');
+            if (!box) { return; }
+            box.classList.add('is-closing');
+            setTimeout(function () {
+                if (box.id === 'clientAlert') { box.hidden = true; } else { box.remove(); }
+            }, 250);
+        });
+    });
+
+    /* ---------- Interaksi tiap kolom ---------- */
+    fields.forEach(function (field) {
+        var rule = field.getAttribute('data-rule');
+
+        field.addEventListener('input', function () {
+            if (rule === 'nik') {
+                field.value = field.value.replace(/\D/g, '').slice(0, 16);
+            } else if (rule === 'hp') {
+                field.value = field.value.replace(/[^\d+\s-]/g, '');
+            }
+            updateCount(field);
+            if (field.getAttribute('data-touched') === '1' || field.classList.contains('is-invalid')) {
+                render(field, validate(field));
+            }
+            updateProgress();
+        });
+
+        field.addEventListener('blur', function () {
+            field.value = field.value.trim();
+            if (field.value !== '' || field.getAttribute('data-touched') === '1') {
+                field.setAttribute('data-touched', '1');
+                render(field, validate(field));
+            }
+            updateCount(field);
+            updateProgress();
+        });
+
+        updateCount(field);
+    });
+
+    /* Tampilkan error dari server di bawah kolom yang bersangkutan */
+    var firstServerError = null;
+    fields.forEach(function (field) {
+        var serverMessage = field.getAttribute('data-server-error');
+        if (serverMessage) {
+            field.setAttribute('data-touched', '1');
+            render(field, serverMessage);
+            if (!firstServerError) { firstServerError = field; }
+        }
+    });
+    updateProgress();
+
+    if (serverAlert) {
+        serverAlert.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        serverAlert.focus({ preventScroll: true });
+    }
+
+    /* ---------- Kirim formulir ---------- */
+    form.addEventListener('submit', function (e) {
+        if (submitted) { e.preventDefault(); return; }
+
+        var firstInvalid = null;
+        var invalidCount = 0;
+
+        fields.forEach(function (field) {
+            field.value = field.value.trim();
+            if (field.getAttribute('data-rule') === 'hp') {
+                field.value = field.value.replace(/[\s-]/g, '');
+            }
+            field.setAttribute('data-touched', '1');
+            var message = validate(field);
+            render(field, message);
+            if (message) {
+                invalidCount++;
+                if (!firstInvalid) { firstInvalid = field; }
+                if (!reduceMotion) {
+                    field.classList.remove('is-shaking');
+                    void field.offsetWidth;
+                    field.classList.add('is-shaking');
+                }
+            }
+        });
+        updateProgress();
+
+        if (firstInvalid) {
+            e.preventDefault();
+            showClientAlert('Ada ' + invalidCount + ' kolom yang belum sesuai. Periksa kolom yang ditandai merah.');
+            firstInvalid.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+            firstInvalid.focus({ preventScroll: true });
+            return;
+        }
+
+        hideClientAlert();
+        submitted = true;
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitLabel.textContent = 'Mengirim...';
+    });
+
+    /* Tombol Back browser: pulihkan tombol kirim */
+    window.addEventListener('pageshow', function () {
+        submitted = false;
+        submitBtn.classList.remove('is-loading');
+        submitBtn.removeAttribute('aria-busy');
+        submitLabel.textContent = defaultLabel;
+    });
+
+    /* ---------- Konfirmasi sebelum keluar jika sudah ada isian ---------- */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-confirm-leave]'), function (link) {
+        link.addEventListener('click', function (e) {
+            var dirty = fields.some(function (f) { return f.value.trim() !== ''; });
+            if (dirty && !submitted &&
+                !window.confirm('Data yang sudah Anda isi akan hilang. Tetap kembali?')) {
+                e.preventDefault();
+            }
+        });
+    });
+})();
+</script>
 
 </body>
 </html>
