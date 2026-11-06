@@ -1,266 +1,482 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Layanan Online | SICANTIK</title>
 
-    <title>Monitoring Layanan Online - Super Admin</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --charcoal: #292F36;
+            --copper: #C66B32;
+            --white: #FFFFFF;
+            --offwhite: #F5F5F3;
+            --muted: #7B828A;
+            --border: #E8E7E3;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            background: #f4f7fb;
-            color: #1f2937;
-            font-family: Arial, Helvetica, sans-serif;
+            background: var(--offwhite);
+            color: var(--charcoal);
+            font-family: 'DM Sans', sans-serif;
         }
 
-        /* HEADER */
         .top-header {
-            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            background: var(--charcoal);
             color: white;
-            padding: 28px 35px;
-            box-shadow: 0 4px 15px rgba(13, 110, 253, .18);
+            padding: 35px 5%;
+            border-bottom: 4px solid var(--copper);
+        }
+
+        .header-content {
+            max-width: 1450px;
+            margin: auto;
+        }
+
+        .header-label {
+            color: #E9A477;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
         .top-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
             margin: 0;
-            font-size: 27px;
-            font-weight: 700;
         }
 
         .top-header p {
-            margin: 7px 0 0;
-            opacity: .9;
+            color: #D1D5D8;
+            margin: 8px 0 0;
+            font-size: 14px;
         }
 
         .page-container {
-            width: 95%;
-            max-width: 1500px;
-            margin: 30px auto;
+            max-width: 1450px;
+            width: 90%;
+            margin: 30px auto 60px;
         }
 
-        /* BACK BUTTON */
         .back-button {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            color: var(--charcoal);
             text-decoration: none;
-            color: #0d6efd;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            transition: .2s;
         }
 
         .back-button:hover {
-            color: #084298;
+            color: var(--copper);
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 27px;
+            margin: 0 0 7px;
+        }
+
+        .page-heading p {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0;
         }
 
         /* SUMMARY */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
         .summary-card {
             background: white;
-            border-radius: 14px;
-            padding: 22px 25px;
-            margin-bottom: 24px;
-            box-shadow: 0 3px 15px rgba(0,0,0,.06);
-            border-left: 5px solid #0d6efd;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--copper);
         }
 
         .summary-title {
-            font-size: 14px;
-            color: #6c757d;
-            margin-bottom: 5px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .summary-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0d6efd;
+            font-size: 29px;
+            font-weight: 800;
+            margin-top: 8px;
+            color: var(--charcoal);
         }
 
-        /* CARD */
+        .summary-description {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* CONTENT */
+
         .content-card {
             background: white;
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 25px;
-            margin-bottom: 24px;
-            box-shadow: 0 3px 15px rgba(0,0,0,.06);
+            margin-bottom: 22px;
+            box-shadow: 0 5px 20px rgba(41, 47, 54, .035);
         }
 
-        .card-title {
-            font-size: 18px;
+        .card-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .card-heading h3 {
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .card-heading p {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 5px 0 0;
+        }
+
+        .result-count {
+            color: var(--copper);
+            background: #FFF2E9;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 700;
-            margin-bottom: 20px;
         }
 
         /* FILTER */
-        .form-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #495057;
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 17px;
         }
 
-        .form-control,
-        .form-select {
-            min-height: 42px;
+        .filter-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .filter-control {
+            width: 100%;
+            min-height: 43px;
+            padding: 10px 12px;
+            border: 1px solid #DCDDD9;
             border-radius: 8px;
+            background: white;
+            color: var(--charcoal);
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: .2s;
+        }
+
+        .filter-control:focus {
+            border-color: var(--copper);
+            box-shadow: 0 0 0 3px rgba(198, 107, 50, .10);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 19px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
         }
 
         .btn-primary {
-            background: #0d6efd;
-            border-color: #0d6efd;
-            border-radius: 8px;
-            font-weight: 600;
+            background: var(--copper);
+            color: white;
         }
 
         .btn-primary:hover {
-            background: #0b5ed7;
-            border-color: #0b5ed7;
+            background: #A95425;
         }
 
         .btn-reset {
-            border-radius: 8px;
-            font-weight: 600;
+            background: #F0F0ED;
+            color: var(--charcoal);
+        }
+
+        .btn-reset:hover {
+            background: #E5E4DF;
         }
 
         /* TABLE */
+
         .table-wrapper {
+            width: 100%;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
-            min-width: 1100px;
+            min-width: 1050px;
             border-collapse: collapse;
         }
 
         thead th {
-            background: #0d6efd;
-            color: white;
-            padding: 14px;
-            font-size: 13px;
+            background: #F6F3EF;
+            color: #555D65;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 15px 13px;
+            text-align: left;
             white-space: nowrap;
-            border: none;
+            border-bottom: 1px solid var(--border);
         }
 
         tbody td {
-            padding: 14px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 15px 13px;
+            font-size: 13px;
+            border-bottom: 1px solid #EEEEEB;
             vertical-align: middle;
-            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: .2s;
         }
 
         tbody tr:hover {
-            background: #f8fbff;
+            background: #FCFAF7;
         }
 
         .number {
+            color: var(--muted);
             font-weight: 700;
-            color: #6c757d;
         }
 
         .application-number {
+            color: var(--copper);
+            font-weight: 800;
+        }
+
+        .applicant-name {
             font-weight: 700;
-            color: #0d6efd;
+            color: var(--charcoal);
         }
 
         .service-name {
             font-weight: 600;
-            color: #212529;
+        }
+
+        .sub-text {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 4px;
         }
 
         /* STATUS */
+
         .status {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 6px 11px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
             white-space: nowrap;
         }
 
         .status-menunggu {
-            background: #fff3cd;
-            color: #664d03;
+            background: #FFF3D9;
+            color: #93630A;
         }
 
         .status-diproses {
-            background: #cfe2ff;
-            color: #084298;
+            background: #E8EFFB;
+            color: #355B98;
         }
 
         .status-diverifikasi {
-            background: #cff4fc;
-            color: #055160;
+            background: #E1F4F4;
+            color: #247777;
         }
 
-        .status-disetujui {
-            background: #d1e7dd;
-            color: #0f5132;
-        }
-
+        .status-disetujui,
         .status-selesai {
-            background: #d1e7dd;
-            color: #0f5132;
+            background: #E3F2E7;
+            color: #347348;
         }
 
         .status-ditolak {
-            background: #f8d7da;
-            color: #842029;
+            background: #FBE7E6;
+            color: #A6423D;
         }
 
         .status-default {
-            background: #e9ecef;
-            color: #495057;
+            background: #EEEEEB;
+            color: #555D65;
+        }
+
+        .btn-detail {
+            background: var(--charcoal);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 7px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .btn-detail:hover {
+            background: var(--copper);
+            color: white;
         }
 
         /* EMPTY */
+
         .empty-state {
             text-align: center;
-            padding: 65px 20px;
-            color: #6c757d;
+            padding: 55px 20px;
         }
 
         .empty-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
+            font-size: 38px;
+            margin-bottom: 12px;
         }
 
         .empty-state h4 {
-            color: #343a40;
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 13px;
         }
 
         /* PAGINATION */
+
         .pagination-wrapper {
-            margin-top: 25px;
+            margin-top: 22px;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
 
+        .pagination svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .pagination nav {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .pagination a,
+        .pagination span {
+            font-size: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .filter-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
             .top-header {
-                padding: 22px 20px;
+                padding: 27px 6%;
             }
 
             .top-header h1 {
-                font-size: 22px;
+                font-size: 25px;
             }
 
             .page-container {
-                width: 94%;
-                margin-top: 20px;
+                width: 92%;
+                margin-top: 22px;
+            }
+
+            .page-heading h2 {
+                font-size: 23px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
             }
 
             .content-card {
-                padding: 18px;
+                padding: 18px 15px;
+            }
+
+            .filter-actions .btn {
+                flex: 1;
             }
         }
     </style>
@@ -268,461 +484,241 @@
 
 <body>
 
-    {{-- HEADER --}}
-    <div class="top-header">
-        <h1>Monitoring Layanan Online</h1>
+    <header class="top-header">
+        <div class="header-content">
+            <div class="header-label">SICANTIK · ADMINISTRATOR</div>
+            <h1>Monitoring Layanan Online</h1>
+            <p>Pemantauan seluruh pengajuan layanan online masyarakat.</p>
+        </div>
+    </header>
 
-        <p>
-            Pemantauan seluruh pengajuan layanan online masyarakat
-        </p>
-    </div>
+    <main class="page-container">
 
-
-    <div class="page-container">
-
-        {{-- KEMBALI KE DASHBOARD --}}
-        <a
-            href="{{ route('admin.dashboard') }}"
-            class="back-button"
-        >
-            ← Kembali ke Dashboard Super Admin
+        <a href="{{ route('admin.dashboard') }}" class="back-button">
+            ← Kembali ke Dashboard
         </a>
 
-
-        {{-- RINGKASAN --}}
-        <div class="summary-card">
-
-            <div class="summary-title">
-                Total Pengajuan Layanan
-            </div>
-
-            <div class="summary-number">
-                {{ $pengajuan->total() }}
-            </div>
-
+        <div class="page-heading">
+            <h2>Data Pengajuan Layanan</h2>
+            <p>Kelola dan pantau perkembangan pengajuan layanan masyarakat.</p>
         </div>
 
-
-        {{-- FILTER --}}
-        <div class="content-card">
-
-            <div class="card-title">
-                Filter Pengajuan Layanan
+        {{-- RINGKASAN --}}
+        <section class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-title">Total Hasil Pengajuan</div>
+                <div class="summary-number">{{ $pengajuan->total() }}</div>
+                <div class="summary-description">Data sesuai pencarian dan filter yang digunakan</div>
             </div>
 
-            <form
-                method="GET"
-                action="{{ route('admin.monitoring.layanan') }}"
-            >
+            <div class="summary-card">
+                <div class="summary-title">Data pada Halaman Ini</div>
+                <div class="summary-number">{{ $pengajuan->count() }}</div>
+                <div class="summary-description">Jumlah pengajuan yang sedang ditampilkan</div>
+            </div>
+        </section>
 
-                <div class="row g-3">
+        {{-- FILTER --}}
+        <section class="content-card">
+            <div class="card-heading">
+                <div>
+                    <h3>Filter dan Pencarian</h3>
+                    <p>Gunakan filter untuk menemukan data pengajuan tertentu.</p>
+                </div>
+            </div>
 
-                    {{-- NOMOR --}}
-                    <div class="col-lg-3 col-md-6">
+            <form action="{{ route('admin.monitoring.layanan') }}" method="GET">
 
-                        <label class="form-label">
-                            Nomor Pengajuan
-                        </label>
+                <div class="filter-grid">
 
+                    <div class="filter-group">
+                        <label for="nomor_pengajuan">Nomor Pengajuan</label>
                         <input
                             type="text"
+                            id="nomor_pengajuan"
                             name="nomor_pengajuan"
-                            class="form-control"
+                            class="filter-control"
+                            placeholder="Masukkan nomor pengajuan"
                             value="{{ request('nomor_pengajuan') }}"
-                            placeholder="Cari nomor pengajuan..."
                         >
-
                     </div>
 
-
-                    {{-- LAYANAN --}}
-                    <div class="col-lg-3 col-md-6">
-
-                        <label class="form-label">
-                            Jenis Layanan
-                        </label>
-
-                        <select
-                            name="layanan_id"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                Semua Layanan
-                            </option>
-
-                            @foreach ($layanan as $item)
-
+                    <div class="filter-group">
+                        <label for="layanan_id">Jenis Layanan</label>
+                        <select id="layanan_id" name="layanan_id" class="filter-control">
+                            <option value="">Semua Layanan</option>
+                            @foreach($layanan as $itemLayanan)
                                 <option
-                                    value="{{ $item->id }}"
-                                    {{ request('layanan_id') == $item->id ? 'selected' : '' }}
+                                    value="{{ $itemLayanan->id }}"
+                                    {{ request('layanan_id') == $itemLayanan->id ? 'selected' : '' }}
                                 >
-                                    {{ $item->nama }}
+                                    {{ $itemLayanan->nama }}
                                 </option>
-
                             @endforeach
-
                         </select>
-
                     </div>
 
-
-                    {{-- STATUS --}}
-                    <div class="col-lg-2 col-md-6">
-
-                        <label class="form-label">
-                            Status
-                        </label>
-
-                        <select
-                            name="status"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                Semua Status
-                            </option>
-
-                            <option
-                                value="menunggu_verifikasi"
-                                {{ request('status') == 'menunggu_verifikasi' ? 'selected' : '' }}
-                            >
-                                Menunggu Verifikasi
-                            </option>
-
-                            <option
-                                value="Diverifikasi"
-                                {{ request('status') == 'Diverifikasi' ? 'selected' : '' }}
-                            >
-                                Diverifikasi
-                            </option>
-
-                            <option
-                                value="Disetujui"
-                                {{ request('status') == 'Disetujui' ? 'selected' : '' }}
-                            >
-                                Disetujui
-                            </option>
-
-                            <option
-                                value="Ditolak"
-                                {{ request('status') == 'Ditolak' ? 'selected' : '' }}
-                            >
-                                Ditolak
-                            </option>
-
+                    <div class="filter-group">
+                        <label for="status">Status Pengajuan</label>
+                        <select id="status" name="status" class="filter-control">
+                            <option value="">Semua Status</option>
+                            <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                            <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>Diproses</option>
+                            <option value="Diverifikasi" {{ request('status') == 'Diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
+                            <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                            <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                            <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                         </select>
-
                     </div>
 
-
-                    {{-- TANGGAL MULAI --}}
-                    <div class="col-lg-2 col-md-6">
-
-                        <label class="form-label">
-                            Tanggal Mulai
-                        </label>
-
+                    <div class="filter-group">
+                        <label for="tanggal_mulai">Tanggal Mulai</label>
                         <input
                             type="date"
+                            id="tanggal_mulai"
                             name="tanggal_mulai"
-                            class="form-control"
+                            class="filter-control"
                             value="{{ request('tanggal_mulai') }}"
                         >
-
                     </div>
 
-
-                    {{-- TANGGAL AKHIR --}}
-                    <div class="col-lg-2 col-md-6">
-
-                        <label class="form-label">
-                            Tanggal Akhir
-                        </label>
-
+                    <div class="filter-group">
+                        <label for="tanggal_akhir">Tanggal Akhir</label>
                         <input
                             type="date"
+                            id="tanggal_akhir"
                             name="tanggal_akhir"
-                            class="form-control"
+                            class="filter-control"
                             value="{{ request('tanggal_akhir') }}"
                         >
-
                     </div>
 
                 </div>
 
-
-                <div class="mt-4 d-flex gap-2">
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary px-4"
-                    >
-                        🔎 Filter
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Cari Pengajuan
                     </button>
 
-                    <a
-                        href="{{ route('admin.monitoring.layanan') }}"
-                        class="btn btn-outline-secondary btn-reset px-4"
-                    >
-                        Reset
+                    <a href="{{ route('admin.monitoring.layanan') }}" class="btn btn-reset">
+                        Reset Filter
                     </a>
-
                 </div>
 
             </form>
+        </section>
 
-        </div>
+        {{-- TABEL DATA --}}
+        <section class="content-card">
 
-
-        {{-- DATA --}}
-        <div class="content-card">
-
-            <div class="d-flex justify-content-between align-items-center mb-4">
-
+            <div class="card-heading">
                 <div>
-
-                    <div class="card-title mb-1">
-                        Data Pengajuan Layanan
-                    </div>
-
-                    <small class="text-muted">
-                        Data terbaru ditampilkan terlebih dahulu.
-                    </small>
-
+                    <h3>Daftar Pengajuan Layanan</h3>
+                    <p>Informasi pengajuan layanan online masyarakat.</p>
                 </div>
 
-                <span class="badge bg-primary rounded-pill px-3 py-2">
-                    {{ $pengajuan->total() }} Pengajuan
+                <span class="result-count">
+                    {{ $pengajuan->total() }} Data
                 </span>
-
             </div>
 
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nomor Pengajuan</th>
+                            <th>Nama Pemohon</th>
+                            <th>Jenis Layanan</th>
+                            <th>Nomor HP</th>
+                            <th>Status</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
 
-            @if ($pengajuan->count() > 0)
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
+                    <tbody>
+                        @forelse($pengajuan as $index => $item)
+                            @php
+                                $statusClass = \Illuminate\Support\Str::slug($item->status ?? 'default');
+                            @endphp
 
                             <tr>
+                                <td class="number">
+                                    {{ $pengajuan->firstItem() + $index }}
+                                </td>
 
-                                <th>No</th>
+                                <td>
+                                    <span class="application-number">
+                                        {{ $item->nomor_pengajuan }}
+                                    </span>
+                                </td>
 
-                                <th>Nomor Pengajuan</th>
+                                <td>
+                                    <span class="applicant-name">
+                                        {{ $item->nama_lengkap }}
+                                    </span>
+                                    <span class="sub-text">
+                                        NIK: {{ $item->nik ?: '-' }}
+                                    </span>
+                                </td>
 
-                                <th>Nama Pemohon</th>
+                                <td>
+                                    <span class="service-name">
+                                        {{ $item->layanan->nama ?? 'Layanan tidak tersedia' }}
+                                    </span>
+                                </td>
 
-                                <th>Layanan</th>
+                                <td>{{ $item->nomor_hp ?: '-' }}</td>
 
-                                <th>NIK</th>
+                                <td>
+                                    <span class="status status-{{ $statusClass }}">
+                                        {{ $item->status ?: 'Belum ada status' }}
+                                    </span>
+                                </td>
 
-                                <th>No. HP</th>
+                                <td>
+                                    {{ $item->created_at ? $item->created_at->format('d/m/Y') : '-' }}
+                                    <span class="sub-text">
+                                        {{ $item->created_at ? $item->created_at->format('H:i') . ' WIB' : '' }}
+                                    </span>
+                                </td>
 
-                                <th>Status</th>
-
-                                <th>Tanggal Pengajuan</th>
-
+                                <td>
+                                    <a
+                                        href="{{ route('admin.pengajuan-layanan.show', $item->id) }}"
+                                        class="btn btn-detail"
+                                    >
+                                        Lihat Detail →
+                                    </a>
+                                </td>
                             </tr>
 
-                        </thead>
-
-
-                        <tbody>
-
-                            @foreach ($pengajuan as $item)
-
-                                @php
-
-                                    $status = strtolower(
-                                        trim($item->status ?? '')
-                                    );
-
-                                    $statusClass = match ($status) {
-
-                                        'menunggu_verifikasi'
-                                            => 'status-menunggu',
-
-                                        'menunggu'
-                                            => 'status-menunggu',
-
-                                        'diproses'
-                                            => 'status-diproses',
-
-                                        'diverifikasi'
-                                            => 'status-diverifikasi',
-
-                                        'disetujui'
-                                            => 'status-disetujui',
-
-                                        'selesai'
-                                            => 'status-selesai',
-
-                                        'ditolak'
-                                            => 'status-ditolak',
-
-                                        default
-                                            => 'status-default',
-                                    };
-
-
-                                    $statusLabel = match ($status) {
-
-                                        'menunggu_verifikasi'
-                                            => 'Menunggu Verifikasi',
-
-                                        'menunggu'
-                                            => 'Menunggu',
-
-                                        'diproses'
-                                            => 'Diproses',
-
-                                        'diverifikasi'
-                                            => 'Diverifikasi',
-
-                                        'disetujui'
-                                            => 'Disetujui',
-
-                                        'selesai'
-                                            => 'Selesai',
-
-                                        'ditolak'
-                                            => 'Ditolak',
-
-                                        default
-                                            => $item->status ?? 'Tidak Diketahui',
-                                    };
-
-                                @endphp
-
-
-                                <tr>
-
-                                    {{-- NO --}}
-                                    <td class="number">
-
-                                        {{ $pengajuan->firstItem() + $loop->index }}
-
-                                    </td>
-
-
-                                    {{-- NOMOR --}}
-                                    <td>
-
-                                        <span class="application-number">
-
-                                            {{ $item->nomor_pengajuan }}
-
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- NAMA --}}
-                                    <td>
-
-                                        {{ $item->nama_lengkap ?? '-' }}
-
-                                    </td>
-
-
-                                    {{-- LAYANAN --}}
-                                    <td>
-
-                                        <span class="service-name">
-
-                                            {{ $item->layanan?->nama ?? '-' }}
-
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- NIK --}}
-                                    <td>
-
-                                        {{ $item->nik ?? '-' }}
-
-                                    </td>
-
-
-                                    {{-- HP --}}
-                                    <td>
-
-                                        {{ $item->nomor_hp ?? '-' }}
-
-                                    </td>
-
-
-                                    {{-- STATUS --}}
-                                    <td>
-
-                                        <span
-                                            class="status {{ $statusClass }}"
-                                        >
-                                            {{ $statusLabel }}
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- TANGGAL --}}
-                                    <td>
-
-                                        {{ $item->created_at?->format('d/m/Y H:i') ?? '-' }}
-
-                                    </td>
-
-                                </tr>
-
-                            @endforeach
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-
-                {{-- PAGINATION --}}
-                <div class="pagination-wrapper">
-
-                    {{ $pengajuan->links() }}
-
-                </div>
-
-            @else
-
-                {{-- EMPTY STATE --}}
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        📭
-                    </div>
-
-                    <h4>
-                        Belum Ada Pengajuan Layanan
-                    </h4>
-
-                    <p class="mb-0">
-                        Belum terdapat pengajuan layanan online
-                        dari masyarakat.
-                    </p>
-
-                </div>
-
-            @endif
-
-        </div>
-
-    </div>
-
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-    </script>
+                        @empty
+                            <tr>
+                                <td colspan="8">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">📋</div>
+                                        <h4>Belum Ada Data Pengajuan</h4>
+                                        <p>
+                                            Data pengajuan layanan tidak ditemukan.
+                                            Silakan ubah kata kunci atau filter pencarian.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-wrapper">
+                {{ $pengajuan->links() }}
+            </div>
+
+        </section>
+
+    </main>
 
 </body>
 </html>

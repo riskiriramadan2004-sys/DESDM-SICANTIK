@@ -4,257 +4,427 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Manajemen User - DESDM SICANTIK</title>
+    <title>Manajemen User | DESDM SICANTIK</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        /* =====================================
+           1. IDENTITAS VISUAL SI CANTIK
+        ===================================== */
+
+        :root {
+            --charcoal: #292F36;
+            --charcoal-light: #3B4249;
+            --copper: #C66B32;
+            --copper-dark: #A95325;
+            --warm-white: #F5F5F3;
+            --white: #FFFFFF;
+            --gray: #68717A;
+            --pale-copper: #FCEBDD;
+            --border: #E3E5E6;
+
+            --danger: #B42332;
+            --danger-bg: #FFF0F0;
+
+            --success: #18794E;
+            --success-bg: #EAF7EF;
+        }
+
+        /* =====================================
+           2. RESET DAN GLOBAL
+        ===================================== */
+
         * {
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f3f6fb;
-            color: #172033;
+        html {
+            min-height: 100%;
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--warm-white);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a,
+        button {
+            font-family: inherit;
+        }
+
+        /* =====================================
+           3. HEADER SI CANTIK
+        ===================================== */
 
         .header {
-            background: linear-gradient(135deg, #1268e8, #176ff2);
-            color: white;
-            padding: 24px 28px;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 24px;
+            padding: 17px clamp(20px, 4vw, 58px);
+            color: var(--white);
+            background: var(--charcoal);
+            border-bottom: 3px solid var(--copper);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 0;
+        }
+
+        /* LOGO SULAWESI TENGAH */
+
+        .header-logo {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            display: grid;
+            place-items: center;
+            padding: 4px;
+            border-radius: 10px;
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        .header-logo img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .header-title h1 {
             margin: 0;
-            font-size: 26px;
+            color: var(--white);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(19px, 2vw, 25px);
+            font-weight: 800;
+            letter-spacing: -.5px;
         }
 
         .header-title p {
             margin: 5px 0 0;
-            font-size: 15px;
-            opacity: .9;
+            color: #D4D9DC;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
+        /* TOMBOL DASHBOARD */
+
         .btn-dashboard {
-            background: white;
-            color: #1268e8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-shrink: 0;
+            padding: 11px 16px;
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 9px;
+            background: rgba(255,255,255,.08);
+            color: var(--white);
             text-decoration: none;
-            padding: 11px 18px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 700;
+            transition: .2s ease;
         }
 
         .btn-dashboard:hover {
-            background: #eef5ff;
+            color: var(--white);
+            background: var(--copper);
+            border-color: var(--copper);
+            transform: translateY(-1px);
         }
 
-        /* =========================
-           CONTENT
-        ========================= */
+        /* =====================================
+           4. KONTEN UTAMA
+        ===================================== */
 
         .container {
-            max-width: 1350px;
-            margin: 30px auto;
-            padding: 0 20px;
+            width: min(1350px, 100%);
+            margin: 0 auto;
+            padding: 32px 24px 48px;
         }
 
         .page-heading {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 18px;
+            gap: 18px;
+            margin-bottom: 20px;
         }
 
         .page-heading h2 {
             margin: 0;
-            font-size: 21px;
+            color: var(--charcoal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -.4px;
         }
 
+        /* TOMBOL TAMBAH USER */
+
         .btn-add {
-            background: #1268e8;
-            color: white;
-            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             padding: 11px 17px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            border: 1px solid var(--copper);
+            border-radius: 9px;
+            background: var(--copper);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            box-shadow: 0 5px 14px rgba(198,107,50,.16);
+            transition: .2s ease;
         }
 
         .btn-add:hover {
-            background: #0959cc;
+            background: var(--copper-dark);
+            border-color: var(--copper-dark);
+            transform: translateY(-1px);
         }
 
-        /* =========================
-           ALERT
-        ========================= */
+        /* =====================================
+           5. ALERT
+        ===================================== */
 
         .alert {
-            padding: 14px 18px;
-            border-radius: 9px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 13px 16px;
             margin-bottom: 18px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         .alert-success {
-            background: #e8f8ef;
-            color: #16743b;
-            border: 1px solid #bde8cd;
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid #CBE8D5;
         }
 
         .alert-error {
-            background: #fdecec;
-            color: #a62626;
-            border: 1px solid #f2c2c2;
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid #F2D0D3;
         }
 
-        /* =========================
-           TABLE
-        ========================= */
+        /* =====================================
+           6. TABEL USER
+        ===================================== */
 
         .table-card {
-            background: white;
-            border-radius: 14px;
-            padding: 24px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+            padding: 22px;
+            border: 1px solid rgba(41,47,54,.05);
+            border-radius: 17px;
+            background: var(--white);
+            box-shadow: 0 12px 35px rgba(41,47,54,.07);
             overflow-x: auto;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            min-width: 760px;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
-        th {
-            background: #25292d;
-            color: white;
-            padding: 14px;
+        thead th {
+            padding: 15px 16px;
+            background: var(--charcoal);
+            color: var(--white);
             text-align: left;
-            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
         }
 
-        td {
-            padding: 14px;
-            border-bottom: 1px solid #e6e9ee;
-            font-size: 14px;
+        thead th:first-child {
+            border-radius: 9px 0 0 9px;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        thead th:last-child {
+            border-radius: 0 9px 9px 0;
+        }
+
+        tbody td {
+            padding: 16px;
+            border-bottom: 1px solid #EAECED;
+            color: #46515A;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        tbody tr {
+            transition: background .18s ease;
+        }
+
+        tbody tr:hover {
+            background: #FCFAF8;
         }
 
         .user-name {
-            font-weight: bold;
+            color: var(--charcoal);
+            font-weight: 700;
         }
 
-        /* =========================
-           ROLE BADGE
-        ========================= */
+        /* =====================================
+           7. BADGE ROLE
+        ===================================== */
 
         .badge {
-            display: inline-block;
-            padding: 7px 13px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 12px;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
         }
 
         .badge-super {
-            background: #eadcff;
-            color: #54259a;
+            background: #F0E8FA;
+            color: #68429A;
+            border-color: #E5D8F5;
         }
 
         .badge-informasi {
-            background: #d8e8ff;
-            color: #1259aa;
+            background: #E8EFF8;
+            color: #365F91;
+            border-color: #D7E3F2;
         }
 
         .badge-pengaduan {
-            background: #ffd9dc;
-            color: #a52935;
+            background: #FBE9E8;
+            color: #A64A43;
+            border-color: #F3D5D2;
         }
 
         .badge-bantuan {
-            background: #fff0c9;
-            color: #956900;
+            background: var(--pale-copper);
+            color: #98602F;
+            border-color: #F3D8C2;
         }
 
         .badge-layanan {
-            background: #d9f1e7;
-            color: #18734e;
+            background: #E6F2EC;
+            color: #39765A;
+            border-color: #D1E8DB;
         }
 
-        /* =========================
-           BUTTON
-        ========================= */
+        /* =====================================
+           8. TOMBOL AKSI
+        ===================================== */
 
         .actions {
             display: flex;
-            gap: 8px;
             align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 8px 13px;
+            border: 1px solid transparent;
             border-radius: 8px;
-            padding: 9px 15px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
             text-decoration: none;
-            display: inline-block;
+            cursor: pointer;
+            transition: .2s ease;
         }
 
         .btn-edit {
-            background: #ffbd00;
-            color: #171717;
+            background: var(--pale-copper);
+            color: var(--copper-dark);
+            border-color: #F2D6C1;
         }
 
         .btn-edit:hover {
-            background: #e8a900;
+            background: var(--copper);
+            color: var(--white);
+            border-color: var(--copper);
         }
 
         .btn-delete {
-            background: #df3045;
-            color: white;
+            background: #FBE9E8;
+            color: var(--danger);
+            border-color: #F3D5D2;
         }
 
         .btn-delete:hover {
-            background: #c82339;
+            background: var(--danger);
+            color: var(--white);
+            border-color: var(--danger);
         }
 
-        /* =========================
-           PAGINATION
-        ========================= */
+        /* =====================================
+           9. PAGINATION
+        ===================================== */
 
         .pagination-wrapper {
             margin-top: 20px;
         }
 
-        /* =========================
-           MODAL HAPUS
-        ========================= */
+        .pagination-wrapper nav {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .pagination-wrapper svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .pagination-wrapper a,
+        .pagination-wrapper span {
+            font-size: 12px;
+        }
+
+        /* =====================================
+           10. MODAL HAPUS USER
+        ===================================== */
 
         .delete-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, .55);
-
+            z-index: 99999;
             display: none;
-
             align-items: center;
             justify-content: center;
-
-            z-index: 99999;
-
             padding: 20px;
+            background: rgba(25,31,37,.62);
+            backdrop-filter: blur(4px);
         }
 
         .delete-modal-overlay.active {
@@ -264,22 +434,19 @@
         .delete-modal {
             width: 100%;
             max-width: 440px;
-            background: white;
-            border-radius: 18px;
             padding: 30px;
-
+            border: 1px solid rgba(255,255,255,.8);
+            border-radius: 18px;
+            background: var(--white);
             text-align: center;
-
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, .25);
-
+            box-shadow: 0 24px 70px rgba(0,0,0,.25);
             animation: modalShow .2s ease-out;
         }
 
         @keyframes modalShow {
             from {
                 opacity: 0;
-                transform: translateY(-15px) scale(.96);
+                transform: translateY(-12px) scale(.97);
             }
 
             to {
@@ -289,126 +456,181 @@
         }
 
         .delete-icon {
-            width: 68px;
-            height: 68px;
-
-            margin: 0 auto 18px;
-
-            border-radius: 50%;
-
-            background: #fff0f1;
-
+            width: 65px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            color: #df3045;
-
-            font-size: 32px;
+            margin: 0 auto 17px;
+            border-radius: 50%;
+            background: #FBE9E8;
+            color: var(--danger);
+            font-size: 27px;
         }
 
         .delete-modal h3 {
             margin: 0 0 10px;
-            font-size: 21px;
-            color: #172033;
+            color: var(--charcoal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
         }
 
         .delete-modal p {
-            margin: 0 auto 25px;
-            color: #657085;
-            line-height: 1.6;
-            font-size: 14px;
+            margin: 0 auto 24px;
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         .delete-modal strong {
-            color: #172033;
+            color: var(--charcoal);
         }
 
         .modal-actions {
             display: flex;
-            gap: 10px;
             justify-content: center;
+            gap: 10px;
         }
 
         .modal-btn {
-            min-width: 130px;
-            padding: 12px 18px;
-
-            border: none;
+            min-width: 125px;
+            padding: 11px 17px;
+            border: 1px solid transparent;
             border-radius: 9px;
-
-            font-weight: bold;
-            font-size: 14px;
-
+            font-size: 12px;
+            font-weight: 800;
             cursor: pointer;
+            transition: .2s ease;
         }
 
         .btn-cancel {
-            background: #edf0f5;
-            color: #3f4858;
+            background: var(--warm-white);
+            color: var(--charcoal);
+            border-color: var(--border);
         }
 
         .btn-cancel:hover {
-            background: #dfe4ec;
+            background: #E9EAE7;
         }
 
         .btn-confirm-delete {
-            background: #df3045;
-            color: white;
+            background: var(--danger);
+            color: var(--white);
         }
 
         .btn-confirm-delete:hover {
-            background: #c82339;
+            background: #941D2A;
         }
 
-        @media (max-width: 768px) {
+        /* =====================================
+           11. RESPONSIVE TABLET
+        ===================================== */
 
+        @media (max-width: 768px) {
             .header {
-                padding: 20px;
+                align-items: flex-start;
+                padding: 17px 20px;
+            }
+
+            .header-title {
+                gap: 11px;
+            }
+
+            .header-logo {
+                width: 42px;
+                height: 42px;
+                flex-basis: 42px;
             }
 
             .header-title h1 {
-                font-size: 21px;
+                font-size: 19px;
             }
 
             .header-title p {
-                font-size: 13px;
+                max-width: 360px;
+                font-size: 11px;
             }
 
             .btn-dashboard {
-                padding: 9px 12px;
-                font-size: 12px;
-            }
-
-            .page-heading {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .table-card {
-                padding: 12px;
-            }
-
-            th,
-            td {
-                padding: 11px 9px;
+                padding: 9px 11px;
+                font-size: 11px;
                 white-space: nowrap;
             }
 
-            .actions {
+            .container {
+                padding: 25px 16px 35px;
+            }
+
+            .page-heading {
+                align-items: flex-start;
                 flex-direction: column;
-                align-items: stretch;
+                gap: 13px;
+            }
+
+            .page-heading h2 {
+                font-size: 18px;
+            }
+
+            .table-card {
+                padding: 13px;
+                border-radius: 13px;
+            }
+
+            .actions {
+                flex-wrap: nowrap;
             }
 
             .modal-actions {
-                flex-direction: column;
+                flex-direction: column-reverse;
             }
 
             .modal-btn {
                 width: 100%;
             }
         }
+
+        /* =====================================
+           12. RESPONSIVE HP
+        ===================================== */
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .btn-dashboard {
+                align-self: flex-start;
+            }
+
+            .container {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .table-card {
+                padding: 9px;
+            }
+
+            .delete-modal {
+                padding: 25px 20px;
+            }
+        }
+
+        /* =====================================
+           13. AKSESIBILITAS
+        ===================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
     </style>
 </head>
 
@@ -422,11 +644,20 @@
 
         <div class="header-title">
 
-            <h1>Manajemen User</h1>
+            <div class="header-logo">
+                <img
+                    src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+                    alt="Logo Provinsi Sulawesi Tengah"
+                >
+            </div>
 
-            <p>
-                Pengelolaan akun administrator sistem DESDM-SICANTIK
-            </p>
+            <div>
+                <h1>Manajemen User</h1>
+
+                <p>
+                    Pengelolaan akun administrator sistem DESDM-SICANTIK
+                </p>
+            </div>
 
         </div>
 
@@ -434,7 +665,8 @@
             href="{{ route('admin.dashboard') }}"
             class="btn-dashboard"
         >
-            ← Kembali ke Dashboard
+            <i class="fa-solid fa-arrow-left"></i>
+            Kembali ke Dashboard
         </a>
 
     </header>
@@ -456,32 +688,35 @@
                 href="{{ route('admin.users.create') }}"
                 class="btn-add"
             >
-                + Tambah User
+                <i class="fa-solid fa-plus"></i>
+                Tambah User
             </a>
 
         </div>
 
 
-        {{-- =========================
-             SUCCESS MESSAGE
-        ========================= --}}
+        {{-- SUCCESS MESSAGE --}}
 
         @if(session('success'))
 
             <div class="alert alert-success">
+
+                <i class="fa-solid fa-circle-check"></i>
+
                 {{ session('success') }}
+
             </div>
 
         @endif
 
 
-        {{-- =========================
-             ERROR MESSAGE
-        ========================= --}}
+        {{-- ERROR MESSAGE --}}
 
         @if($errors->any())
 
             <div class="alert alert-error">
+
+                <i class="fa-solid fa-circle-exclamation"></i>
 
                 <ul style="margin:0; padding-left:20px;">
 
@@ -498,9 +733,7 @@
         @endif
 
 
-        {{-- =========================
-             TABLE
-        ========================= --}}
+        {{-- TABLE --}}
 
         <div class="table-card">
 
@@ -624,6 +857,7 @@
                                         href="{{ route('admin.users.edit', $user) }}"
                                         class="btn btn-edit"
                                     >
+                                        <i class="fa-solid fa-pen-to-square"></i>
                                         Edit
                                     </a>
 
@@ -640,6 +874,7 @@
                                                 @js($user->name)
                                             )"
                                         >
+                                            <i class="fa-solid fa-trash"></i>
                                             Hapus
                                         </button>
 
@@ -647,8 +882,9 @@
 
                                         <span
                                             style="
-                                                font-size:12px;
-                                                color:#8a93a3;
+                                                font-size:11px;
+                                                color:#68717A;
+                                                white-space:nowrap;
                                             "
                                         >
                                             Akun aktif
@@ -671,10 +907,16 @@
                                 style="
                                     text-align:center;
                                     padding:40px;
-                                    color:#7a8495;
+                                    color:#68717A;
                                 "
                             >
+
+                                <i class="fa-solid fa-users"
+                                   style="font-size:25px; margin-bottom:12px; display:block; color:#C66B32;">
+                                </i>
+
                                 Belum ada data administrator.
+
                             </td>
 
                         </tr>
@@ -703,9 +945,9 @@
     </main>
 
 
-    {{-- =========================================================
+    {{-- =========================================
          MODAL KONFIRMASI HAPUS
-    ========================================================== --}}
+    ========================================== --}}
 
     <div
         id="deleteModal"
@@ -719,7 +961,7 @@
         >
 
             <div class="delete-icon">
-                ⚠
+                <i class="fa-solid fa-trash-can"></i>
             </div>
 
             <h3>
@@ -729,7 +971,9 @@
             <p>
                 Apakah Anda yakin ingin menghapus user
                 <strong id="deleteUserName"></strong>?
+
                 <br>
+
                 Akun ini akan dihapus dari sistem dan
                 tidak dapat digunakan untuk login lagi.
             </p>
@@ -751,6 +995,7 @@
                     class="modal-btn btn-confirm-delete"
                     onclick="confirmDelete()"
                 >
+                    <i class="fa-solid fa-trash"></i>
                     Ya, Hapus
                 </button>
 
@@ -776,9 +1021,9 @@
     </form>
 
 
-    {{-- =========================
+    {{-- =========================================
          JAVASCRIPT MODAL
-    ========================= --}}
+    ========================================== --}}
 
     <script>
 

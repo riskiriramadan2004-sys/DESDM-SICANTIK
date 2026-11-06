@@ -3,150 +3,568 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#292F36">
 
-    <title>Login Admin | Si Cantik</title>
+    <title>Login Admin | DESDM SICANTIK</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        /* =========================================
+           1. DESIGN SYSTEM SI CANTIK
+        ========================================= */
+
+        :root {
+            --charcoal: #292F36;
+            --charcoal-light: #3B4249;
+
+            --copper: #C66B32;
+            --copper-dark: #A95325;
+
+            --warm-white: #F5F5F3;
+            --white: #FFFFFF;
+
+            --gray: #68717A;
+            --pale-copper: #FCEBDD;
+
+            --border: #E0E4E5;
+
+            --danger: #B42332;
+            --danger-bg: #FFF0F0;
+
+            --success: #18794E;
+            --success-bg: #EAF7EF;
+        }
+
+        /* =========================================
+           2. RESET
+        ========================================= */
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
             min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+
+            background: var(--warm-white);
+            color: var(--charcoal);
+
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* =========================================
+           3. HEADER
+        ========================================= */
+
+        .topbar {
+            position: relative;
+            z-index: 5;
+
+            width: 100%;
+            flex-shrink: 0;
+
+            padding: 13px 6%;
+
+            background: var(--charcoal);
+            color: var(--white);
+
+            border-bottom: 3px solid var(--copper);
+        }
+
+        .topbar-inner {
+            width: min(1180px, 100%);
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        /* LOGO RESMI ESDM */
+
+        .brand-mark {
+            width: 48px;
+            height: 48px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 4px;
+
+            border-radius: 10px;
+
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        .brand-mark img {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: .4px;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+
+            color: #D0D5D8;
+
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .topbar-label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: #E5E8EA;
+
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .topbar-label i {
+            color: #E7A778;
+        }
+
+        /* =========================================
+           4. MAIN BACKGROUND GEDUNG ESDM
+        ========================================= */
+
+        .main {
+            position: relative;
+            isolation: isolate;
+
+            flex: 1;
+            min-height: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px 24px;
+
+            overflow: hidden;
+
             background:
                 linear-gradient(
-                    135deg,
-                    #edf4fa 0%,
-                    #f8fafc 50%,
-                    #eaf2f8 100%
-                );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
-            color: #173f65;
+                    110deg,
+                    rgba(245, 245, 243, .76) 0%,
+                    rgba(245, 245, 243, .84) 48%,
+                    rgba(255, 255, 255, .91) 100%
+                ),
+                url("{{ asset('images/hero-esdm-3.jpeg') }}")
+                center center / cover no-repeat;
         }
 
-        /* ================================
-           CONTAINER
-        ================================= */
+        /* ORNAMEN LINGKARAN */
 
-        .login-wrapper {
-            width: 100%;
-            max-width: 520px;
+        .main::before,
+        .main::after {
+            content: "";
+
+            position: absolute;
+            z-index: -1;
+
+            border: 1px solid rgba(198, 107, 50, .18);
+            border-radius: 50%;
+
+            pointer-events: none;
         }
 
-        /* ================================
-           LOGIN CARD
-        ================================= */
+        .main::before {
+            width: 430px;
+            height: 430px;
 
-        .login-card {
-            background: #ffffff;
+            top: -230px;
+            right: -120px;
+        }
+
+        .main::after {
+            width: 350px;
+            height: 350px;
+
+            bottom: -210px;
+            left: -130px;
+        }
+
+        /* =========================================
+           5. LOGIN CARD
+        ========================================= */
+
+        .login-layout {
+            position: relative;
+            z-index: 1;
+
+            width: min(1000px, 100%);
+            max-height: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(340px, .92fr);
+
+            align-items: stretch;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, .85);
             border-radius: 22px;
-            padding: 48px 50px 42px;
+
+            background: rgba(255, 255, 255, .97);
+
             box-shadow:
-                0 20px 50px rgba(15, 55, 90, 0.13),
-                0 3px 10px rgba(15, 55, 90, 0.04);
-            border: 1px solid #e4ebf2;
+                0 25px 70px rgba(41, 47, 54, .17);
+
+            animation: cardEnter .65s ease both;
         }
 
-        /* ================================
-           LOGO
-        ================================= */
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
 
-        .logo {
-            width: 88px;
-            height: 88px;
-            margin: 0 auto 22px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================
+           6. PANEL KIRI
+        ========================================= */
+
+        .welcome-panel {
+            position: relative;
+            overflow: hidden;
 
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            min-height: 0;
+
+            padding: 38px 38px;
+
+            color: var(--white);
+
+            background:
+                radial-gradient(
+                    circle at 95% 5%,
+                    rgba(198, 107, 50, .43),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(41, 47, 54, .93),
+                    rgba(41, 47, 54, .84)
+                );
+
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        .welcome-panel::before,
+        .welcome-panel::after {
+            content: "";
+
+            position: absolute;
+
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 50%;
+
+            pointer-events: none;
+        }
+
+        .welcome-panel::before {
+            width: 330px;
+            height: 330px;
+
+            right: -150px;
+            bottom: -100px;
+        }
+
+        .welcome-panel::after {
+            width: 230px;
+            height: 230px;
+
+            right: -100px;
+            bottom: -50px;
+        }
+
+        .welcome-content,
+        .welcome-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
 
-            background: #ffc400;
-            color: #123f68;
+            padding: 8px 13px;
 
-            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 999px;
 
-            font-size: 42px;
+            background: rgba(255, 255, 255, .08);
+
+            color: #F5D2BB;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .welcome-title {
+            margin-top: 28px;
+
+            font-family: 'Plus Jakarta Sans', sans-serif;
+
+            font-size: clamp(29px, 3vw, 39px);
             font-weight: 800;
 
-            box-shadow:
-                0 8px 20px rgba(255, 196, 0, 0.25);
+            line-height: 1.25;
+            letter-spacing: -1.1px;
         }
 
-        /* ================================
-           TITLE
-        ================================= */
-
-        .title {
-            text-align: center;
-
-            font-size: 32px;
-            font-weight: 750;
-
-            color: #123f68;
-
-            margin-bottom: 9px;
+        .welcome-title span {
+            color: #E7A778;
         }
 
-        .subtitle {
-            text-align: center;
+        .welcome-description {
+            max-width: 360px;
 
-            color: #6b7c8f;
+            margin-top: 17px;
 
-            font-size: 15px;
+            color: #E0E4E6;
+
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        /* FITUR */
+
+        .welcome-features {
+            display: grid;
+            gap: 15px;
+
+            margin-top: 27px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #E8EBED;
+
+            font-size: 11px;
             line-height: 1.6;
-
-            margin-bottom: 34px;
         }
 
-        /* ================================
-           ALERT
-        ================================= */
+        .feature-icon {
+            width: 35px;
+            height: 35px;
+
+            flex-shrink: 0;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: rgba(198, 107, 50, .2);
+            color: #F1B58D;
+
+            font-size: 13px;
+        }
+
+        .welcome-footer {
+            margin-top: 25px;
+            padding-top: 19px;
+
+            border-top: 1px solid rgba(255, 255, 255, .15);
+
+            color: #C1C9CE;
+
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           7. PANEL FORM LOGIN
+        ========================================= */
+
+        .form-panel {
+            position: relative;
+
+            min-width: 0;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 34px 36px;
+
+            background: rgba(255, 255, 255, .98);
+
+            border-top: 3px solid var(--copper);
+        }
+
+        .form-heading {
+            margin-bottom: 24px;
+        }
+
+        .form-eyebrow {
+            color: var(--copper-dark);
+
+            font-family: 'Plus Jakarta Sans', sans-serif;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
+        .form-heading h1 {
+            margin-top: 9px;
+
+            color: var(--charcoal);
+
+            font-family: 'Plus Jakarta Sans', sans-serif;
+
+            font-size: 27px;
+            font-weight: 800;
+
+            letter-spacing: -.8px;
+        }
+
+        .form-heading p {
+            margin-top: 9px;
+
+            color: var(--gray);
+
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           8. ALERT
+        ========================================= */
 
         .alert {
-            padding: 13px 15px;
-            border-radius: 9px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
 
-            margin-bottom: 22px;
+            padding: 12px 13px;
+            margin-bottom: 18px;
 
-            font-size: 14px;
-            line-height: 1.5;
+            border-radius: 10px;
+
+            font-size: 11px;
+            line-height: 1.7;
+
+            overflow-wrap: anywhere;
+        }
+
+        .alert i {
+            margin-top: 3px;
+            flex-shrink: 0;
         }
 
         .alert-error {
-            background: #fff1f1;
-            border: 1px solid #f0c2c2;
-            color: #b42318;
+            background: var(--danger-bg);
+            border: 1px solid #F2D0D3;
+            color: var(--danger);
         }
 
         .alert-success {
-            background: #eefbf3;
-            border: 1px solid #b7e4c7;
-            color: #16713b;
+            background: var(--success-bg);
+            border: 1px solid #CBE8D5;
+            color: var(--success);
         }
 
-        /* ================================
-           FORM
-        ================================= */
+        /* =========================================
+           9. INPUT FORM
+        ========================================= */
 
         .form-group {
-            margin-bottom: 23px;
+            margin-bottom: 18px;
         }
 
         .form-label {
             display: block;
 
-            margin-bottom: 9px;
+            margin-bottom: 8px;
 
-            color: #244b6d;
+            color: var(--charcoal);
 
-            font-size: 15px;
-            font-weight: 650;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         .input-wrapper {
@@ -156,462 +574,993 @@
         .input-icon {
             position: absolute;
 
-            left: 16px;
+            left: 15px;
             top: 50%;
 
             transform: translateY(-50%);
 
-            color: #71869a;
+            color: #87929A;
 
-            font-size: 18px;
+            font-size: 14px;
 
             pointer-events: none;
         }
 
         .form-input {
+            display: block;
+
             width: 100%;
-            height: 54px;
+            min-width: 0;
+            height: 47px;
 
-            padding: 0 16px 0 48px;
+            padding: 0 45px;
 
-            border: 1px solid #d3dce6;
+            border: 1px solid #D9DEE1;
             border-radius: 10px;
-
-            background: #ffffff;
-
-            color: #243b53;
-
-            font-size: 15px;
 
             outline: none;
 
+            background: var(--white);
+            color: var(--charcoal);
+
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+
             transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
         }
 
         .form-input::placeholder {
-            color: #9aa8b6;
+            color: #A0A8AE;
+        }
+
+        .form-input:hover {
+            border-color: #B9C0C5;
         }
 
         .form-input:focus {
-            border-color: #195789;
+            border-color: var(--copper);
 
-            box-shadow:
-                0 0 0 4px rgba(25, 87, 137, 0.10);
+            background: var(--white);
+
+            box-shadow: 0 0 0 4px rgba(198, 107, 50, .12);
         }
 
-        /* ================================
-           PASSWORD
-        ================================= */
-
-        .password-input {
-            padding-right: 55px;
+        .form-input.is-invalid {
+            border-color: var(--danger);
         }
+
+        /* =========================================
+           10. TOGGLE PASSWORD
+        ========================================= */
 
         .toggle-password {
             position: absolute;
 
-            right: 14px;
+            right: 9px;
             top: 50%;
 
             transform: translateY(-50%);
 
-            border: none;
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border: 0;
+            border-radius: 8px;
+
             background: transparent;
-
-            color: #718396;
-
-            font-size: 18px;
+            color: #78838B;
 
             cursor: pointer;
 
-            padding: 6px;
+            transition: background .2s ease, color .2s ease;
         }
 
         .toggle-password:hover {
-            color: #164b79;
+            background: var(--pale-copper);
+            color: var(--copper-dark);
         }
 
-        /* ================================
-           OPTIONS
-        ================================= */
+        .field-error {
+            margin-top: 6px;
+
+            color: var(--danger);
+
+            font-size: 11px;
+        }
+
+        /* =========================================
+           11. INGAT SAYA
+        ========================================= */
 
         .options {
             display: flex;
             align-items: center;
+            justify-content: space-between;
 
-            margin: 5px 0 25px;
+            gap: 12px;
+
+            margin: 2px 0 20px;
         }
 
         .remember {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
 
-            color: #617487;
+            color: var(--gray);
 
-            font-size: 14px;
+            font-size: 12px;
 
             cursor: pointer;
         }
 
         .remember input {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
 
-            accent-color: #155184;
+            accent-color: var(--copper);
 
             cursor: pointer;
         }
 
-        /* ================================
-           BUTTON
-        ================================= */
+        /* =========================================
+           12. TOMBOL LOGIN
+        ========================================= */
 
         .login-button {
             width: 100%;
-            height: 55px;
+            min-height: 47px;
 
-            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 10px;
+
+            border: 1px solid var(--copper);
             border-radius: 10px;
 
-            background: #164b79;
-            color: #ffffff;
+            background: linear-gradient(
+                120deg,
+                var(--copper),
+                #D47A43
+            );
 
-            font-size: 16px;
-            font-weight: 700;
+            color: var(--white);
+
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
 
             cursor: pointer;
 
-            box-shadow:
-                0 7px 18px rgba(22, 75, 121, 0.18);
+            box-shadow: 0 7px 18px rgba(198, 107, 50, .2);
 
             transition:
-                background 0.2s ease,
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+                background .2s ease,
+                transform .2s ease,
+                box-shadow .2s ease;
         }
 
         .login-button:hover {
-            background: #123d63;
+            background: linear-gradient(
+                120deg,
+                var(--copper-dark),
+                var(--copper)
+            );
+
+            box-shadow: 0 10px 23px rgba(198, 107, 50, .27);
 
             transform: translateY(-2px);
-
-            box-shadow:
-                0 10px 22px rgba(22, 75, 121, 0.23);
         }
 
         .login-button:active {
             transform: translateY(0);
         }
 
-        /* ================================
-           BACK LINK
-        ================================= */
+        .login-button:focus-visible,
+        .toggle-password:focus-visible,
+        .back-link:focus-visible {
+            outline: 3px solid rgba(198, 107, 50, .4);
+            outline-offset: 3px;
+        }
+
+        /* =========================================
+           13. CATATAN KEAMANAN
+        ========================================= */
+
+        .security-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+
+            margin-top: 17px;
+            padding: 11px 12px;
+
+            border: 1px solid #F0EFEC;
+            border-radius: 9px;
+
+            background: var(--warm-white);
+
+            color: var(--gray);
+
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .security-note i {
+            margin-top: 3px;
+            color: var(--copper);
+        }
+
+        /* =========================================
+           14. KEMBALI KE BERANDA
+        ========================================= */
 
         .back-link {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            margin-top: 25px;
+            gap: 8px;
 
-            text-align: center;
+            margin-top: 18px;
 
-            color: #1b5c8f;
+            color: var(--gray);
+
+            font-size: 11px;
+            font-weight: 700;
 
             text-decoration: none;
 
-            font-size: 14px;
-            font-weight: 600;
+            transition: color .2s ease;
         }
 
         .back-link:hover {
-            text-decoration: underline;
+            color: var(--copper-dark);
         }
 
-        /* ================================
-           FOOTER
-        ================================= */
+        /* =========================================
+           15. FOOTER
+        ========================================= */
 
-        .footer-text {
-            margin-top: 23px;
+        .page-footer {
+            position: relative;
+            z-index: 2;
+
+            flex-shrink: 0;
+
+            padding: 7px 20px 10px;
 
             text-align: center;
 
-            color: #8997a5;
+            color: var(--gray);
 
-            font-size: 13px;
-
-            line-height: 1.6;
+            font-size: 10px;
+            line-height: 1.7;
         }
 
-        /* ================================
-           RESPONSIVE
-        ================================= */
+        .page-footer strong {
+            color: var(--charcoal);
 
-        @media (max-width: 600px) {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-            body {
-                padding: 20px 15px;
+        /* =========================================
+           16. RESPONSIVE LAPTOP KECIL
+        ========================================= */
+
+        @media (max-height: 720px) and (min-width: 761px) {
+            .topbar {
+                padding-top: 9px;
+                padding-bottom: 9px;
             }
 
-            .login-card {
-                padding: 38px 25px 32px;
-
-                border-radius: 18px;
+            .brand-mark {
+                width: 40px;
+                height: 40px;
             }
 
-            .logo {
-                width: 78px;
-                height: 78px;
-
-                font-size: 36px;
-
-                border-radius: 18px;
+            .main {
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
 
-            .title {
-                font-size: 27px;
+            .welcome-panel {
+                padding: 25px 30px;
             }
 
-            .subtitle {
-                font-size: 14px;
+            .welcome-title {
+                margin-top: 18px;
+                font-size: 30px;
+            }
+
+            .welcome-description {
+                margin-top: 10px;
+                font-size: 11px;
+            }
+
+            .welcome-features {
+                gap: 10px;
+                margin-top: 17px;
+            }
+
+            .feature-icon {
+                width: 31px;
+                height: 31px;
+            }
+
+            .welcome-footer {
+                margin-top: 15px;
+                padding-top: 12px;
+            }
+
+            .form-panel {
+                padding: 23px 30px;
+            }
+
+            .form-heading {
+                margin-bottom: 17px;
+            }
+
+            .form-heading h1 {
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 13px;
             }
 
             .form-input {
-                height: 52px;
+                height: 43px;
+            }
+
+            .options {
+                margin-bottom: 15px;
             }
 
             .login-button {
-                height: 53px;
+                min-height: 44px;
+            }
+
+            .security-note {
+                margin-top: 12px;
+                padding: 9px;
+            }
+
+            .back-link {
+                margin-top: 13px;
             }
         }
+
+        /* =========================================
+           17. RESPONSIVE TABLET DAN HP
+        ========================================= */
+
+        @media (max-width: 760px) {
+            html,
+            body {
+                height: auto;
+                min-height: 100%;
+            }
+
+            body {
+                min-height: 100vh;
+                min-height: 100dvh;
+
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .topbar {
+                padding: 12px 20px;
+            }
+
+            .topbar-inner {
+                gap: 12px;
+            }
+
+            .brand-mark {
+                width: 42px;
+                height: 42px;
+            }
+
+            .brand-name {
+                font-size: 13px;
+            }
+
+            .brand-subtitle {
+                font-size: 9px;
+            }
+
+            .login-layout {
+                width: 100%;
+                max-width: 470px;
+                max-height: none;
+
+                grid-template-columns: minmax(0, 1fr);
+
+                border-radius: 18px;
+            }
+
+            .main {
+                flex: 1;
+
+                min-height: auto;
+
+                padding: 25px 15px;
+
+                overflow: visible;
+
+                background-position: center center;
+            }
+
+            .welcome-panel {
+                min-height: auto;
+                padding: 28px 27px;
+            }
+
+            .welcome-title {
+                margin-top: 20px;
+                font-size: 29px;
+            }
+
+            .welcome-description {
+                margin-top: 12px;
+                font-size: 12px;
+            }
+
+            .welcome-features {
+                display: none;
+            }
+
+            .welcome-footer {
+                margin-top: 21px;
+                padding-top: 14px;
+            }
+
+            .form-panel {
+                min-height: auto;
+                padding: 29px 27px;
+            }
+
+            .form-heading {
+                margin-bottom: 22px;
+            }
+
+            .form-heading h1 {
+                font-size: 25px;
+            }
+
+            .form-input {
+                height: 47px;
+            }
+
+            .page-footer {
+                padding: 12px 15px 16px;
+            }
+        }
+
+        /* =========================================
+           18. RESPONSIVE HP KECIL
+        ========================================= */
+
+        @media (max-width: 380px) {
+            .topbar {
+                padding: 11px 15px;
+            }
+
+            .topbar-label {
+                font-size: 0;
+                gap: 0;
+            }
+
+            .topbar-label i {
+                font-size: 16px;
+            }
+
+            .brand-mark {
+                width: 39px;
+                height: 39px;
+            }
+
+            .brand-name {
+                font-size: 12px;
+            }
+
+            .brand-subtitle {
+                font-size: 8px;
+            }
+
+            .welcome-panel {
+                padding: 24px 20px;
+            }
+
+            .welcome-title {
+                font-size: 26px;
+            }
+
+            .form-panel {
+                padding: 25px 20px;
+            }
+
+            .form-heading h1 {
+                font-size: 23px;
+            }
+        }
+
+        /* =========================================
+           19. AKSESIBILITAS
+        ========================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition: none !important;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-<div class="login-wrapper">
+    <!-- =========================================
+         HEADER SI CANTIK
+    ========================================= -->
 
-    <div class="login-card">
+    <header class="topbar">
 
-        {{-- ================================
-             LOGO
-        ================================= --}}
-        <div class="logo">
-            E
+        <div class="topbar-inner">
+
+            <div class="brand">
+
+                <!-- LOGO RESMI ESDM -->
+
+                <div class="brand-mark">
+                    <img
+                        src="{{ asset('images/logo-sulawesi-tengah.png') }}"
+                        alt="Logo ESDM"
+                    >
+                </div>
+
+                <div>
+                    <div class="brand-name">
+                        DESDM SICANTIK
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Layanan Digital ESDM
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="topbar-label">
+
+                <i class="fa-solid fa-shield-halved"
+                   aria-hidden="true"></i>
+
+                Area Administrator
+
+            </div>
+
         </div>
 
-
-        {{-- ================================
-             JUDUL
-        ================================= --}}
-        <h1 class="title">
-            Admin Si Cantik
-        </h1>
-
-        <p class="subtitle">
-            Sistem Informasi Dinas Energi dan Sumber Daya Mineral
-        </p>
+    </header>
 
 
-        {{-- ================================
-             ERROR MESSAGE
-        ================================= --}}
-        @if ($errors->any())
-            <div class="alert alert-error">
-                {{ $errors->first() }}
-            </div>
-        @endif
+    <!-- =========================================
+         MAIN LOGIN
+    ========================================= -->
+
+    <main class="main">
+
+        <div class="login-layout">
+
+            <!-- PANEL KIRI -->
+
+            <section class="welcome-panel">
+
+                <div class="welcome-content">
+
+                    <div class="welcome-badge">
+
+                        <i class="fa-solid fa-lock"
+                           aria-hidden="true"></i>
+
+                        Akses Terbatas
+
+                    </div>
+
+                    <h2 class="welcome-title">
+
+                        Selamat Datang di<br>
+
+                        <span>Panel Admin.</span>
+
+                    </h2>
+
+                    <p class="welcome-description">
+
+                        Kelola informasi, pengaduan masyarakat,
+                        bantuan, dan layanan digital melalui satu
+                        sistem terpadu Dinas Energi dan Sumber
+                        Daya Mineral Provinsi Sulawesi Tengah.
+
+                    </p>
+
+                    <div class="welcome-features">
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-shield-halved"
+                                   aria-hidden="true"></i>
+
+                            </div>
+
+                            <span>
+                                Akses sistem sesuai hak dan peran admin
+                            </span>
+
+                        </div>
 
 
-        {{-- ================================
-             SUCCESS MESSAGE
-        ================================= --}}
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+                        <div class="feature">
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-list-check"
+                                   aria-hidden="true"></i>
+
+                            </div>
+
+                            <span>
+                                Pengelolaan layanan dalam satu platform
+                            </span>
+
+                        </div>
 
 
-        {{-- ================================
-             LOGIN FORM
-        ================================= --}}
-        <form
-            method="POST"
-            action="{{ route('admin.login') }}"
-        >
+                        <div class="feature">
 
-            @csrf
+                            <div class="feature-icon">
 
+                                <i class="fa-solid fa-clock"
+                                   aria-hidden="true"></i>
 
-            {{-- EMAIL --}}
-            <div class="form-group">
+                            </div>
 
-                <label
-                    for="email"
-                    class="form-label"
-                >
-                    Email Admin
-                </label>
+                            <span>
+                                Informasi dan aktivitas terorganisasi
+                            </span>
 
-                <div class="input-wrapper">
+                        </div>
 
-                    <span class="input-icon">
-                        ✉
-                    </span>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        class="form-input"
-                        value="{{ old('email') }}"
-                        placeholder="Masukkan email admin"
-                        autocomplete="email"
-                        required
-                        autofocus
-                    >
+                    </div>
 
                 </div>
 
-            </div>
+
+                <div class="welcome-footer">
+
+                    Sistem Informasi Dinas Energi dan Sumber Daya Mineral
+
+                    <br>
+
+                    Provinsi Sulawesi Tengah
+
+                </div>
+
+            </section>
 
 
-            {{-- PASSWORD --}}
-            <div class="form-group">
+            <!-- PANEL FORM LOGIN -->
 
-                <label
-                    for="password"
-                    class="form-label"
-                >
-                    Password
-                </label>
+            <section class="form-panel">
 
-                <div class="input-wrapper">
+                <div class="form-heading">
 
-                    <span class="input-icon">
-                        🔒
-                    </span>
+                    <div class="form-eyebrow">
+                        Administrator
+                    </div>
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        class="form-input password-input"
-                        placeholder="Masukkan password"
-                        autocomplete="current-password"
-                        required
-                    >
+                    <h1>
+                        Masuk ke Akun
+                    </h1>
 
-                    <button
-                        type="button"
-                        class="toggle-password"
-                        id="togglePassword"
-                        onclick="togglePasswordVisibility()"
-                        aria-label="Tampilkan password"
-                    >
-                        👁
+                    <p>
+                        Silakan masukkan email dan password akun admin
+                        untuk melanjutkan.
+                    </p>
+
+                </div>
+
+
+                <!-- PESAN ERROR -->
+
+                @if ($errors->any())
+
+                    <div class="alert alert-error" role="alert">
+
+                        <i class="fa-solid fa-circle-exclamation"
+                           aria-hidden="true"></i>
+
+                        <div>
+                            {{ $errors->first() }}
+                        </div>
+
+                    </div>
+
+                @endif
+
+
+                <!-- PESAN BERHASIL -->
+
+                @if (session('success'))
+
+                    <div class="alert alert-success" role="status">
+
+                        <i class="fa-solid fa-circle-check"
+                           aria-hidden="true"></i>
+
+                        <div>
+                            {{ session('success') }}
+                        </div>
+
+                    </div>
+
+                @endif
+
+
+                <!-- FORM LOGIN -->
+
+                <form method="POST" action="{{ route('admin.login') }}">
+
+                    @csrf
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email" class="form-label">
+                            Email Admin
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-envelope input-icon"
+                               aria-hidden="true"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-input {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                value="{{ old('email') }}"
+                                placeholder="nama@email.com"
+                                autocomplete="username"
+                                inputmode="email"
+                                maxlength="254"
+                                required
+                                autofocus
+                                aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}"
+                                aria-describedby="{{ $errors->has('email') ? 'email-error' : '' }}"
+                            >
+
+                        </div>
+
+                        @if ($errors->has('email'))
+
+                            <div class="field-error" id="email-error">
+                                {{ $errors->first('email') }}
+                            </div>
+
+                        @endif
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock input-icon"
+                               aria-hidden="true"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-input"
+                                placeholder="Masukkan password"
+                                autocomplete="current-password"
+                                required
+                                aria-describedby="password-help"
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="togglePassword"
+                                aria-label="Tampilkan password"
+                                aria-controls="password"
+                                aria-pressed="false"
+                            >
+
+                                <i class="fa-regular fa-eye"
+                                   aria-hidden="true"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INGAT SAYA -->
+
+                    <div class="options">
+
+                        <label class="remember" for="remember">
+
+                            <input
+                                type="checkbox"
+                                id="remember"
+                                name="remember"
+                                value="1"
+                            >
+
+                            <span>
+                                Ingat saya
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- TOMBOL LOGIN -->
+
+                    <button type="submit" class="login-button">
+
+                        <i class="fa-solid fa-arrow-right-to-bracket"
+                           aria-hidden="true"></i>
+
+                        Masuk ke Panel Admin
+
                     </button>
 
-                </div>
-
-            </div>
+                </form>
 
 
-            {{-- INGAT SAYA --}}
-            <div class="options">
+                <!-- CATATAN KEAMANAN -->
 
-                <label class="remember">
+                <div class="security-note" id="password-help">
 
-                    <input
-                        type="checkbox"
-                        name="remember"
-                        value="1"
-                    >
+                    <i class="fa-solid fa-circle-info"
+                       aria-hidden="true"></i>
 
                     <span>
-                        Ingat saya
+
+                        Gunakan akun resmi yang telah terdaftar.
+                        Jangan membagikan password kepada orang lain.
+
                     </span>
 
-                </label>
-
-            </div>
+                </div>
 
 
-            {{-- TOMBOL LOGIN --}}
-            <button
-                type="submit"
-                class="login-button"
-            >
-                Masuk ke Panel Admin
-            </button>
+                <!-- KEMBALI KE BERANDA -->
 
-        </form>
+                <a href="{{ url('/') }}" class="back-link">
 
+                    <i class="fa-solid fa-arrow-left"
+                       aria-hidden="true"></i>
 
-        {{-- KEMBALI KE WEBSITE --}}
-        <a
-            href="{{ url('/') }}"
-            class="back-link"
-        >
-            ← Kembali ke Website Si Cantik
-        </a>
+                    Kembali ke halaman utama
 
-    </div>
+                </a>
+
+            </section>
+
+        </div>
+
+    </main>
 
 
-    {{-- FOOTER --}}
-    <div class="footer-text">
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
 
-        Si Cantik &copy; {{ date('Y') }}
+    <footer class="page-footer">
 
-        <br>
+        <strong>DESDM SICANTIK</strong>
 
-        Dinas Energi dan Sumber Daya Mineral
+        &middot; Dinas ESDM Provinsi Sulawesi Tengah
 
-    </div>
-
-</div>
-
-
-<script>
-
-    function togglePasswordVisibility() {
-
-        const password =
-            document.getElementById('password');
-
-        const button =
-            document.getElementById('togglePassword');
+    </footer>
 
 
-        if (password.type === 'password') {
+    <!-- =========================================
+         JAVASCRIPT TAMPILKAN PASSWORD
+    ========================================= -->
 
-            password.type = 'text';
+    <script>
+        (() => {
 
-            button.textContent = '🙈';
+            const toggleButton =
+                document.getElementById('togglePassword');
 
-            button.setAttribute(
-                'aria-label',
-                'Sembunyikan password'
-            );
+            const passwordInput =
+                document.getElementById('password');
 
-        } else {
+            if (!toggleButton || !passwordInput) {
+                return;
+            }
 
-            password.type = 'password';
+            toggleButton.addEventListener('click', () => {
 
-            button.textContent = '👁';
+                const isHidden =
+                    passwordInput.type === 'password';
 
-            button.setAttribute(
-                'aria-label',
-                'Tampilkan password'
-            );
-        }
-    }
+                passwordInput.type =
+                    isHidden ? 'text' : 'password';
 
-</script>
+                toggleButton.setAttribute(
+                    'aria-pressed',
+                    String(isHidden)
+                );
+
+                toggleButton.setAttribute(
+                    'aria-label',
+                    isHidden
+                        ? 'Sembunyikan password'
+                        : 'Tampilkan password'
+                );
+
+                const icon =
+                    toggleButton.querySelector('i');
+
+                if (icon) {
+
+                    icon.classList.toggle(
+                        'fa-eye',
+                        !isHidden
+                    );
+
+                    icon.classList.toggle(
+                        'fa-eye-slash',
+                        isHidden
+                    );
+
+                }
+
+                passwordInput.focus();
+
+            });
+
+        })();
+    </script>
 
 </body>
 </html>
