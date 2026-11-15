@@ -1,18 +1,15 @@
-```blade
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#292F36">
-
     <title>Hasil Status Pengajuan | DESDM SICANTIK</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <style>
         :root {
             --charcoal: #292F36;
@@ -628,7 +625,6 @@
         }
     </style>
 </head>
-
 <body>
     <header class="topbar">
         <div class="topbar-inner">
@@ -641,7 +637,6 @@
                     <div class="brand-subtitle">Layanan Digital ESDM</div>
                 </div>
             </div>
-
             <div class="topbar-label">
                 <i class="fa-solid fa-shield-halved"></i>
                 Informasi Pengajuan
@@ -721,19 +716,40 @@
                     </h3>
 
                     <div class="details-grid">
+
                         <div class="detail-item">
                             <span class="field-label">Nama Pemohon</span>
-                            <div class="detail-value">{{ $pengajuanLayanan->nama_lengkap }}</div>
+                            <div class="detail-value">
+                                {{ $pengajuanLayanan->nama_lengkap ?? '-' }}
+                            </div>
                         </div>
 
                         <div class="detail-item">
-                            <span class="field-label">NIK</span>
-                            <div class="detail-value">{{ $pengajuanLayanan->nik }}</div>
+                            <span class="field-label">Jenis Pemohon</span>
+                            <div class="detail-value">
+                                {{ ucfirst($pengajuanLayanan->jenis_pemohon ?? '-') }}
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="field-label">Asal Instansi/Kampus/Perusahaan</span>
+                            <div class="detail-value">
+                                {{ $pengajuanLayanan->nama_instansi ?? '-' }}
+                            </div>
                         </div>
 
                         <div class="detail-item">
                             <span class="field-label">Nomor HP</span>
-                            <div class="detail-value">{{ $pengajuanLayanan->nomor_hp }}</div>
+                            <div class="detail-value">
+                                {{ $pengajuanLayanan->nomor_hp ?? '-' }}
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="field-label">Alamat Lengkap</span>
+                            <div class="detail-value">
+                                {{ $pengajuanLayanan->alamat ?? '-' }}
+                            </div>
                         </div>
 
                         <div class="detail-item">
@@ -752,8 +768,11 @@
 
                         <div class="detail-item">
                             <span class="field-label">Keperluan</span>
-                            <div class="detail-value">{{ $pengajuanLayanan->keperluan ?: '-' }}</div>
+                            <div class="detail-value">
+                                {{ $pengajuanLayanan->keperluan ?: '-' }}
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="status-section">
@@ -772,7 +791,9 @@
                                 <i class="fa-solid fa-comment-dots"></i>
                                 {{ $statusLayanan === 'Ditolak' ? 'Alasan Pengajuan Ditolak' : 'Catatan Pengelola' }}
                             </div>
-                            <div class="note-text">{{ $pengajuanLayanan->catatan_petugas }}</div>
+                            <div class="note-text">
+                                {{ $pengajuanLayanan->catatan_petugas }}
+                            </div>
                         </div>
                     @endif
 
@@ -852,17 +873,23 @@
                     <div class="details-grid">
                         <div class="detail-item">
                             <span class="field-label">Nama Pemohon</span>
-                            <div class="detail-value">{{ $pengajuan->nama_lengkap }}</div>
+                            <div class="detail-value">
+                                {{ $pengajuan->nama_lengkap }}
+                            </div>
                         </div>
 
                         <div class="detail-item">
                             <span class="field-label">NIK</span>
-                            <div class="detail-value">{{ $pengajuan->nik }}</div>
+                            <div class="detail-value">
+                                {{ $pengajuan->nik }}
+                            </div>
                         </div>
 
                         <div class="detail-item">
                             <span class="field-label">Nomor HP</span>
-                            <div class="detail-value">{{ $pengajuan->nomor_hp }}</div>
+                            <div class="detail-value">
+                                {{ $pengajuan->nomor_hp }}
+                            </div>
                         </div>
                     </div>
 
@@ -882,7 +909,9 @@
                                 <i class="fa-solid fa-comment-dots"></i>
                                 {{ $statusBantuan === 'Ditolak' ? 'Alasan Pengajuan Ditolak' : 'Catatan Pengelola' }}
                             </div>
-                            <div class="note-text">{{ $pengajuan->catatan_petugas }}</div>
+                            <div class="note-text">
+                                {{ $pengajuan->catatan_petugas }}
+                            </div>
                         </div>
                     @endif
 
@@ -958,4 +987,3 @@
     </footer>
 </body>
 </html>
-```

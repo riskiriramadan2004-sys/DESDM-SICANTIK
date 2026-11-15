@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -16,26 +17,24 @@ return new class extends Migration
                 ->constrained('layanans')
                 ->cascadeOnDelete();
 
-            // Identitas pengajuan layanan
+            // Identitas pengajuan
             $table->string('nomor_pengajuan')->unique();
 
             // Data pemohon
-            $table->string('nik', 16);
+            $table->string('jenis_pemohon')->default('perorangan');
             $table->string('nama_lengkap');
+            $table->string('nama_instansi');
             $table->string('nomor_hp', 20);
 
-            // Alamat
+            // Alamat lengkap
             $table->text('alamat');
-            $table->string('desa_kelurahan');
-            $table->string('kecamatan');
-            $table->string('kabupaten_kota');
-            $table->string('provinsi');
 
             // Keperluan layanan
             $table->text('keperluan');
 
             // Status pengajuan
-            $table->string('status')->default('menunggu_verifikasi');
+            $table->string('status')
+                ->default('Menunggu Verifikasi');
 
             // Catatan petugas
             $table->text('catatan_petugas')->nullable();

@@ -6,6 +6,7 @@ use App\Models\Layanan;
 use App\Models\PengajuanLayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PengajuanLayananController extends Controller
 {
@@ -23,65 +24,44 @@ class PengajuanLayananController extends Controller
     /**
      * Menyimpan pengajuan layanan.
      */
-    public function store(
-        Request $request,
-        Layanan $layanan
-    ) {
+    public function store(Request $request, Layanan $layanan)
+    {
         $validated = $request->validate([
-            'nik' => [
+            'jenis_pemohon' => [
                 'required',
-                'digits:16'
+                Rule::in(['perorangan', 'instansi']),
             ],
 
             'nama_lengkap' => [
                 'required',
                 'string',
-                'max:255'
+                'max:255',
+            ],
+
+            'nama_instansi' => [
+                'required',
+                'string',
+                'max:255',
             ],
 
             'nomor_hp' => [
                 'required',
                 'string',
-                'max:20'
+                'max:20',
             ],
 
             'alamat' => [
                 'required',
-                'string'
-            ],
-
-            'desa_kelurahan' => [
-                'required',
                 'string',
-                'max:255'
-            ],
-
-            'kecamatan' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-
-            'kabupaten_kota' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-
-            'provinsi' => [
-                'required',
-                'string',
-                'max:255'
             ],
 
             'keperluan' => [
                 'required',
-                'string'
+                'string',
             ],
         ]);
 
-        $nomorPengajuan =
-            'LO-' .
+        $nomorPengajuan = 'LO-' .
             now()->format('Ymd') .
             '-' .
             strtoupper(Str::random(5));
@@ -107,12 +87,9 @@ class PengajuanLayananController extends Controller
     /**
      * Menampilkan halaman berhasil.
      */
-    public function berhasil(
-        PengajuanLayanan $pengajuanLayanan
-    ) {
-        $pengajuanLayanan->load(
-            'layanan.bidangLayanan'
-        );
+    public function berhasil(PengajuanLayanan $pengajuanLayanan)
+    {
+        $pengajuanLayanan->load('layanan.bidangLayanan');
 
         return view(
             'layanan-online.pengajuan-berhasil',

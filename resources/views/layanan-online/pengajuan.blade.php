@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="theme-color" content="#292F36">
     <title>Ajukan Layanan - Si Cantik</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,11 +38,9 @@
         }
 
         html {
-            /* area di luar body (saat overscroll / zoom out) ikut charcoal */
             background: var(--charcoal);
         }
 
-        /* Body dibuat kolom setinggi layar supaya footer selalu menempel di dasar */
         body {
             min-height: 100vh;
             display: flex;
@@ -68,20 +67,16 @@
             position: relative;
             overflow: hidden;
             color: var(--white);
-            /* kiri-kanan: tidak mepet, tapi lebih ke kiri dari sebelumnya */
             padding: 18px clamp(20px, 8vw, 150px);
             border-bottom: 3px solid var(--copper);
             box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
             background:
-                /* dua garis diagonal tipis */
                 linear-gradient(115deg, transparent calc(50% - .6px), rgba(230, 160, 120, .7) 50%, transparent calc(50% + .6px)) 80% 0 / 150px 100% no-repeat,
                 linear-gradient(115deg, transparent calc(50% - .6px), rgba(255, 255, 255, .28) 50%, transparent calc(50% + .6px)) 85% 0 / 150px 100% no-repeat,
-                /* gradasi copper lembut dari kanan sampai tengah */
                 linear-gradient(270deg, rgba(198, 107, 50, .45) 0%, rgba(198, 107, 50, .2) 25%, rgba(198, 107, 50, 0) 52%),
                 var(--charcoal);
         }
 
-        /* garis vertikal copper di tepi kanan */
         .header::after {
             content: "";
             position: absolute;
@@ -92,7 +87,6 @@
             background: linear-gradient(to bottom, #F2B17F, #C66B32, #8F421F);
         }
 
-        /* rata kiri, tidak lagi dipusatkan */
         .header-inner {
             position: relative;
             z-index: 1;
@@ -103,7 +97,6 @@
             gap: 14px;
         }
 
-        /* logo tanpa kotak putih, di samping tulisan */
         .brand-logo {
             width: 50px;
             height: 50px;
@@ -132,9 +125,7 @@
             border-radius: 5px;
         }
 
-        /* MAIN
-           (margin kiri-kanan saja; "margin: auto" di dalam flex kolom
-           akan ikut menengahkan secara vertikal) */
+        /* MAIN */
 
         .container {
             width: 100%;
@@ -327,7 +318,7 @@
             background: rgba(41, 47, 54, .08);
         }
 
-        /* PROGRESS KELENGKAPAN */
+        /* PROGRESS */
 
         .progress-card {
             margin-bottom: 30px;
@@ -442,7 +433,8 @@
         }
 
         input,
-        textarea {
+        textarea,
+        select {
             width: 100%;
             border: 1px solid #DADDDC;
             background: #FCFCFB;
@@ -455,7 +447,8 @@
             transition: .25s;
         }
 
-        input {
+        input,
+        select {
             height: 47px;
         }
 
@@ -471,31 +464,35 @@
         }
 
         input:hover,
-        textarea:hover {
+        textarea:hover,
+        select:hover {
             border-color: #C9CDCB;
         }
 
         input:focus,
-        textarea:focus {
+        textarea:focus,
+        select:focus {
             background: white;
             border-color: var(--copper);
             box-shadow: 0 0 0 3px rgba(198, 107, 50, .12);
         }
 
-        /* status validasi */
         input.is-valid,
-        textarea.is-valid {
+        textarea.is-valid,
+        select.is-valid {
             border-color: #7DBE9A;
         }
 
         input.is-invalid,
-        textarea.is-invalid {
+        textarea.is-invalid,
+        select.is-invalid {
             border-color: var(--danger);
             background: #FFF8F7;
         }
 
         input.is-invalid:focus,
-        textarea.is-invalid:focus {
+        textarea.is-invalid:focus,
+        select.is-invalid:focus {
             box-shadow: 0 0 0 3px rgba(192, 57, 43, .14);
         }
 
@@ -505,10 +502,10 @@
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%      { transform: translateX(-5px); }
-            40%      { transform: translateX(5px); }
-            60%      { transform: translateX(-3px); }
-            80%      { transform: translateX(3px); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
         }
 
         .help-text {
@@ -516,9 +513,9 @@
             color: var(--gray);
             font-size: 11px;
             margin-top: 7px;
+            line-height: 1.6;
         }
 
-        /* pesan error + penghitung di bawah tiap kolom */
         .field-foot {
             display: flex;
             justify-content: space-between;
@@ -621,7 +618,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* FOOTER: menempel di dasar halaman, seluruh area bawah charcoal */
+        /* FOOTER */
 
         .footer {
             margin-top: auto;
@@ -700,9 +697,9 @@
                 width: 100%;
             }
 
-            /* 16px mencegah iPhone memperbesar layar otomatis saat kolom difokuskan */
             input,
-            textarea {
+            textarea,
+            select {
                 font-size: 16px;
             }
         }
@@ -718,7 +715,9 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+            *,
+            *::before,
+            *::after {
                 transition: none !important;
                 animation: none !important;
             }
@@ -785,7 +784,7 @@
             <span class="required">*</span> wajib diisi.
         </p>
 
-        {{-- Pesan sukses dari server (jika controller mengirim session 'success') --}}
+        {{-- PESAN SUKSES --}}
         @if (session('success'))
             <div class="alert alert-success" role="status">
                 <span>{{ session('success') }}</span>
@@ -793,7 +792,7 @@
             </div>
         @endif
 
-        {{-- Error dari server --}}
+        {{-- ERROR SERVER --}}
         @if ($errors->any())
             <div class="alert" id="serverAlert" role="alert" tabindex="-1">
                 <strong>Periksa kembali data yang Anda masukkan.</strong>
@@ -805,7 +804,7 @@
             </div>
         @endif
 
-        {{-- Error dari pengecekan di browser (diisi oleh JavaScript) --}}
+        {{-- ERROR JAVASCRIPT --}}
         <div class="alert" id="clientAlert" role="alert" tabindex="-1" hidden>
             <strong>Periksa kembali data yang Anda masukkan.</strong>
             <span id="clientAlertText"></span>
@@ -825,9 +824,17 @@
             <div class="progress-card" aria-live="polite">
                 <div class="progress-head">
                     <span>Kelengkapan formulir</span>
-                    <strong id="progressText">0 dari 9 kolom</strong>
+                    <strong id="progressText">0 dari 6 kolom</strong>
                 </div>
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                    id="progressBar"
+                >
                     <span class="progress-fill" id="progressFill"></span>
                 </div>
             </div>
@@ -842,34 +849,40 @@
 
                 <div class="form-grid">
 
+                    {{-- JENIS PEMOHON --}}
                     <div class="form-group">
-                        <label for="nik">
-                            NIK <span class="required">*</span>
+
+                        <label for="jenis_pemohon">
+                            Jenis Pemohon <span class="required">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            id="nik"
-                            name="nik"
-                            value="{{ old('nik') }}"
-                            maxlength="16"
-                            inputmode="numeric"
-                            pattern="[0-9]{16}"
-                            autocomplete="off"
-                            placeholder="Masukkan 16 digit NIK"
-                            data-rule="nik"
-                            data-server-error="{{ $errors->first('nik') }}"
+                        <select
+                            id="jenis_pemohon"
+                            name="jenis_pemohon"
+                            data-rule="jenis"
+                            data-server-error="{{ $errors->first('jenis_pemohon') }}"
                             required
                         >
+                            <option value="">Pilih jenis pemohon</option>
+                            <option value="perorangan" {{ old('jenis_pemohon') == 'perorangan' ? 'selected' : '' }}>
+                                Perorangan
+                            </option>
+                            <option value="instansi" {{ old('jenis_pemohon') == 'instansi' ? 'selected' : '' }}>
+                                Instansi/Perusahaan
+                            </option>
+                        </select>
 
                         <span class="help-text">
-                            NIK harus terdiri dari 16 digit angka.
+                            Pilih jenis pemohon sesuai dengan pengajuan Anda.
                         </span>
+
                     </div>
 
+                    {{-- NAMA PEMOHON --}}
                     <div class="form-group">
+
                         <label for="nama_lengkap">
-                            Nama Lengkap <span class="required">*</span>
+                            Nama Pemohon <span class="required">*</span>
                         </label>
 
                         <input
@@ -879,13 +892,43 @@
                             value="{{ old('nama_lengkap') }}"
                             autocomplete="name"
                             placeholder="Masukkan nama lengkap"
+                            maxlength="255"
                             data-rule="nama"
                             data-server-error="{{ $errors->first('nama_lengkap') }}"
                             required
                         >
+
                     </div>
 
+                    {{-- ASAL INSTANSI --}}
                     <div class="form-group">
+
+                        <label for="nama_instansi">
+                            Asal Instansi/Kampus/Perusahaan
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nama_instansi"
+                            name="nama_instansi"
+                            value="{{ old('nama_instansi') }}"
+                            placeholder="Contoh: Universitas Tadulako atau PT ABC"
+                            maxlength="255"
+                            data-rule="instansi"
+                            data-server-error="{{ $errors->first('nama_instansi') }}"
+                            required
+                        >
+
+                        <span class="help-text">
+                            Wajib diisi, termasuk bagi pemohon perorangan.
+                        </span>
+
+                    </div>
+
+                    {{-- NOMOR HP --}}
+                    <div class="form-group">
+
                         <label for="nomor_hp">
                             Nomor HP <span class="required">*</span>
                         </label>
@@ -898,10 +941,16 @@
                             inputmode="tel"
                             autocomplete="tel"
                             placeholder="Contoh: 08xxxxxxxxxx"
+                            maxlength="20"
                             data-rule="hp"
                             data-server-error="{{ $errors->first('nomor_hp') }}"
                             required
                         >
+
+                        <span class="help-text">
+                            Pastikan nomor HP aktif dan dapat dihubungi.
+                        </span>
+
                     </div>
 
                 </div>
@@ -918,6 +967,7 @@
                 <div class="form-grid">
 
                     <div class="form-group full">
+
                         <label for="alamat">
                             Alamat Lengkap <span class="required">*</span>
                         </label>
@@ -925,88 +975,25 @@
                         <textarea
                             id="alamat"
                             name="alamat"
+                            rows="4"
                             autocomplete="street-address"
-                            placeholder="Masukkan alamat lengkap"
+                            placeholder="Tuliskan alamat lengkap Anda"
                             data-rule="alamat"
                             data-server-error="{{ $errors->first('alamat') }}"
                             required
                         >{{ old('alamat') }}</textarea>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="desa_kelurahan">
-                            Desa/Kelurahan <span class="required">*</span>
-                        </label>
+                        <span class="help-text">
+                            Tuliskan alamat lengkap dalam satu kolom tanpa memisahkan desa,
+                            kecamatan, kabupaten/kota, dan provinsi.
+                        </span>
 
-                        <input
-                            type="text"
-                            id="desa_kelurahan"
-                            name="desa_kelurahan"
-                            value="{{ old('desa_kelurahan') }}"
-                            placeholder="Desa/Kelurahan"
-                            data-rule="wilayah"
-                            data-server-error="{{ $errors->first('desa_kelurahan') }}"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="kecamatan">
-                            Kecamatan <span class="required">*</span>
-                        </label>
-
-                        <input
-                            type="text"
-                            id="kecamatan"
-                            name="kecamatan"
-                            value="{{ old('kecamatan') }}"
-                            placeholder="Kecamatan"
-                            data-rule="wilayah"
-                            data-server-error="{{ $errors->first('kecamatan') }}"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="kabupaten_kota">
-                            Kabupaten/Kota <span class="required">*</span>
-                        </label>
-
-                        <input
-                            type="text"
-                            id="kabupaten_kota"
-                            name="kabupaten_kota"
-                            value="{{ old('kabupaten_kota') }}"
-                            autocomplete="address-level2"
-                            placeholder="Kabupaten/Kota"
-                            data-rule="wilayah"
-                            data-server-error="{{ $errors->first('kabupaten_kota') }}"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="provinsi">
-                            Provinsi <span class="required">*</span>
-                        </label>
-
-                        <input
-                            type="text"
-                            id="provinsi"
-                            name="provinsi"
-                            value="{{ old('provinsi') }}"
-                            autocomplete="address-level1"
-                            placeholder="Provinsi"
-                            data-rule="wilayah"
-                            data-server-error="{{ $errors->first('provinsi') }}"
-                            required
-                        >
                     </div>
 
                 </div>
             </div>
 
-            {{-- KEPERLUAN --}}
+            {{-- KEPERLUAN LAYANAN --}}
             <div class="form-section">
 
                 <div class="section-heading">
@@ -1014,27 +1001,32 @@
                     <h3>Keperluan Layanan</h3>
                 </div>
 
-                <div class="form-group">
-                    <label for="keperluan">
-                        Keperluan <span class="required">*</span>
-                    </label>
+                <div class="form-grid">
 
-                    <textarea
-                        id="keperluan"
-                        name="keperluan"
-                        rows="6"
-                        placeholder="Jelaskan keperluan atau tujuan pengajuan layanan Anda"
-                        data-rule="keperluan"
-                        data-server-error="{{ $errors->first('keperluan') }}"
-                        required
-                    >{{ old('keperluan') }}</textarea>
+                    <div class="form-group full">
 
-                    <span class="help-text">
-                        Jelaskan keperluan dengan jelas agar dapat diproses
-                        dengan baik.
-                    </span>
+                        <label for="keperluan">
+                            Keperluan <span class="required">*</span>
+                        </label>
+
+                        <textarea
+                            id="keperluan"
+                            name="keperluan"
+                            rows="6"
+                            placeholder="Jelaskan keperluan atau tujuan pengajuan layanan Anda"
+                            data-rule="keperluan"
+                            data-server-error="{{ $errors->first('keperluan') }}"
+                            required
+                        >{{ old('keperluan') }}</textarea>
+
+                        <span class="help-text">
+                            Jelaskan keperluan dengan jelas agar dapat diproses
+                            dengan baik.
+                        </span>
+
+                    </div>
+
                 </div>
-
             </div>
 
             {{-- BUTTON --}}
@@ -1079,57 +1071,90 @@
     'use strict';
 
     var form = document.getElementById('pengajuanForm');
-    if (!form) { return; }
+
+    if (!form) {
+        return;
+    }
 
     var reduceMotion = window.matchMedia &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var fields = Array.prototype.slice.call(form.querySelectorAll('[data-rule]'));
+
+    var fields = Array.prototype.slice.call(
+        form.querySelectorAll('[data-rule]')
+    );
+
     var submitBtn = document.getElementById('submitBtn');
     var submitLabel = submitBtn.querySelector('[data-label]');
     var defaultLabel = submitLabel.textContent;
+
     var clientAlert = document.getElementById('clientAlert');
     var clientAlertText = document.getElementById('clientAlertText');
     var serverAlert = document.getElementById('serverAlert');
+
     var progressText = document.getElementById('progressText');
     var progressFill = document.getElementById('progressFill');
     var progressBar = document.getElementById('progressBar');
-    var sections = Array.prototype.slice.call(form.querySelectorAll('.form-section'));
+
+    var sections = Array.prototype.slice.call(
+        form.querySelectorAll('.form-section')
+    );
+
     var submitted = false;
 
-    /* ---------- Aturan validasi ---------- */
+    /* ATURAN VALIDASI */
+
     function minLength(n, label) {
         return {
-            test: function (v) { return v.trim().length >= n; },
+            test: function (v) {
+                return v.trim().length >= n;
+            },
             msg: label + ' minimal ' + n + ' karakter.'
         };
     }
 
     var rules = {
-        nik: {
-            test: function (v) { return /^\d{16}$/.test(v); },
-            msg: 'NIK harus terdiri dari 16 digit angka.'
+        jenis: {
+            test: function (v) {
+                return v === 'perorangan' || v === 'instansi';
+            },
+            msg: 'Silakan pilih jenis pemohon.'
         },
+
         nama: minLength(3, 'Nama lengkap'),
+
+        instansi: minLength(2, 'Asal instansi/kampus/perusahaan'),
+
         hp: {
-            test: function (v) { return /^(?:\+?62|0)8\d{8,11}$/.test(v.replace(/[\s-]/g, '')); },
+            test: function (v) {
+                return /^(?:\+?62|0)8\d{8,11}$/.test(
+                    v.replace(/[\s-]/g, '')
+                );
+            },
             msg: 'Nomor HP tidak valid. Contoh: 08xxxxxxxxxx.'
         },
-        alamat: minLength(10, 'Alamat'),
-        wilayah: minLength(2, 'Kolom ini'),
+
+        alamat: minLength(10, 'Alamat lengkap'),
+
         keperluan: minLength(10, 'Keperluan')
     };
 
     function validate(field) {
         var value = field.value;
-        if (!value.trim()) { return 'Kolom ini wajib diisi.'; }
         var rule = rules[field.getAttribute('data-rule')];
+
+        if (!value.trim()) {
+            return 'Kolom ini wajib diisi.';
+        }
+
         return rule && !rule.test(value) ? rule.msg : '';
     }
 
-    /* ---------- Siapkan pesan error & penghitung tiap kolom ---------- */
+    /* PESAN ERROR DAN PENGHITUNG */
+
     fields.forEach(function (field) {
         var group = field.closest('.form-group');
         var foot = document.createElement('div');
+
         foot.className = 'field-foot';
 
         var err = document.createElement('span');
@@ -1146,15 +1171,21 @@
 
         field._err = err;
         field._count = count;
+
         field.setAttribute('aria-describedby', err.id);
     });
 
     function updateCount(field) {
         var len = field.value.length;
-        var rule = field.getAttribute('data-rule');
-        if (rule === 'nik') {
-            field._count.textContent = len + '/16';
-            field._count.classList.toggle('is-done', len === 16);
+
+        if (field.hasAttribute('maxlength')) {
+            var max = field.getAttribute('maxlength');
+
+            field._count.textContent = len + '/' + max;
+            field._count.classList.toggle(
+                'is-done',
+                len > 0 && len <= Number(max)
+            );
         } else if (field.tagName === 'TEXTAREA') {
             field._count.textContent = len + ' karakter';
         }
@@ -1162,34 +1193,77 @@
 
     function render(field, message) {
         field._err.textContent = message;
+
         field.classList.toggle('is-invalid', !!message);
-        field.classList.toggle('is-valid', !message && field.value.trim() !== '');
-        field.setAttribute('aria-invalid', message ? 'true' : 'false');
+
+        field.classList.toggle(
+            'is-valid',
+            !message && field.value.trim() !== ''
+        );
+
+        field.setAttribute(
+            'aria-invalid',
+            message ? 'true' : 'false'
+        );
     }
 
-    /* ---------- Progress & penanda bagian selesai ---------- */
+    /* PROGRESS FORMULIR */
+
     function updateProgress() {
-        var done = fields.filter(function (f) { return validate(f) === ''; }).length;
+        var done = fields.filter(function (field) {
+            return validate(field) === '';
+        }).length;
+
         var percent = Math.round((done / fields.length) * 100);
-        progressText.textContent = done + ' dari ' + fields.length + ' kolom';
+
+        progressText.textContent =
+            done + ' dari ' + fields.length + ' kolom';
+
         progressFill.style.width = percent + '%';
-        progressFill.classList.toggle('is-complete', done === fields.length);
-        progressBar.setAttribute('aria-valuenow', String(percent));
+
+        progressFill.classList.toggle(
+            'is-complete',
+            done === fields.length
+        );
+
+        progressBar.setAttribute(
+            'aria-valuenow',
+            String(percent)
+        );
 
         sections.forEach(function (section) {
             var badge = section.querySelector('.section-number');
-            if (!badge) { return; }
-            if (!badge.hasAttribute('data-number')) {
-                badge.setAttribute('data-number', badge.textContent.trim());
+
+            if (!badge) {
+                return;
             }
-            var inSection = Array.prototype.slice.call(section.querySelectorAll('[data-rule]'));
-            var complete = inSection.length > 0 && inSection.every(function (f) { return validate(f) === ''; });
+
+            if (!badge.hasAttribute('data-number')) {
+                badge.setAttribute(
+                    'data-number',
+                    badge.textContent.trim()
+                );
+            }
+
+            var inSection = Array.prototype.slice.call(
+                section.querySelectorAll('[data-rule]')
+            );
+
+            var complete = inSection.length > 0 &&
+                inSection.every(function (field) {
+                    return validate(field) === '';
+                });
+
             badge.classList.toggle('is-complete', complete);
-            badge.textContent = complete ? '\u2713' : badge.getAttribute('data-number');
+
+            badge.textContent = complete
+                ? '\u2713'
+                : badge.getAttribute('data-number');
         });
     }
 
-    /* ---------- Alert dari browser ---------- */
+    /* ALERT */
+
     function showClientAlert(message) {
         clientAlertText.textContent = message;
         clientAlert.hidden = false;
@@ -1200,40 +1274,72 @@
         clientAlert.hidden = true;
     }
 
-    Array.prototype.forEach.call(document.querySelectorAll('[data-alert-close]'), function (btn) {
-        btn.addEventListener('click', function () {
-            var box = btn.closest('.alert');
-            if (!box) { return; }
-            box.classList.add('is-closing');
-            setTimeout(function () {
-                if (box.id === 'clientAlert') { box.hidden = true; } else { box.remove(); }
-            }, 250);
-        });
-    });
+    Array.prototype.forEach.call(
+        document.querySelectorAll('[data-alert-close]'),
+        function (btn) {
+            btn.addEventListener('click', function () {
+                var box = btn.closest('.alert');
 
-    /* ---------- Interaksi tiap kolom ---------- */
+                if (!box) {
+                    return;
+                }
+
+                box.classList.add('is-closing');
+
+                setTimeout(function () {
+                    if (box.id === 'clientAlert') {
+                        box.hidden = true;
+                    } else {
+                        box.remove();
+                    }
+                }, 250);
+            });
+        }
+    );
+
+    /* INTERAKSI SETIAP KOLOM */
+
     fields.forEach(function (field) {
         var rule = field.getAttribute('data-rule');
 
         field.addEventListener('input', function () {
-            if (rule === 'nik') {
-                field.value = field.value.replace(/\D/g, '').slice(0, 16);
-            } else if (rule === 'hp') {
+            if (rule === 'hp') {
                 field.value = field.value.replace(/[^\d+\s-]/g, '');
             }
+
             updateCount(field);
-            if (field.getAttribute('data-touched') === '1' || field.classList.contains('is-invalid')) {
+
+            if (
+                field.getAttribute('data-touched') === '1' ||
+                field.classList.contains('is-invalid')
+            ) {
                 render(field, validate(field));
             }
+
+            updateProgress();
+        });
+
+        field.addEventListener('change', function () {
+            if (field.getAttribute('data-touched') === '1') {
+                render(field, validate(field));
+            }
+
             updateProgress();
         });
 
         field.addEventListener('blur', function () {
-            field.value = field.value.trim();
-            if (field.value !== '' || field.getAttribute('data-touched') === '1') {
+            if (field.tagName !== 'SELECT') {
+                field.value = field.value.trim();
+            }
+
+            if (
+                field.value !== '' ||
+                field.getAttribute('data-touched') === '1'
+            ) {
                 field.setAttribute('data-touched', '1');
                 render(field, validate(field));
             }
+
             updateCount(field);
             updateProgress();
         });
@@ -1241,83 +1347,150 @@
         updateCount(field);
     });
 
-    /* Tampilkan error dari server di bawah kolom yang bersangkutan */
+    /* ERROR DARI SERVER */
+
     var firstServerError = null;
+
     fields.forEach(function (field) {
         var serverMessage = field.getAttribute('data-server-error');
+
         if (serverMessage) {
             field.setAttribute('data-touched', '1');
             render(field, serverMessage);
-            if (!firstServerError) { firstServerError = field; }
+
+            if (!firstServerError) {
+                firstServerError = field;
+            }
         }
     });
+
     updateProgress();
 
     if (serverAlert) {
-        serverAlert.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-        serverAlert.focus({ preventScroll: true });
+        serverAlert.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'center'
+        });
+
+        serverAlert.focus({
+            preventScroll: true
+        });
+    } else if (firstServerError) {
+        firstServerError.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'center'
+        });
     }
 
-    /* ---------- Kirim formulir ---------- */
+    /* KIRIM FORMULIR */
+
     form.addEventListener('submit', function (e) {
-        if (submitted) { e.preventDefault(); return; }
+        if (submitted) {
+            e.preventDefault();
+            return;
+        }
 
         var firstInvalid = null;
         var invalidCount = 0;
 
         fields.forEach(function (field) {
-            field.value = field.value.trim();
+            if (field.tagName !== 'SELECT') {
+                field.value = field.value.trim();
+            }
+
             if (field.getAttribute('data-rule') === 'hp') {
                 field.value = field.value.replace(/[\s-]/g, '');
             }
+
             field.setAttribute('data-touched', '1');
+
             var message = validate(field);
+
             render(field, message);
+
             if (message) {
                 invalidCount++;
-                if (!firstInvalid) { firstInvalid = field; }
+
+                if (!firstInvalid) {
+                    firstInvalid = field;
+                }
+
                 if (!reduceMotion) {
                     field.classList.remove('is-shaking');
+
                     void field.offsetWidth;
+
                     field.classList.add('is-shaking');
                 }
             }
         });
+
         updateProgress();
 
         if (firstInvalid) {
             e.preventDefault();
-            showClientAlert('Ada ' + invalidCount + ' kolom yang belum sesuai. Periksa kolom yang ditandai merah.');
-            firstInvalid.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-            firstInvalid.focus({ preventScroll: true });
+
+            showClientAlert(
+                'Ada ' + invalidCount +
+                ' kolom yang belum sesuai. Periksa kolom yang ditandai merah.'
+            );
+
+            firstInvalid.scrollIntoView({
+                behavior: reduceMotion ? 'auto' : 'smooth',
+                block: 'center'
+            });
+
+            firstInvalid.focus({
+                preventScroll: true
+            });
+
             return;
         }
 
         hideClientAlert();
+
         submitted = true;
+
         submitBtn.classList.add('is-loading');
         submitBtn.setAttribute('aria-busy', 'true');
+
         submitLabel.textContent = 'Mengirim...';
     });
 
-    /* Tombol Back browser: pulihkan tombol kirim */
+    /* PULIHKAN TOMBOL SETELAH KEMBALI KE HALAMAN */
+
     window.addEventListener('pageshow', function () {
         submitted = false;
+
         submitBtn.classList.remove('is-loading');
         submitBtn.removeAttribute('aria-busy');
+
         submitLabel.textContent = defaultLabel;
     });
 
-    /* ---------- Konfirmasi sebelum keluar jika sudah ada isian ---------- */
-    Array.prototype.forEach.call(document.querySelectorAll('[data-confirm-leave]'), function (link) {
-        link.addEventListener('click', function (e) {
-            var dirty = fields.some(function (f) { return f.value.trim() !== ''; });
-            if (dirty && !submitted &&
-                !window.confirm('Data yang sudah Anda isi akan hilang. Tetap kembali?')) {
-                e.preventDefault();
-            }
-        });
-    });
+    /* KONFIRMASI SEBELUM KELUAR */
+
+    Array.prototype.forEach.call(
+        document.querySelectorAll('[data-confirm-leave]'),
+        function (link) {
+            link.addEventListener('click', function (e) {
+                var dirty = fields.some(function (field) {
+                    return field.value.trim() !== '';
+                });
+
+                if (
+                    dirty &&
+                    !submitted &&
+                    !window.confirm(
+                        'Data yang sudah Anda isi akan hilang. Tetap kembali?'
+                    )
+                ) {
+                    e.preventDefault();
+                }
+            });
+        }
+    );
+
 })();
 </script>
 
