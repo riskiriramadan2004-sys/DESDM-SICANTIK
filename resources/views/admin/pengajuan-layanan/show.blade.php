@@ -1,256 +1,397 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Detail Pengajuan Layanan | SICANTIK</title>
+    <title>Detail Pengajuan | SICANTIK</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --charcoal: #292F36;
-            --copper: #C66B32;
-            --white: #FFFFFF;
-            --offwhite: #F5F5F3;
-            --muted: #7B828A;
-            --border: #E8E7E3;
+            --navy: #202a35;
+            --navy-light: #344454;
+            --copper: #c77b4a;
+            --cream: #f5f3ef;
+            --white: #fff;
+            --text: #29333d;
+            --muted: #87909a;
+            --border: #e8e9e9;
+            --green: #25845b;
+            --yellow: #b47a21;
+            --red: #bd514b;
+            --blue: #426fa9;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            background: var(--offwhite);
-            color: var(--charcoal);
-            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* HEADER */
+        a { text-decoration: none; }
 
-        .top-header {
-            background: var(--charcoal);
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            width: 255px;
+            background: var(--navy);
             color: white;
-            padding: 30px 5%;
-            border-bottom: 4px solid var(--copper);
+            padding: 27px 18px;
+            display: flex;
+            flex-direction: column;
+            z-index: 20;
         }
 
-        .header-inner {
-            max-width: 1100px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px 28px;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: var(--copper);
+            display: grid;
+            place-items: center;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            display: block;
+            color: #b7c0c8;
+            font-size: 9px;
+            letter-spacing: 1.2px;
+            margin-top: 4px;
+        }
+
+        .menu-label {
+            color: #8795a3;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            padding: 28px 12px 12px;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 14px;
+            color: #c4cbd2;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 9px;
+            margin-bottom: 5px;
+            transition: .2s;
+        }
+
+        .menu-link svg {
+            width: 19px;
+            height: 19px;
+            flex-shrink: 0;
+        }
+
+        .menu-link:hover,
+        .menu-link.active {
+            background: rgba(199,123,74,.17);
+            color: white;
+        }
+
+        .menu-link.active {
+            border-left: 3px solid var(--copper);
+            padding-left: 11px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,.12);
+            padding-top: 18px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px;
+            margin-bottom: 12px;
+        }
+
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #445466;
+            display: grid;
+            place-items: center;
+        }
+
+        .profile-icon svg { width: 18px; height: 18px; }
+
+        .profile-name { font-size: 11px; font-weight: 700; }
+        .profile-role { font-size: 9px; color: #aeb8c1; margin-top: 3px; }
+
+        .logout-link {
+            width: 100%;
+            border: 1px solid rgba(255,255,255,.15);
+            background: transparent;
+            color: #d5dce2;
+            padding: 11px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .logout-link:hover { background: rgba(255,255,255,.1); }
+        .logout-link svg { width: 16px; height: 16px; }
+
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 68px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 38px;
+        }
+
+        .breadcrumb { color: var(--muted); font-size: 11px; }
+        .breadcrumb strong { color: var(--text); }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #3ba879;
+            border-radius: 50%;
+        }
+
+        .content {
+            max-width: 1450px;
+            padding: 34px 38px 55px;
             margin: auto;
         }
 
-        .header-label {
-            color: #E9A477;
-            font-size: 11px;
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .eyebrow {
+            color: var(--copper);
+            font-size: 10px;
             font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 9px;
+            letter-spacing: 1.8px;
+            margin-bottom: 10px;
         }
 
-        .top-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 30px;
+        h1 {
+            font-size: 26px;
             margin: 0;
+            font-weight: 800;
+            color: var(--navy);
         }
 
-        .top-header p {
-            color: #D1D5D8;
-            font-size: 13px;
-            margin: 8px 0 0;
-        }
-
-        /* CONTAINER */
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 30px auto 60px;
+        .heading-description {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 9px 0 0;
+            line-height: 1.7;
         }
 
         .back-button {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--charcoal);
-            text-decoration: none;
-            font-size: 13px;
+            color: var(--navy);
+            font-size: 11px;
             font-weight: 700;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             transition: .2s;
         }
 
-        .back-button:hover {
-            color: var(--copper);
-        }
-
-        /* ALERT */
+        .back-button:hover { color: var(--copper); }
+        .back-button svg { width: 16px; height: 16px; }
 
         .alert {
             padding: 14px 17px;
             border-radius: 9px;
-            margin-bottom: 20px;
-            font-size: 13px;
+            margin-bottom: 18px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        .success {
-            background: #E5F3E8;
-            color: #28623A;
-            border: 1px solid #C7E5CE;
-        }
+        .success { background: #e5f3e8; color: #28623a; border: 1px solid #c7e5ce; }
+        .error { background: #fbe8e6; color: #9d3732; border: 1px solid #f1ceca; }
 
-        .error {
-            background: #FBE8E6;
-            color: #9D3732;
-            border: 1px solid #F1CECA;
-        }
-
-        /* CARD */
-
-        .card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 28px;
-            margin-bottom: 23px;
-            box-shadow: 0 5px 20px rgba(41, 47, 54, .035);
-        }
-
-        .card-heading {
+        .application-banner {
+            background: var(--navy);
+            border-radius: 13px;
+            color: white;
+            padding: 24px 27px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 22px;
+            align-items: center;
+            gap: 20px;
             flex-wrap: wrap;
+            margin-bottom: 21px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card-heading h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            margin: 0;
-            color: var(--charcoal);
+        .application-banner::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 50%;
+            right: -35px;
+            top: -85px;
+            box-shadow: 0 0 0 22px rgba(255,255,255,.025), 0 0 0 45px rgba(255,255,255,.02);
         }
 
-        .card-heading p {
-            font-size: 12px;
-            color: var(--muted);
-            margin: 6px 0 0;
-        }
-
-        .section-label {
-            color: var(--copper);
-            font-size: 10px;
+        .banner-label {
+            color: #d6a27f;
+            font-size: 9px;
             font-weight: 800;
             letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 7px;
-        }
-
-        /* APPLICATION ID */
-
-        .application-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            background: #FAF7F3;
-            border: 1px solid #F0E6DC;
-            border-radius: 11px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .application-number-label {
-            color: var(--muted);
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .application-number {
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 800;
-            color: var(--copper);
             word-break: break-word;
         }
-
-        /* STATUS */
 
         .status {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 7px 13px;
+            gap: 6px;
             border-radius: 30px;
-            font-size: 11px;
+            padding: 8px 13px;
+            font-size: 10px;
             font-weight: 800;
             white-space: nowrap;
         }
 
-        .status-menunggu-verifikasi {
-            background: #FFF3D9;
-            color: #93630A;
+        .status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
         }
 
-        .status-diverifikasi {
-            background: #E1F4F4;
-            color: #247777;
+        .menunggu { background: #fff2d9; color: var(--yellow); }
+        .diverifikasi { background: #e8f0fc; color: var(--blue); }
+        .disetujui { background: #e5f4eb; color: var(--green); }
+        .ditolak { background: #fbe9e7; color: var(--red); }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            margin-bottom: 21px;
+            overflow: hidden;
         }
 
-        .status-disetujui {
-            background: #E3F2E7;
-            color: #347348;
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 21px 24px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .status-ditolak {
-            background: #FBE7E6;
-            color: #A6423D;
+        .panel-icon {
+            width: 39px;
+            height: 39px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: #f8eee7;
+            color: var(--copper);
+            flex-shrink: 0;
         }
 
-        .status-default {
-            background: #EEEEEB;
-            color: #555D65;
+        .panel-icon svg { width: 20px; height: 20px; }
+
+        .panel-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
         }
 
-        /* DETAIL GRID */
+        .panel-subtitle {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .panel-body { padding: 8px 24px 22px; }
 
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0 25px;
+            gap: 0 28px;
         }
 
         .detail-item {
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            border-bottom: 1px solid #eff0ee;
             min-width: 0;
         }
 
-        .detail-item.full {
-            grid-column: 1 / -1;
-        }
+        .detail-item.full { grid-column: 1 / -1; }
 
         .detail-label {
             color: var(--muted);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             margin-bottom: 7px;
         }
 
         .detail-value {
-            color: var(--charcoal);
-            font-size: 13px;
+            color: var(--text);
+            font-size: 12px;
             font-weight: 600;
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-wrap: anywhere;
+            white-space: pre-line;
         }
 
         .detail-value.muted {
@@ -258,74 +399,75 @@
             font-weight: 400;
         }
 
-        .current-status {
-            margin-top: 3px;
+        .type-tag {
+            display: inline-block;
+            background: #f5f1eb;
+            color: #8a613f;
+            border-radius: 5px;
+            padding: 5px 9px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: capitalize;
         }
 
-        /* NOTE */
-
         .note-box {
-            background: #FAF7F3;
+            background: #faf7f3;
             border-left: 3px solid var(--copper);
             border-radius: 7px;
-            padding: 16px;
-            font-size: 13px;
+            padding: 14px 16px;
+            font-size: 12px;
             line-height: 1.7;
-            color: var(--charcoal);
             white-space: pre-line;
         }
 
-        /* FORM */
+        .form-body { padding: 24px; }
 
-        .form-group {
-            margin-bottom: 21px;
-        }
+        .form-group { margin-bottom: 21px; }
 
         .form-group label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
             margin-bottom: 9px;
-            color: var(--charcoal);
+            color: var(--navy);
         }
 
         .form-control {
             width: 100%;
-            min-height: 45px;
+            min-height: 44px;
             padding: 12px 14px;
-            border: 1px solid #DCDDD9;
+            border: 1px solid #dcdedc;
             border-radius: 8px;
             background: white;
-            color: var(--charcoal);
+            color: var(--text);
             font-family: inherit;
-            font-size: 13px;
+            font-size: 12px;
             outline: none;
             transition: .2s;
         }
 
         .form-control:focus {
             border-color: var(--copper);
-            box-shadow: 0 0 0 3px rgba(198, 107, 50, .10);
+            box-shadow: 0 0 0 3px rgba(199,123,74,.11);
         }
 
         textarea.form-control {
             min-height: 125px;
             resize: vertical;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .form-hint {
             color: var(--muted);
-            font-size: 11px;
+            font-size: 10px;
             margin-top: 7px;
+            line-height: 1.6;
         }
-
-        /* BUTTON */
 
         .form-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 11px;
             flex-wrap: wrap;
         }
 
@@ -333,104 +475,164 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 19px;
+            gap: 8px;
+            padding: 12px 17px;
             border: none;
             border-radius: 8px;
             font-family: inherit;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
-            text-decoration: none;
             cursor: pointer;
             transition: .2s;
         }
 
-        .btn-primary {
-            background: var(--copper);
-            color: white;
-        }
+        .btn svg { width: 16px; height: 16px; }
 
-        .btn-primary:hover {
-            background: #A95425;
-        }
+        .btn-primary { background: var(--copper); color: white; }
+        .btn-primary:hover { background: #a95425; }
 
-        .btn-secondary {
-            background: #F0F0ED;
-            color: var(--charcoal);
-        }
-
-        .btn-secondary:hover {
-            background: #E5E4DF;
-        }
+        .btn-secondary { background: #eff0ee; color: var(--navy); }
+        .btn-secondary:hover { background: #e2e4e1; }
 
         .footer-note {
-            margin-top: 20px;
+            margin-top: 19px;
             color: var(--muted);
-            font-size: 11px;
-            line-height: 1.6;
+            font-size: 10px;
+            line-height: 1.7;
         }
 
-        /* RESPONSIVE */
+        @media(max-width: 1050px) {
+            .sidebar { width: 220px; }
+            .main { margin-left: 220px; }
+            .content { padding: 28px 24px; }
+            .topbar { padding: 0 24px; }
+        }
 
-        @media (max-width: 650px) {
-            .top-header {
-                padding: 25px 6%;
-            }
-
-            .top-header h1 {
-                font-size: 25px;
-            }
-
-            .container {
-                width: 92%;
-                margin-top: 22px;
-            }
-
-            .card {
-                padding: 19px;
-            }
-
-            .card-heading h2 {
-                font-size: 20px;
-            }
-
-            .application-header {
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .detail-item.full {
-                grid-column: auto;
-            }
-
-            .form-actions .btn {
+        @media(max-width: 700px) {
+            .sidebar {
+                position: relative;
                 width: 100%;
+                padding: 14px 16px;
             }
+
+            .brand { padding: 0 4px 13px; }
+            .menu-label { padding: 13px 5px 7px; }
+            .menu-link { padding: 10px; margin-bottom: 0; }
+            .sidebar-bottom { margin-top: 10px; padding-top: 10px; }
+            .admin-profile { display: none; }
+            .logout-link { padding: 9px; }
+
+            .main { margin-left: 0; }
+            .topbar { height: 52px; padding: 0 17px; }
+            .content { padding: 24px 15px 40px; }
+            h1 { font-size: 22px; }
+            .application-banner { padding: 20px; }
+            .application-number { font-size: 16px; }
+            .panel-header { padding: 17px; }
+            .panel-body, .form-body { padding: 12px 17px 19px; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .detail-item.full { grid-column: auto; }
+            .form-actions .btn { width: 100%; }
         }
     </style>
 </head>
 
 <body>
 
-    <header class="top-header">
-        <div class="header-inner">
-            <div class="header-label">SICANTIK · ADMINISTRATOR</div>
-            <h1>Detail Pengajuan Layanan</h1>
-            <p>Informasi pemohon dan verifikasi pengajuan layanan online.</p>
-        </div>
-    </header>
+@php
+    $statusClass = match ($pengajuanLayanan->status) {
+        'Diverifikasi' => 'diverifikasi',
+        'Disetujui' => 'disetujui',
+        'Ditolak' => 'ditolak',
+        default => 'menunggu',
+    };
 
-    <main class="container">
+    $jenisPemohon = $pengajuanLayanan->jenis_pemohon ?? 'perorangan';
+@endphp
+
+<aside class="sidebar">
+    <div class="brand">
+        <div class="brand-mark">S</div>
+        <div>
+            <div class="brand-name">SICANTIK</div>
+            <span class="brand-subtitle">SISTEM INFORMASI ESDM</span>
+        </div>
+    </div>
+
+    <div class="menu-label">MENU ADMINISTRASI</div>
+
+    <a href="{{ route('admin.pengajuan-layanan.index') }}" class="menu-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="M8 9h8M8 13h8M8 17h4"/>
+        </svg>
+        Pengajuan Layanan
+    </a>
+
+    <a href="{{ url('/') }}" class="menu-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/>
+        </svg>
+        Kembali ke Beranda
+    </a>
+
+    <div class="sidebar-bottom">
+        <div class="admin-profile">
+            <div class="profile-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21a8 8 0 0 1 16 0"/>
+                </svg>
+            </div>
+            <div>
+                <div class="profile-name">Administrator</div>
+                <div class="profile-role">Pengelola Layanan Online</div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ route('admin.logout') }}">
+            @csrf
+            <button type="submit" class="logout-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M10 17l5-5-5-5M15 12H3"/>
+                    <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/>
+                </svg>
+                Keluar dari Sistem
+            </button>
+        </form>
+    </div>
+</aside>
+
+<main class="main">
+
+    <div class="topbar">
+        <div class="breadcrumb">
+            Administrasi / Pengajuan Layanan / <strong>Detail Pengajuan</strong>
+        </div>
+        <div class="topbar-right">
+            <span class="online-dot"></span>
+            Sistem Aktif
+        </div>
+    </div>
+
+    <div class="content">
 
         <a href="{{ route('admin.pengajuan-layanan.index') }}" class="back-button">
-            ← Kembali ke Daftar Pengajuan
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m15 18-6-6 6-6"/>
+                <path d="M9 12h12"/>
+            </svg>
+            Kembali ke Daftar Pengajuan
         </a>
 
-        {{-- NOTIFIKASI --}}
+        <div class="page-heading">
+            <div class="eyebrow">SISTEM ADMINISTRASI ESDM</div>
+            <h1>Detail Pengajuan Layanan</h1>
+            <p class="heading-description">
+                Periksa informasi pemohon dan tindak lanjuti pengajuan layanan.
+            </p>
+        </div>
+
         @if(session('success'))
             <div class="alert success">
                 ✓ {{ session('success') }}
@@ -443,252 +645,253 @@
             </div>
         @endif
 
-        {{-- DETAIL PENGAJUAN --}}
-        <section class="card">
-
-            <div class="card-heading">
-                <div>
-                    <div class="section-label">Informasi Pengajuan</div>
-                    <h2>Data Pengajuan Masyarakat</h2>
-                    <p>Informasi lengkap permohonan layanan online.</p>
+        <section class="application-banner">
+            <div>
+                <div class="banner-label">NOMOR PENGAJUAN</div>
+                <div class="application-number">
+                    {{ $pengajuanLayanan->nomor_pengajuan }}
                 </div>
             </div>
 
-            <div class="application-header">
-                <div>
-                    <div class="application-number-label">NOMOR PENGAJUAN</div>
-                    <div class="application-number">
-                        {{ $pengajuanLayanan->nomor_pengajuan }}
-                    </div>
-                </div>
-
-                @php
-                    $statusClass = \Illuminate\Support\Str::slug(
-                        $pengajuanLayanan->status ?? 'default'
-                    );
-                @endphp
-
-                <span class="status status-{{ $statusClass }}">
-                    {{ $pengajuanLayanan->status ?: 'Belum ada status' }}
-                </span>
-            </div>
-
-            <div class="section-label">Informasi Layanan</div>
-
-            <div class="detail-grid">
-
-                <div class="detail-item">
-                    <div class="detail-label">Nama Layanan</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->layanan->nama ?? '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Bidang Layanan</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->layanan->bidangLayanan->nama ?? '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item full">
-                    <div class="detail-label">Keperluan Pengajuan</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->keperluan ?: '-' }}
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="section-label" style="margin-top: 27px;">
-                Informasi Pemohon
-            </div>
-
-            <div class="detail-grid">
-
-                <div class="detail-item">
-                    <div class="detail-label">Nama Lengkap</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->nama_lengkap ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">NIK</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->nik ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Nomor HP / WhatsApp</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->nomor_hp ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Provinsi</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->provinsi ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item full">
-                    <div class="detail-label">Alamat</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->alamat ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Desa / Kelurahan</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->desa_kelurahan ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Kecamatan</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->kecamatan ?: '-' }}
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Kabupaten / Kota</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->kabupaten_kota ?: '-' }}
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="section-label" style="margin-top: 27px;">
-                Status dan Catatan
-            </div>
-
-            <div class="detail-grid">
-                <div class="detail-item">
-                    <div class="detail-label">Status Saat Ini</div>
-                    <div class="current-status">
-                        <span class="status status-{{ $statusClass }}">
-                            {{ $pengajuanLayanan->status ?: 'Belum ada status' }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-label">Catatan Petugas</div>
-                    <div class="detail-value">
-                        {{ $pengajuanLayanan->catatan_petugas ?: 'Belum ada catatan petugas.' }}
-                    </div>
-                </div>
-            </div>
-
+            <span class="status {{ $statusClass }}">
+                {{ $pengajuanLayanan->status ?: 'Menunggu Verifikasi' }}
+            </span>
         </section>
 
-        {{-- VERIFIKASI --}}
-        <section class="card">
-
-            <div class="card-heading">
+        <section class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M4 5h16v14H4z"/>
+                        <path d="M8 9h8M8 13h5"/>
+                    </svg>
+                </div>
                 <div>
-                    <div class="section-label">Tindak Lanjut Admin</div>
-                    <h2>Verifikasi Pengajuan</h2>
-                    <p>Perbarui status dan berikan catatan atas pengajuan masyarakat.</p>
+                    <div class="panel-title">Informasi Layanan</div>
+                    <div class="panel-subtitle">Rincian layanan yang diajukan pemohon.</div>
                 </div>
             </div>
 
-            <form
-                action="{{ route('admin.pengajuan-layanan.verifikasi', $pengajuanLayanan) }}"
-                method="POST"
-            >
-                @csrf
-                @method('PUT')
+            <div class="panel-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Layanan</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->layanan->nama ?? '-' }}
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="status">Status Pengajuan</label>
+                    <div class="detail-item">
+                        <div class="detail-label">Bidang Layanan</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->layanan->bidangLayanan->nama ?? '-' }}
+                        </div>
+                    </div>
 
-                    <select
-                        name="status"
-                        id="status"
-                        class="form-control"
-                        required
-                    >
-                        <option
-                            value="Menunggu Verifikasi"
-                            @selected(
-                                $pengajuanLayanan->status === 'Menunggu Verifikasi'
-                                || $pengajuanLayanan->status === 'menunggu_verifikasi'
-                            )
-                        >
-                            Menunggu Verifikasi
-                        </option>
-
-                        <option
-                            value="Diverifikasi"
-                            @selected($pengajuanLayanan->status === 'Diverifikasi')
-                        >
-                            Diverifikasi
-                        </option>
-
-                        <option
-                            value="Disetujui"
-                            @selected($pengajuanLayanan->status === 'Disetujui')
-                        >
-                            Disetujui
-                        </option>
-
-                        <option
-                            value="Ditolak"
-                            @selected($pengajuanLayanan->status === 'Ditolak')
-                        >
-                            Ditolak
-                        </option>
-                    </select>
-
-                    <div class="form-hint">
-                        Pilih status terbaru sesuai hasil pemeriksaan pengajuan.
+                    <div class="detail-item full">
+                        <div class="detail-label">Keperluan Pengajuan</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->keperluan ?: '-' }}
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="keterangan">Catatan / Keterangan Petugas</label>
-
-                    <textarea
-                        name="keterangan"
-                        id="keterangan"
-                        class="form-control"
-                        placeholder="Masukkan catatan atau alasan perubahan status..."
-                    >{{ old('keterangan', $pengajuanLayanan->catatan_petugas) }}</textarea>
-
-                    <div class="form-hint">
-                        Berikan keterangan yang jelas agar pemohon mengetahui hasil tindak lanjut.
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        Simpan Perubahan
-                    </button>
-
-                    <a
-                        href="{{ route('admin.pengajuan-layanan.index') }}"
-                        class="btn btn-secondary"
-                    >
-                        Kembali
-                    </a>
-                </div>
-
-            </form>
-
-            <div class="footer-note">
-                Pastikan status dan catatan sudah sesuai sebelum menyimpan perubahan.
             </div>
-
         </section>
 
-    </main>
+        <section class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21a8 8 0 0 1 16 0"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="panel-title">Informasi Pemohon</div>
+                    <div class="panel-subtitle">Identitas dan kontak pemohon layanan.</div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="detail-grid">
+
+                    <div class="detail-item">
+                        <div class="detail-label">Jenis Pemohon</div>
+                        <div class="detail-value">
+                            <span class="type-tag">
+                                {{ $jenisPemohon }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Lengkap</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->nama_lengkap ?: '-' }}
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Instansi</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->nama_instansi ?: '-' }}
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Nomor HP / WhatsApp</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->nomor_hp ?: '-' }}
+                        </div>
+                    </div>
+
+                    <div class="detail-item full">
+                        <div class="detail-label">Alamat Lengkap</div>
+                        <div class="detail-value">
+                            {{ $pengajuanLayanan->alamat ?: '-' }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 3v18M3 12h18"/>
+                        <circle cx="12" cy="12" r="9"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="panel-title">Status dan Catatan Petugas</div>
+                    <div class="panel-subtitle">Informasi tindak lanjut pengajuan.</div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Status Saat Ini</div>
+                        <div class="detail-value">
+                            <span class="status {{ $statusClass }}">
+                                {{ $pengajuanLayanan->status ?: 'Menunggu Verifikasi' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-label">Catatan Petugas</div>
+                        @if($pengajuanLayanan->catatan_petugas)
+                            <div class="note-box">
+                                {{ $pengajuanLayanan->catatan_petugas }}
+                            </div>
+                        @else
+                            <div class="detail-value muted">
+                                Belum ada catatan petugas.
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="m9 12 2 2 4-4"/>
+                        <circle cx="12" cy="12" r="9"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="panel-title">Verifikasi Pengajuan</div>
+                    <div class="panel-subtitle">
+                        Perbarui status dan berikan catatan hasil pemeriksaan.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-body">
+                <form
+                    action="{{ route('admin.pengajuan-layanan.verifikasi', $pengajuanLayanan) }}"
+                    method="POST"
+                >
+                    @csrf
+                    @method('PUT')
+
+                    <div class="form-group">
+                        <label for="status">Status Pengajuan</label>
+
+                        <select name="status" id="status" class="form-control" required>
+                            <option value="Menunggu Verifikasi"
+                                @selected(
+                                    $pengajuanLayanan->status === 'Menunggu Verifikasi'
+                                    || $pengajuanLayanan->status === 'menunggu_verifikasi'
+                                )>
+                                Menunggu Verifikasi
+                            </option>
+
+                            <option value="Diverifikasi"
+                                @selected($pengajuanLayanan->status === 'Diverifikasi')>
+                                Diverifikasi
+                            </option>
+
+                            <option value="Disetujui"
+                                @selected($pengajuanLayanan->status === 'Disetujui')>
+                                Disetujui
+                            </option>
+
+                            <option value="Ditolak"
+                                @selected($pengajuanLayanan->status === 'Ditolak')>
+                                Ditolak
+                            </option>
+                        </select>
+
+                        <div class="form-hint">
+                            Pilih status berdasarkan hasil pemeriksaan pengajuan.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keterangan">Catatan / Keterangan Petugas</label>
+
+                        <textarea
+                            name="keterangan"
+                            id="keterangan"
+                            class="form-control"
+                            maxlength="1000"
+                            placeholder="Tuliskan catatan atau alasan perubahan status..."
+                        >{{ old('keterangan', $pengajuanLayanan->catatan_petugas) }}</textarea>
+
+                        <div class="form-hint">
+                            Maksimal 1.000 karakter. Berikan informasi yang jelas kepada pemohon.
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                            </svg>
+                            Simpan Perubahan
+                        </button>
+
+                        <a href="{{ route('admin.pengajuan-layanan.index') }}" class="btn btn-secondary">
+                            Kembali ke Daftar
+                        </a>
+                    </div>
+                </form>
+
+                <div class="footer-note">
+                    Pastikan informasi dan status telah diperiksa sebelum menyimpan perubahan.
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
 
 </body>
 </html>
